@@ -1,0 +1,16 @@
+.hidden {
+  display: none;
+}
+
+.loader-container {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  opacity: 0.8;
+  z-index: 999;
+}
+
+::ng-deep mat-progress-spinner {
+  top: calc(50% - 40px);
+  left: calc(50% - 40px);
+}
