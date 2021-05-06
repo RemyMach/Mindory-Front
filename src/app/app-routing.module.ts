@@ -4,9 +4,10 @@ import {LoginComponent} from './components/login/login.component';
 import {HomeComponent} from './components/home/home.component';
 import {SubscribeComponent} from './components/subscribe/subscribe.component';
 import {PageNotFoundComponent} from './components/page-not-found/page-not-found.component';
+import {AuthenticateGuard} from './guard/authenticate.guard';
 
 const routes: Routes = [
-  {path: '', component: HomeComponent},
+  {path: '', component: HomeComponent, canActivate: [AuthenticateGuard]},
   {path: 'login', component: LoginComponent},
   {path: 'subscribe', component: SubscribeComponent},
   {path: '**', component: PageNotFoundComponent}
