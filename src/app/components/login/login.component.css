@@ -6,6 +6,7 @@
   flex-direction: column;
   min-height: 400px;
   min-width: 300px;
+  font-family: "Chewy", Arial,Helvetica, sans-serif;
 }
 
 #form-disponibility {
@@ -28,6 +29,11 @@
 #inputs_form mat-form-field {
   margin-right: 10%;
   margin-left: 10%;
+}
+
+#inputs_form mat-form-field mat-label{
+
+  font-family: "Chewy", Arial,Helvetica, sans-serif;
 }
 
 #password_icon {
@@ -55,11 +61,22 @@
   height: 100%;
 }
 
+#button_connect {
+  font-family: "Chewy", Arial,Helvetica, sans-serif;
+}
+
+.button_connect_active {
+  background: #F73C3B;
+  color: white;
+}
+
+
+
 @media screen and (max-width: 450px) {
 
 
   #big_logo_content {
-
+    display: none;
   }
 
   #inputs_form {

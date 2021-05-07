@@ -1,7 +1,7 @@
 <app-header-login></app-header-login>
 <span id="login_content">
     <h1>Se connecter à Mindory</h1>
-    <h4>Bon apprentissage</h4>
+    <h3>Bon apprentissage</h3>
     <form id="form-disponibility" [formGroup]="loginForm" (ngSubmit)="postLoginForm()">
 
       <span id="inputs_form">
@@ -19,7 +19,7 @@
       </span>
 
       <span id="button-validation">
-          <button mat-raised-button [disabled]="loginForm.invalid || buttonIsInValidAfterClick">Se connecter</button>
+          <button id="button_connect" [ngClass]="{'button_connect_active': !loginForm.invalid && !buttonIsInValidAfterClick}" mat-raised-button [disabled]="loginForm.invalid || buttonIsInValidAfterClick">Se connecter</button>
       </span>
 
     </form>
