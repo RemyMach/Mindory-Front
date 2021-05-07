@@ -28,6 +28,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatDialogModule} from '@angular/material/dialog';
 import { DialogConfirmationComponent } from './components/dialog-confirmation/dialog-confirmation.component';
+import { HeaderLoginComponent } from './components/header-login/header-login.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { DialogConfirmationComponent } from './components/dialog-confirmation/di
     SubscribeComponent,
     PageNotFoundComponent,
     SnackbarComponent,
-    DialogConfirmationComponent
+    DialogConfirmationComponent,
+    HeaderLoginComponent
   ],
   imports: [
     BrowserModule,

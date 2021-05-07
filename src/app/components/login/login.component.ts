@@ -9,6 +9,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 export class LoginComponent implements OnInit {
 
   buttonIsInValidAfterClick = false;
+  hidePasswordVisibility = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -16,13 +17,13 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
-    password: ['', Validators.required, Validators.min(8), Validators.max(50)]
+    password: ['', [Validators.required]]
   });
 
   ngOnInit(): void {
   }
 
-  async postDisponibilityForm(): Promise<void> {
+  async postLoginForm(): Promise<void> {
     if (this.loginForm.invalid && !this.loginForm.dirty) {
       return;
     }
@@ -35,6 +36,7 @@ export class LoginComponent implements OnInit {
 
   private async attemptToLogin(): Promise<void> {
 
+    console.log('oui ça fonctionne');
     //tentative de connexion ici
   }
 

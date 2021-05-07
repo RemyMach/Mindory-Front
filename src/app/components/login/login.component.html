@@ -1,1 +1,31 @@
-<p>login works!</p>
+<app-header-login></app-header-login>
+<span id="login_content">
+    <h1>Se connecter à Mindory</h1>
+    <h4>Bon apprentissage</h4>
+    <form id="form-disponibility" [formGroup]="loginForm" (ngSubmit)="postLoginForm()">
+
+      <span id="inputs_form">
+          <mat-form-field class="example-form-field">
+            <mat-label>Email</mat-label>
+            <input matInput type="text" name="email" id="email" formControlName="email" required>
+            <mat-icon id="mail_icon" matSuffix>mail</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field class="example-form-field">
+            <mat-label>Mot de passe</mat-label>
+            <input matInput [type]="hidePasswordVisibility ? 'password': 'text'" name="password" id="password" formControlName="password" required>
+            <mat-icon id="password_icon" (click)="hidePasswordVisibility = !hidePasswordVisibility" matSuffix>{{hidePasswordVisibility ? 'visibility_off': 'visibility'}}</mat-icon>
+          </mat-form-field>
+      </span>
+
+      <span id="button-validation">
+          <button mat-raised-button [disabled]="loginForm.invalid || buttonIsInValidAfterClick">Se connecter</button>
+      </span>
+
+    </form>
+  <span id="big_logo_content">
+      <img id="big_logo" src="assets/mindory_big.png">
+  </span>
+</span>
+
+

@@ -1,0 +1,13 @@
+#header_content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 10%;
+  width: 80%;
+  margin: auto;
+}
+
+#image_logo {
+  height: 50px;
+  width: 50px;
+}

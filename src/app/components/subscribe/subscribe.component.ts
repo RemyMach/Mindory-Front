@@ -20,12 +20,12 @@ export class SubscribeComponent implements OnInit {
     password: ['', [Validators.required, Validators.min(8), Validators.max(50)]],
     confirmationPassword: ['', [Validators.required]],
     username: ['', [Validators.required]]
-  });
+  }, {validators: this.checkPasswords()});
 
   ngOnInit(): void {
   }
 
-  async postDisponibilityForm(): Promise<void> {
+  async postSubscribeForm(): Promise<void> {
     if (this.subscribeForm.invalid && !this.subscribeForm.dirty) {
       return;
     }
@@ -37,7 +37,11 @@ export class SubscribeComponent implements OnInit {
   }
 
   private async attemptToLogin(): Promise<void> {
-
+    console.log('je fonctionne');
     /* TODO tentative d'inscription ici*/
+  }
+
+  checkPasswords(): boolean {
+    return this.subscribeForm.get('password') === this.subscribeForm.get('confirmationPassword');
   }
 }
