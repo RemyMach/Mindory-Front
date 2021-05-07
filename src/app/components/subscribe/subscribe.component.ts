@@ -8,6 +8,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 })
 export class SubscribeComponent implements OnInit {
   buttonIsInValidAfterClick = false;
+  hidePasswordVisibility = true;
+  hidePasswordConfirmationVisibility = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -20,7 +22,7 @@ export class SubscribeComponent implements OnInit {
     password: ['', [Validators.required, Validators.min(8), Validators.max(50)]],
     confirmationPassword: ['', [Validators.required]],
     username: ['', [Validators.required]]
-  }, {validators: this.checkPasswords()});
+  });
 
   ngOnInit(): void {
   }
@@ -42,6 +44,7 @@ export class SubscribeComponent implements OnInit {
   }
 
   checkPasswords(): boolean {
-    return this.subscribeForm.get('password') === this.subscribeForm.get('confirmationPassword');
+    return true;
+    //return this.subscribeForm.get('password') === this.subscribeForm.get('confirmationPassword');
   }
 }

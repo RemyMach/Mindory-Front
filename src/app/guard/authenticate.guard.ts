@@ -18,6 +18,7 @@ export class AuthenticateGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
     if (this.sessionService.user === null) {
+      console.log('jean');
       this.router.navigate(['login']);
       return false;
     }
