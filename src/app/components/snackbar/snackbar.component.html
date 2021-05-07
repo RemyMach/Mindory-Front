@@ -1,0 +1,15 @@
+<div class="snack-container">
+    <span class="element" id="span-icon">
+        <mat-icon class="{{color}}">{{getIcon}}</mat-icon>
+    </span>
+  <span class="element">
+        <span>{{data.message}}</span>
+    </span>
+  <span class="element">
+        <button mat-button="" class="mat-focus-indicator mat-button mat-button-base" (click)="snackBarRef.dismissWithAction()">
+            <span class="mat-button-wrapper">{{data.snackActionMessage}}</span>
+            <span matripple="" class="mat-ripple mat-button-ripple" ng-reflect-disabled="false" ng-reflect-centered="false" ng-reflect-trigger="[object HTMLButtonElement]"></span>
+            <span class="mat-button-focus-overlay"></span>
+        </button>
+    </span>
+</div>
