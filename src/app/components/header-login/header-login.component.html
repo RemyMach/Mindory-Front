@@ -1,4 +1,4 @@
 <span id="header_content">
   <img id="image_logo" src="assets/logo_seul.png">
-  <button id="button_header" mat-raised-button color="primary">{{PAGE_URL === '/login' ? 'S\'inscrire' : 'Se connecter'}}</button>
+  <button (click)="PAGE_URL === '/login' ? router.navigate(['/subscribe']) : router.navigate(['/login'])" id="button_header" mat-raised-button color="primary">{{PAGE_URL === '/login' ? 'S\'inscrire' : 'Se connecter'}}</button>
 </span>

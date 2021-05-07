@@ -9,7 +9,7 @@ import {Router} from '@angular/router';
 export class HeaderLoginComponent implements OnInit {
   PAGE_URL = this.router.url;
   constructor(
-    private router: Router
+     public router: Router
   ) { }
 
   ngOnInit(): void {

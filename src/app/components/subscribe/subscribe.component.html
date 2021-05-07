@@ -43,13 +43,13 @@
 
           <mat-form-field class="example-form-field">
             <mat-label>Retaper mot de passe</mat-label>
-            <input matInput [type]="hidePasswordConfirmationVisibility ? 'password': 'text'" name="confirmation_password" id="confirmation_password" formControlName="password" required>
+            <input matInput [type]="hidePasswordConfirmationVisibility ? 'password': 'text'" name="confirmationPassword" id="confirmationPassword" formControlName="confirmationPassword" required>
             <mat-icon class="input_icon password_icon" (click)="hidePasswordConfirmationVisibility = !hidePasswordConfirmationVisibility" matSuffix>{{hidePasswordConfirmationVisibility ? 'visibility_off': 'visibility'}}</mat-icon>
           </mat-form-field>
       </span>
 
       <span id="button-validation">
-          <button id="button_connect" [ngClass]="{'button_connect_active': !subscribeForm.invalid && !buttonIsInValidAfterClick}" mat-raised-button [disabled]="subscribeForm.invalid || buttonIsInValidAfterClick">S'inscrire</button>
+          <button id="button_subscribe" [ngClass]="{'button_subscribe_active': !subscribeForm.invalid && !buttonIsInValidAfterClick}" mat-raised-button [disabled]="subscribeForm.invalid || buttonIsInValidAfterClick">S'inscrire</button>
       </span>
 
     </form>

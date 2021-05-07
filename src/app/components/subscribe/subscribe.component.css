@@ -60,3 +60,16 @@
   width: 100%;
   height: 100%;
 }
+
+#button-validation {
+  margin-top: 2%;
+}
+
+#button_subscribe {
+  font-family: "Chewy", Arial,Helvetica, sans-serif;
+}
+
+.button_subscribe_active {
+  background: #F73C3B;
+  color: white;
+}
