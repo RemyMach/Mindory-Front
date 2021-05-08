@@ -1,0 +1,31 @@
+.snack-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 800px;
+}
+
+::ng-deep .mat-snack-bar-container {
+  max-width: 100% !important;
+}
+
+.red {
+  color: red;
+}
+
+.green {
+  color: green;
+}
+
+.blue {
+  color: blue;
+}
+mat-icon {
+  vertical-align: middle;
+}
+
+#span-icon {
+  margin-right: 10%;
+}

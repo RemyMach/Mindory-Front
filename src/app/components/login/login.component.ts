@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AuthService} from '../../services/mindory-api/auth.service';
 import {interval} from 'rxjs';
+import {SnackbarService} from '../../services/snackbar.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private snackBar: SnackbarService
   ) { }
 
   loginForm: FormGroup = this.formBuilder.group({
@@ -43,8 +45,13 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(this.loginForm.get('email').value, this.loginForm.get('password').value)
     .subscribe(
-        data => console.log('success', data),
-        error => console.log('oops', error)
+        data => {
+          this.router.navigate(['home']);
+        },
+        error => {
+
+          this.snackBar.openSnackBar(error, 'OK', 'Error');
+        }
       );
   }
 

@@ -30,6 +30,7 @@ export class UserService {
         tap(data => {
           if (data) {
             this.saveUser(data);
+            return;
           }
         }),
         catchError((err: HttpErrorResponse) => {
