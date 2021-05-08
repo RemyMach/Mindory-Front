@@ -15,7 +15,7 @@ export class LocalStorageService {
 
   updateLocalStorageAttributes(): void {
     this.user = localStorage.getItem('user') !== null ? JSON.parse(localStorage.getItem('user')) : null;
-    this.session = localStorage.getItem('session') !== null ? JSON.parse(localStorage.getItem('session')) : null;
+    this.session = localStorage.getItem('session') !== null && this.validSessionFormat() ? JSON.parse(localStorage.getItem('session')) : null;
   }
 
   setUser(userSession: UserModel): void {
@@ -23,7 +23,14 @@ export class LocalStorageService {
   }
 
   setSession(session: SessionModel): void {
-    console.log(session);
     localStorage.setItem('session', JSON.stringify(session));
+  }
+  validSessionFormat(): boolean {
+    try {
+      JSON.parse(localStorage.getItem('session'));
+      return true;
+    }catch {
+      return false;
+    }
   }
 }

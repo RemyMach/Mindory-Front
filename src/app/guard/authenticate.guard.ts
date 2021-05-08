@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router} from '@angular/router';
-import {Observable, of, Subscription} from 'rxjs';
+import {Observable, of, Subscriber, Subscription} from 'rxjs';
 import {LocalStorageService} from '../services/local-storage.service';
 import {UserService} from '../services/mindory-api/user.service';
 
@@ -18,32 +18,22 @@ export class AuthenticateGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    this.localStorageService.updateLocalStorageAttributes();
-    console.log('je passe dans le guard start');
-    if (this.localStorageService.session) {
-      return this.validateSession(this.localStorageService.session.token);
-    }
-    this.router.navigate(['login']);
-
-  }
-
-  validateSession(token: string): Subscription{
-    return this.userMindoryService.getUserByToken(token)
-      .subscribe(
-        data => true,
-        error => false
-      );
-  }
-  redirectIfInvalid(): Observable<boolean> {
-    this.router.navigate(['login']);
-    return new Observable<boolean>((observable) => {
+    return new Observable<boolean>((observable: Subscriber<boolean>) => {
+      this.localStorageService.updateLocalStorageAttributes();
+      if (this.localStorageService.session) {
+        return this.userMindoryService.getUserByToken(this.localStorageService.session.token)
+          .subscribe(
+            data => {
+              return observable.next(true);
+            },
+            error => {
+              this.router.navigate(['login']);
+              return observable.next(false);
+            },
+          );
+      }
+      this.router.navigate(['login']);
       observable.next(false);
     });
   }
-  validReturn(): Observable<boolean> {
-    return new Observable<boolean>((observable) => {
-      observable.next(true);
-    });
-  }
-
 }
