@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ValidateFn} from 'codelyzer/walkerFactory/walkerFn';
+import {AuthService} from '../../services/mindory-api/auth.service';
+import {Router} from '@angular/router';
+import {SnackbarService} from '../../services/snackbar.service';
 
 @Component({
   selector: 'app-subscribe',
@@ -14,6 +17,9 @@ export class SubscribeComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private snackBar: SnackbarService
   ) { }
 
   subscribeForm: FormGroup = this.formBuilder.group({
@@ -28,20 +34,45 @@ export class SubscribeComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  async postSubscribeForm(): Promise<void> {
+  public postSubscribeForm(): Promise<void> {
     if (this.subscribeForm.invalid && !this.subscribeForm.dirty) {
       return;
     }
 
     this.buttonIsInValidAfterClick = true;
 
-
-    await this.attemptToLogin();
+    this.attemptToSubscribe();
   }
 
-  private async attemptToLogin(): Promise<void> {
-    console.log('je fonctionne');
-    /* TODO tentative d'inscription ici*/
+  private attemptToSubscribe(): void {
+
+    this.authService.subscribe({
+      id: null,
+      name: this.subscribeForm.get('name').value as string,
+      surname: this.subscribeForm.get('surname').value as string,
+      email: this.subscribeForm.get('email').value as string,
+      password: this.subscribeForm.get('password').value as string,
+      username: this.subscribeForm.get('username').value as string
+    })
+      .subscribe(
+        data => {
+          this.authService.login(this.subscribeForm.get('email').value, this.subscribeForm.get('password').value)
+            .subscribe(
+              dataLogin => {
+                this.router.navigate(['']);
+              },
+              error => {
+                this.snackBar.openSnackBar('impossible to connect retry later in login page', 'OK', 'Error');
+                this.buttonIsInValidAfterClick = false;
+              }
+            );
+          this.router.navigate(['']);
+        },
+        error => {
+          this.snackBar.openSnackBar(error, 'OK', 'Error');
+          this.buttonIsInValidAfterClick = false;
+        }
+      );
   }
 
   confirmPasswords(controlName: string, matchingControlName: string): (formGroup: FormGroup) => void {

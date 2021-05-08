@@ -30,14 +30,11 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  async postLoginForm(): Promise<void> {
+  public postLoginForm(): void {
     if (this.loginForm.invalid && !this.loginForm.dirty) {
       return;
     }
-
     this.buttonIsInValidAfterClick = true;
-
-
     this.attemptToLogin();
   }
 
@@ -46,12 +43,11 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.loginForm.get('email').value, this.loginForm.get('password').value)
     .subscribe(
         data => {
-          console.log('j\'arrive dans attemptToLogin');
           this.router.navigate(['']);
         },
         error => {
-
           this.snackBar.openSnackBar(error, 'OK', 'Error');
+          this.buttonIsInValidAfterClick = false;
         }
       );
   }

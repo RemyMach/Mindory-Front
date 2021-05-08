@@ -21,7 +21,7 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private localStorageService: LocalStorageService,
-    private defaultErrorService: DefaultErrorService
+    private defaultErrorService: DefaultErrorService,
   ) { }
 
   public login(email: string, password: string): Observable<any> {
@@ -39,9 +39,27 @@ export class AuthService {
       );
   }
 
-  /*private subscribe(props: UserModel): Observable<User> {
+  public subscribe(props: UserModel): Observable<string | UserModel> {
 
-  }*/
+    return this.http.post<UserModel>(`${this.baseUrl}/subscribe`, props, this.httpOptions)
+      .pipe(
+        tap(data => {
+          if (data) {
+            this.saveUser(data);
+            return data;
+          }
+        }),
+        catchError((err: HttpErrorResponse) => {
+          return this.defaultErrorService.handleError<string>(err, err.message);
+        })
+      );
+  }
+  private saveUser(data): void {
+    if (data.username) {
+      this.localStorageService.setUser(data);
+      return;
+    }
+  }
 
   private saveToken(data): void {
     if (data.token) {

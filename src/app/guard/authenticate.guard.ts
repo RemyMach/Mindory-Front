@@ -31,9 +31,10 @@ export class AuthenticateGuard implements CanActivate {
               return observable.next(false);
             },
           );
+      }else {
+        this.router.navigate(['login']);
+        observable.next(false);
       }
-      this.router.navigate(['login']);
-      observable.next(false);
     });
   }
 }
