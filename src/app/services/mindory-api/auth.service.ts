@@ -5,6 +5,7 @@ import {catchError, map, retry, tap} from 'rxjs/operators';
 import { Observable, throwError} from 'rxjs';
 import {LocalStorageService} from '../local-storage.service';
 import {SessionModel} from '../../models/session.model';
+import {DefaultErrorService} from './error/default-error.service';
 
 
 @Injectable({
@@ -19,7 +20,8 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private defaultErrorService: DefaultErrorService
   ) { }
 
   public login(email: string, password: string): Observable<any> {
@@ -32,7 +34,7 @@ export class AuthService {
           }
         }),
         catchError((err: HttpErrorResponse) => {
-          return this.handleError<string>(err, 'Incorrect email ou/et mot de passe');
+          return this.defaultErrorService.handleError<string>(err, 'Incorrect email ou/et mot de passe');
           })
       );
   }
@@ -40,22 +42,6 @@ export class AuthService {
   /*private subscribe(props: UserModel): Observable<User> {
 
   }*/
-
-  private handleError<T>(error: HttpErrorResponse, operation = 'operation', result?: T): Observable<T> {
-    if (error.status === 0) {
-      // A client-side or network error occurred. Handle it accordingly.
-      console.error('An error occurred:', error.error);
-      return throwError('Mindory have a problem please retry later');
-    } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong.
-      console.error(
-        `Backend returned code ${error.status}, ` +
-        `body was: ${error.error}`);
-    }
-    // Return an observable with a user-facing error message.
-    return throwError(operation);
-  }
 
   private saveToken(data): void {
     if (data.token) {
