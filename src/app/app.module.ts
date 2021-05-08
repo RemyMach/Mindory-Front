@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoaderComponent } from './components/loader/loader.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
 
 import {LoaderInterceptorService} from './interceptors/loader-interceptors.service';
 import { LoginComponent } from './components/login/login.component';
@@ -46,6 +47,7 @@ import { HeaderLoginComponent } from './components/header-login/header-login.com
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     MatProgressSpinnerModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,

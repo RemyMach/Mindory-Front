@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
+import {AuthService} from '../../services/mindory-api/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) { }
 
   loginForm: FormGroup = this.formBuilder.group({
@@ -33,13 +35,18 @@ export class LoginComponent implements OnInit {
     this.buttonIsInValidAfterClick = true;
 
 
-    await this.attemptToLogin();
+    this.attemptToLogin();
+    console.log('je vois ce qui se passe');
   }
 
-  private async attemptToLogin(): Promise<void> {
+  private attemptToLogin(): void {
 
-    console.log('oui ça fonctionne');
-    //tentative de connexion ici
+    this.authService.login(this.loginForm.get('email').value, this.loginForm.get('password').value)
+      .subscribe(
+        data => console.log('success', data),
+        error => console.log('oops', error)
+      );
+    console.log('après le subscribe');
   }
 
 }
