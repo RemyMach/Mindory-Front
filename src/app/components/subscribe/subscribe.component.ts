@@ -66,7 +66,6 @@ export class SubscribeComponent implements OnInit {
                 this.buttonIsInValidAfterClick = false;
               }
             );
-          this.router.navigate(['']);
         },
         error => {
           this.snackBar.openSnackBar(error, 'OK', 'Error');
