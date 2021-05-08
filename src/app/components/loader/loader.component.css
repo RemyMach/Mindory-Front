@@ -10,7 +10,11 @@
   z-index: 999;
 }
 
-::ng-deep mat-progress-spinner {
+::ng-deep mat-progress-spinner{
   top: calc(50% - 40px);
   left: calc(50% - 40px);
+}
+
+::ng-deep mat-progress-spinner circle{
+  stroke: #F73C3B !important;
 }

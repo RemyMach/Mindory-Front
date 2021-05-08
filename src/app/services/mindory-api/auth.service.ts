@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
-import {User} from '../../models/User.model';
+import {UserModel} from '../../models/User.model';
 import {catchError, map, retry, tap} from 'rxjs/operators';
-import {interval, Observable, throwError} from 'rxjs';
+import { Observable, throwError} from 'rxjs';
 import {LocalStorageService} from '../local-storage.service';
+import {SessionModel} from '../../models/session.model';
 
-export interface LoginResponse {
-  token: string;
-}
 
 @Injectable({
   providedIn: 'root'
@@ -26,20 +24,20 @@ export class AuthService {
 
   public login(email: string, password: string): Observable<any> {
 
-    return this.http.post<LoginResponse>(`${this.baseUrl}/login`, {email, password}, this.httpOptions)
+    return this.http.post<SessionModel>(`${this.baseUrl}/login`, {email, password}, this.httpOptions)
       .pipe(
-        tap(token => {
-          if (token) {
-            console.log(token);
+        tap(data => {
+          if (data) {
+            this.saveToken(data);
           }
         }),
         catchError((err: HttpErrorResponse) => {
-          return this.handleError<string>(err, 'There is an error with the login please retry later');
+          return this.handleError<string>(err, 'Incorrect email ou/et mot de passe');
           })
       );
   }
 
-  /*private subscribe(props: User): Observable<User> {
+  /*private subscribe(props: UserModel): Observable<User> {
 
   }*/
 
@@ -47,6 +45,7 @@ export class AuthService {
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error);
+      return throwError('Mindory have a problem please retry later');
     } else {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong.
@@ -59,8 +58,8 @@ export class AuthService {
   }
 
   private saveToken(data): void {
-    if (data.tken) {
-      localStorage.setItem('token', data.token);
+    if (data.token) {
+      this.localStorageService.setSession({token: data.token});
       return;
     }
   }

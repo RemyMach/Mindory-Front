@@ -1,5 +1,5 @@
 
-export class User {
+export class UserModel {
   id: number | null;
   name: string | null;
   surname: string | null;

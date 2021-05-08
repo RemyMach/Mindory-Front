@@ -9,7 +9,7 @@ import {LocalStorageService} from '../services/local-storage.service';
 export class AuthenticateGuard implements CanActivate {
 
   constructor(
-    private sessionService: LocalStorageService,
+    private localStorageService: LocalStorageService,
     private router: Router
   ) {}
 
@@ -17,10 +17,14 @@ export class AuthenticateGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-    if (!this.sessionService.user) {
+    if (!this.localStorageService.session) {
       this.router.navigate(['login']);
-      return false;
+      return this.validateSession();
     }
+    return true;
+  }
+
+  validateSession(): boolean {
     return true;
   }
 

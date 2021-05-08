@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AuthService} from '../../services/mindory-api/auth.service';
+import {interval} from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -36,17 +37,15 @@ export class LoginComponent implements OnInit {
 
 
     this.attemptToLogin();
-    console.log('je vois ce qui se passe');
   }
 
   private attemptToLogin(): void {
 
     this.authService.login(this.loginForm.get('email').value, this.loginForm.get('password').value)
-      .subscribe(
+    .subscribe(
         data => console.log('success', data),
         error => console.log('oops', error)
       );
-    console.log('après le subscribe');
   }
 
 }
