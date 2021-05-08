@@ -24,12 +24,14 @@ export class UserService {
 
   public getUserByToken(token: string): Observable<any> {
     this.setAuthorizationHeader(token);
+    console.log(this.httpOptions);
 
     return this.http.get<UserModel>(`${this.baseUrl}/`, this.httpOptions)
       .pipe(
         tap(data => {
           if (data) {
             this.saveUser(data);
+            console.log('dans la request');
             return;
           }
         }),
@@ -45,6 +47,6 @@ export class UserService {
     }
   }
   private setAuthorizationHeader(token: string): void {
-    this.httpOptions.headers.append('Authorization', token);
+    this.httpOptions.headers = this.httpOptions.headers.append('Authorization', `Bearer ${token}`);
   }
 }

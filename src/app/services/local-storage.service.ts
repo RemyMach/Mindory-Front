@@ -23,6 +23,7 @@ export class LocalStorageService {
   }
 
   setSession(session: SessionModel): void {
+    console.log(session);
     localStorage.setItem('session', JSON.stringify(session));
   }
 }

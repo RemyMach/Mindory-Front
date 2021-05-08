@@ -46,7 +46,8 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.loginForm.get('email').value, this.loginForm.get('password').value)
     .subscribe(
         data => {
-          this.router.navigate(['home']);
+          console.log('j\'arrive dans attemptToLogin');
+          this.router.navigate(['']);
         },
         error => {
 
