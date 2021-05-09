@@ -1,7 +1,10 @@
 <app-header-login></app-header-login>
 <span id="login_content">
     <h1>Se connecter à Mindory</h1>
-    <h3>Bon apprentissage</h3>
+    <span id="forget_line">
+      <h3>Bon apprentissage</h3>
+      <a id="link_forget_password" routerLink="/forget">mot de passe oublié ?</a>
+    </span>
     <form id="form-disponibility" [formGroup]="loginForm" (ngSubmit)="postLoginForm()">
 
       <span id="inputs_form">
