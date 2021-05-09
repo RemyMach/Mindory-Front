@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-import {AuthService} from '../../services/mindory-api/auth.service';
 import {SnackbarService} from '../../services/snackbar.service';
+import {PasswordResetService} from '../../services/mindory-api/password-reset.service';
 
 @Component({
   selector: 'app-forget-password',
@@ -17,6 +17,7 @@ export class ForgetPasswordComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private passwordResetService: PasswordResetService,
     private router: Router,
     private snackBar: SnackbarService
   ) { }
@@ -33,7 +34,16 @@ export class ForgetPasswordComponent implements OnInit {
   }
 
   private resetPasswordUserNotAuthentify(): void {
-
+    this.passwordResetService.reset(this.forgetForm.get('email').value)
+      .subscribe(
+        data => {
+          this.snackBar.openSnackBar('Your have received an email if the account exist, check your spam just in case', 'OK', 'Info');
+          this.buttonIsInValidAfterClick = false;
+        },
+        error => {
+          this.snackBar.openSnackBar(error, 'OK', 'Error');
+          this.buttonIsInValidAfterClick = false;
+        }
+      );
   }
-
 }
