@@ -9,7 +9,7 @@ import {ForgetPasswordComponent} from './components/forget-password/forget-passw
 import {ResetPasswordComponent} from './components/reset-password/reset-password.component';
 
 const routes: Routes = [
-  {path: '', component: HomeComponent, canActivate: [AuthenticateGuard]},
+  {path: '', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'subscribe', component: SubscribeComponent},
   {path: 'forget', component: ForgetPasswordComponent},
