@@ -31,6 +31,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { DialogConfirmationComponent } from './components/dialog-confirmation/dialog-confirmation.component';
 import { HeaderLoginComponent } from './components/header-login/header-login.component';
 import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { ForgetPasswordComponent } from './components/forget-password/forget-pas
     SnackbarComponent,
     DialogConfirmationComponent,
     HeaderLoginComponent,
-    ForgetPasswordComponent
+    ForgetPasswordComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,
