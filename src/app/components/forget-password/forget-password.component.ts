@@ -34,7 +34,7 @@ export class ForgetPasswordComponent implements OnInit {
   }
 
   private resetPasswordUserNotAuthentify(): void {
-    this.passwordResetService.reset(this.forgetForm.get('email').value)
+    this.passwordResetService.forget(this.forgetForm.get('email').value)
       .subscribe(
         data => {
           this.snackBar.openSnackBar('Your have received an email if the account exist, check your spam just in case', 'OK', 'Info');

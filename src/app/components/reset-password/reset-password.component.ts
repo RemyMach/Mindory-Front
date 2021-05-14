@@ -3,6 +3,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../services/mindory-api/auth.service';
 import {SnackbarService} from '../../services/snackbar.service';
+import {log} from 'util';
+import {PasswordResetService} from '../../services/mindory-api/password-reset.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -18,7 +20,9 @@ export class ResetPasswordComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private snackBar: SnackbarService
+    private snackBar: SnackbarService,
+    private activatedRoute: ActivatedRoute,
+    private passwordResetService: PasswordResetService
   ) { }
 
   resetPasswordForm: FormGroup = this.formBuilder.group({
@@ -30,6 +34,26 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   postResetPasswordForm(): void {
+    if (this.resetPasswordForm.invalid && !this.resetPasswordForm.dirty) {
+      return;
+    }
+    this.buttonIsInValidAfterClick = true;
+
+    const token = this.activatedRoute.snapshot.params.token;
+    this.attemptToResetPassword(token);
+
+  }
+  attemptToResetPassword(token): void {
+    this.passwordResetService.reset(token, this.resetPasswordForm.get('password').value)
+      .subscribe(
+        data => {
+          this.snackBar.openSnackBar('Votre mot de passe a été mis à jour, vous pouvez vous reconnecter', 'OK', 'Success');
+        },
+        error => {
+          this.snackBar.openSnackBar(error, 'OK', 'Error');
+          this.buttonIsInValidAfterClick = false;
+        }
+      );
   }
 
   confirmPasswords(controlName: string, matchingControlName: string): (formGroup: FormGroup) => void {

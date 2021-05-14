@@ -21,7 +21,7 @@ export class PasswordResetService {
     private defaultErrorService: DefaultErrorService,
   ) { }
 
-  public reset(email: string): Observable<any> {
+  public forget(email: string): Observable<any> {
 
     return this.http.post<SessionModel>(`${this.baseUrl}/`, {email}, this.httpOptions)
       .pipe(
@@ -30,6 +30,19 @@ export class PasswordResetService {
         }),
         catchError((err: HttpErrorResponse) => {
           return this.defaultErrorService.handleError<string>(err, 'Please retry later');
+        })
+      );
+  }
+
+  public reset(token: string, password: string): Observable<any> {
+
+    return this.http.put<SessionModel>(`${this.baseUrl}/`, {token, password}, this.httpOptions)
+      .pipe(
+        tap(data => {
+          return;
+        }),
+        catchError((err: HttpErrorResponse) => {
+          return this.defaultErrorService.handleError<string>(err, err.message);
         })
       );
   }
