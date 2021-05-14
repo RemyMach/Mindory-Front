@@ -50,6 +50,7 @@ export class ResetPasswordComponent implements OnInit {
           this.snackBar.openSnackBar('Votre mot de passe a été mis à jour, vous pouvez vous reconnecter', 'OK', 'Success');
         },
         error => {
+          console.log(error.body);
           this.snackBar.openSnackBar(error, 'OK', 'Error');
           this.buttonIsInValidAfterClick = false;
         }
