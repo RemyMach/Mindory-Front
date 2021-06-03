@@ -33,6 +33,7 @@ import { HeaderLoginComponent } from './components/header-login/header-login.com
 import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { HeaderComponent } from './components/header/header.component';
     HeaderLoginComponent,
     ForgetPasswordComponent,
     ResetPasswordComponent,
-    HeaderComponent
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
