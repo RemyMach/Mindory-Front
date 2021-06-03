@@ -32,6 +32,7 @@ import { DialogConfirmationComponent } from './components/dialog-confirmation/di
 import { HeaderLoginComponent } from './components/header-login/header-login.component';
 import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
     DialogConfirmationComponent,
     HeaderLoginComponent,
     ForgetPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
