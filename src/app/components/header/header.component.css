@@ -3,7 +3,7 @@
   justify-content: space-between;
   align-items: center;
   height: 10%;
-  width: 80%;
+  width: 90%;
   margin: auto;
 }
 
@@ -19,6 +19,7 @@
   width: 30%;
   font-family: "Chewy", Arial,Helvetica, sans-serif;
   color: #47525E;
+  margin-right:5%;
 }
 
 #image_logo {
