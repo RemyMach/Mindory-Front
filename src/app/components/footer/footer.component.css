@@ -1,14 +1,15 @@
 .footer-content{
   border-top: 4px solid #47525E;
   position:absolute;
-  bottom: 0;
+  bottom: 30px;
   left: 10%;
   width: 80%;
-  padding-top: 50px;
+  padding-top: 20px;
   height: 50px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  padding-bottom: 60px;
 }
 
 #footer-lists-content {
@@ -20,6 +21,19 @@
 
 .footer-list-content {
   margin: 0;
+}
+
+#policy-content {
+  width: 40%;
+  margin: 0 5%;
+}
+
+#footer-social-network {
+  width: 15%;
+  display: flex;
+  justify-content: space-around;
+  height: 60%;
+  margin-right: 5%;
 }
 
 .social_icon {
@@ -35,8 +49,4 @@
 
 .footer-title-list {
   color: #47525E;
-}
-
-#footer-social-network {
-  width: 30%;
 }
