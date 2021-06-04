@@ -46,24 +46,38 @@
   font-family: "Chewy", Arial,Helvetica, sans-serif;
   background: #F73C3B;
   color: white;
-  width: 50%;
+  width: auto;
 }
 
 @media screen and (max-width: 600px) {
 
+  #card-content {
+    display: none;
+  }
   #card_logo {
     display: none;
   }
 
   #home-first-content {
-    justify-content: center;
+    display: flex;
+    flex-direction: row;
     width: 100%;
+    margin: 10% auto;
+    height: 70%;
+    justify-content: center;
+    align-items: center;
   }
 
   #home-welcome-text {
 
-    width: 90%;
+    width: 100%;
+    align-items: center;
 
+  }
+
+  #home-welcome-text span{
+    margin: auto 5%;
+    text-align: center;
   }
 
 }
