@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ListDeckService} from '../../services/mindory-api/deck/list-deck.service';
 
 @Component({
   selector: 'app-deck-example',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DeckExampleComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public listDeckService: ListDeckService
+  ) { }
 
   ngOnInit(): void {
+    this.listDeckService.getDecksFromHome();
+    console.log(this.listDeckService.decksHome);
   }
 
 }
