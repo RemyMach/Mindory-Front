@@ -1,2 +1,6 @@
 <app-header></app-header>
 <app-banner-play [deck]="listDeckCardsService.deck"></app-banner-play>
+<app-game-board [cards]="listDeckCardsService.deck?.Cards"></app-game-board>
+<button (click)="refreshPage()">Recommencer</button>
+{{this.currentUrl}}
+<app-footer></app-footer>

@@ -48,3 +48,7 @@
   width: 20%;
   text-align: center;
 }
+
+.banner-play-timer h1 {
+  font-size: 2em;
+}
