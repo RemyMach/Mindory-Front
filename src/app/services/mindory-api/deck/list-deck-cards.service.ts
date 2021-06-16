@@ -26,7 +26,7 @@ export class ListDeckCardsService {
   }
   public getDeck(): void{
     this.getDeckWithCards().subscribe(
-      value => this.deck = value,
+      value =>  this.deck = value,
       err => console.log(err),
       () => console.log('on a finit ici')
     );

@@ -16,6 +16,7 @@ const routes: Routes = [
   {path: 'forget', component: ForgetPasswordComponent},
   {path: 'reset/:token', component: ResetPasswordComponent},
   {path: 'play/decks/:deckTitle', component: PlaySoloComponent},
+  {path: 'play/decks/load/refresh', component: PageNotFoundComponent},
   {path: '**', component: PageNotFoundComponent}
 ];
 

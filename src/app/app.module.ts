@@ -37,6 +37,9 @@ import { FooterComponent } from './components/footer/footer.component';
 import { DeckExampleComponent } from './components/deck-example/deck-example.component';
 import { BannerPlayComponent } from './components/banner-play/banner-play.component';
 import { PlaySoloComponent } from './components/play-solo/play-solo.component';
+import { CardComponent } from './components/card/card.component';
+import { GameBoardComponent } from './components/game-board/game-board.component';
+import { RouteResolver} from './resolvers/route-resolver';
 
 @NgModule({
   declarations: [
@@ -55,7 +58,9 @@ import { PlaySoloComponent } from './components/play-solo/play-solo.component';
     FooterComponent,
     DeckExampleComponent,
     BannerPlayComponent,
-    PlaySoloComponent
+    PlaySoloComponent,
+    CardComponent,
+    GameBoardComponent,
   ],
   imports: [
     BrowserModule,
