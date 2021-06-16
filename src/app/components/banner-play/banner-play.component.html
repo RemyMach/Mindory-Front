@@ -1,0 +1,19 @@
+<div id="banner-play-content">
+  <div id="back-button-content">
+    <mat-icon (click)="handleDeckClick()">arrow_back</mat-icon>
+    <p (click)="handleDeckClick()">Decks</p>
+  </div>
+  <div id="banner-time-logo">
+    <div class="banner-play-timer">
+      <h1>Précédent Record</h1>
+      {{lastRecord}}
+    </div>
+    <div id="logo-play-content">
+      <img class="banner-play-logo" *ngIf="deck" src="http://localhost:3000/{{deck?.image}}" alt="{{deck?.image}}">
+    </div>
+    <div class="banner-play-timer">
+      <h1>Temps</h1>
+      {{time |date:'HH:mm:ss':'UTC'}}
+    </div>
+  </div>
+</div>

@@ -35,6 +35,8 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { DeckExampleComponent } from './components/deck-example/deck-example.component';
+import { BannerPlayComponent } from './components/banner-play/banner-play.component';
+import { PlaySoloComponent } from './components/play-solo/play-solo.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +53,9 @@ import { DeckExampleComponent } from './components/deck-example/deck-example.com
     ResetPasswordComponent,
     HeaderComponent,
     FooterComponent,
-    DeckExampleComponent
+    DeckExampleComponent,
+    BannerPlayComponent,
+    PlaySoloComponent
   ],
   imports: [
     BrowserModule,

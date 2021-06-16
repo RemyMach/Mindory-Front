@@ -3,6 +3,6 @@
 
   <div class="deck-example-logo-content" *ngFor="let deck of listDeckService.decksHome">
     <img class="deck-example-logo" src="{{ 'http://localhost:3000/' + deck.image}}">
-    <button class="deck-example-button" mat-raised-button color="primary">Jouer au Deck {{ deck.title}}</button>
+    <button (click)="router.navigate(['/play/decks/'+deck.id])" class="deck-example-button" mat-raised-button color="primary">Jouer au Deck {{ deck.title}}</button>
   </div>
 </div>

@@ -7,6 +7,7 @@ import {PageNotFoundComponent} from './components/page-not-found/page-not-found.
 import {AuthenticateGuard} from './guard/authenticate.guard';
 import {ForgetPasswordComponent} from './components/forget-password/forget-password.component';
 import {ResetPasswordComponent} from './components/reset-password/reset-password.component';
+import {PlaySoloComponent} from './components/play-solo/play-solo.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -14,6 +15,7 @@ const routes: Routes = [
   {path: 'subscribe', component: SubscribeComponent},
   {path: 'forget', component: ForgetPasswordComponent},
   {path: 'reset/:token', component: ResetPasswordComponent},
+  {path: 'play/decks/:deckTitle', component: PlaySoloComponent},
   {path: '**', component: PageNotFoundComponent}
 ];
 
