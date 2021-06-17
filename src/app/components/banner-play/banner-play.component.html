@@ -8,8 +8,9 @@
       <h1>Précédent Record</h1>
       {{lastRecord}}
     </div>
-    <div id="logo-play-content">
-      <img class="banner-play-logo" *ngIf="deck" src="http://localhost:3000/{{deck?.image}}" alt="{{deck?.image}}">
+    <div id="logo-play-content banner-play-timer">
+      <!--<img class="banner-play-logo" *ngIf="deck" src="http://localhost:3000/{{deck?.image}}" alt="{{deck?.image}}">-->
+      <h1>{{deck?.title}}</h1>
     </div>
     <div class="banner-play-timer">
       <h1>Temps</h1>

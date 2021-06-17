@@ -11,6 +11,7 @@ import {interval} from 'rxjs';
 })
 export class BannerPlayComponent implements OnInit {
   @Input() deck: Deck | undefined;
+  @Input() startGame: boolean;
   public lastRecord: Date;
   public time: Date;
   constructor(

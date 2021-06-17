@@ -8,9 +8,17 @@
 }
 
 .game-card-content {
-  background-color: #4572A0;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 5px;
+  perspective: 1000px;
+}
+
+
+app-card {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
 }

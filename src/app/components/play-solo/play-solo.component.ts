@@ -10,6 +10,7 @@ import { DOCUMENT } from '@angular/common';
 })
 export class PlaySoloComponent implements OnInit {
   currentUrl: string;
+  startGame = false;
   constructor(
     public listDeckCardsService: ListDeckCardsService,
     public router: Router,

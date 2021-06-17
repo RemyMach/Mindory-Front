@@ -1,23 +1,33 @@
-import { Injectable } from '@angular/core';
+import {Injectable, Renderer2} from '@angular/core';
 import {Card, DisplayCard} from '../../models/card.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlaySoloService {
-  cardsClicked: Card[] = [];
+  cardsClicked: Set<Card> = new Set();
+  listElementClicked: Set<HTMLDivElement> = new Set();
+  listElementToRefresh: Set<HTMLDivElement> = new Set();
   constructor() { }
-  public clickOnCard(card: Card): void {
-    if (this.cardsClicked.length === 0) {
-      this.cardsClicked.push(card);
+  public clickOnCard(card: Card, element: HTMLDivElement): void {
+    if (this.cardsClicked.size <= 1) {
       if (card.displayCard === undefined) {
         card.displayCard = new DisplayCard(true);
       } else {
         card.displayCard.display = true;
       }
-    }else {
-      this.cardsClicked[0].displayCard.display = false;
-      this.cardsClicked = [];
+      this.cardsClicked.add(card);
+      this.listElementClicked.add(element);
+    }else if (!this.cardsClicked.has(card)){
+      for (const currentCard of this.cardsClicked) {
+        currentCard.displayCard.display = false;
+      }
+
+      for (const elementToRefresh of this.listElementClicked) {
+        this.listElementToRefresh.add(elementToRefresh);
+      }
+      this.cardsClicked.clear();
+      this.listElementClicked.clear();
     }
   }
 }

@@ -30,7 +30,7 @@
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  height: 20%;
+  height: 10%;
   width: 70%;
   margin:auto;
 }
@@ -50,5 +50,5 @@
 }
 
 .banner-play-timer h1 {
-  font-size: 2em;
+  font-size: 1.5em;
 }

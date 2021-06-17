@@ -39,7 +39,6 @@ import { BannerPlayComponent } from './components/banner-play/banner-play.compon
 import { PlaySoloComponent } from './components/play-solo/play-solo.component';
 import { CardComponent } from './components/card/card.component';
 import { GameBoardComponent } from './components/game-board/game-board.component';
-import { RouteResolver} from './resolvers/route-resolver';
 
 @NgModule({
   declarations: [

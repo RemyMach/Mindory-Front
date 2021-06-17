@@ -1,0 +1,11 @@
+#button_restart {
+  font-family: "Chewy", Arial,Helvetica, sans-serif;
+  background: #F73C3B;
+  color: white;
+}
+
+#solo-content-button {
+  margin: 30px 0;
+  display: flex;
+  justify-content: center;
+}
