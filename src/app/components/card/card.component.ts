@@ -22,10 +22,10 @@ export class CardComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  public handleClick(): void {
+  public async handleClick(): Promise<void> {
     const element = this.elementClickable.nativeElement;
 
-    this.playSoloService.clickOnCard(this.card, element);
+    await this.playSoloService.clickOnCard(this.card, element);
     this.renderer.setStyle(element,  'cursor', 'default');
     this.renderer.addClass(element,  'flip');
   }
