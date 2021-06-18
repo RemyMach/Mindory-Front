@@ -25,17 +25,9 @@ export class CardComponent implements OnInit {
   public handleClick(): void {
     const element = this.elementClickable.nativeElement;
 
-    if (this.card.displayCard === undefined || this.card.displayCard.display === false) {
-      this.playSoloService.clickOnCard(this.card, element);
-      this.renderer.setStyle(element,  'cursor', 'default');
-      this.renderer.addClass(element,  'flip');
-    }else {
-      this.playSoloService.clickOnCard(this.card, element);
-      // @ts-ignore
-      if (this.card.displayCard.display === false) {
-        this.renderer.setStyle(element,  'cursor', 'pointer');
-      }
-    }
+    this.playSoloService.clickOnCard(this.card, element);
+    this.renderer.setStyle(element,  'cursor', 'default');
+    this.renderer.addClass(element,  'flip');
   }
 
 

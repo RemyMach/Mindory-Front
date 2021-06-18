@@ -1,4 +1,4 @@
-<div id="card-content" (click)="handleClick()" #elementClickable>
+<div id="card-content" #elementClickable>
   <span *ngIf="card.displayCard !== undefined && card.displayCard.display === true; else cardNotDisplay">
     <span class="span-content-card div-content-front">
       <div class="div-content-card" >
@@ -8,7 +8,7 @@
     </span>
   </span>
   <ng-template #cardNotDisplay>
-    <span class="span-content-card div-content-back">
+    <span class="span-content-card div-content-back" (click)="handleClick()">
       <div class="div-content-card" >
         <img  class="deck-example-logo"  src="{{ 'http://localhost:3000/' + listDeckCardsService.deck.image}}">
       </div>
