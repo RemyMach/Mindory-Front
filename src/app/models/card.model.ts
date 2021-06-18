@@ -7,6 +7,7 @@ export interface Card {
   text?: string;
   image?: string;
   displayCard?: DisplayCard;
+  cardAssociate: Card;
 }
 
 export class DisplayCard implements DisplayCardProps {
