@@ -55,7 +55,7 @@ export class PlaySoloService {
     this.clearTheCurrentCard();
     if (this.gameIsFinished()) {
       // on a gagné
-      this.interval$.unsubscribe();
+      this.stopGameChronometer();
     }
   }
   private itsNotAPair(cardA: Card, cardB: Card): boolean {
