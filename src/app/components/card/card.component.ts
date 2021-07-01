@@ -1,6 +1,5 @@
 import {Component, ElementRef, Input, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {Card} from '../../models/card.model';
-import {Deck} from '../../models/deck.model';
 import {ListDeckCardsService} from '../../services/mindory-api/deck/list-deck-cards.service';
 import {PlaySoloService} from '../../services/play/play-solo.service';
 

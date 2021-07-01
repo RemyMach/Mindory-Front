@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import {ListDeckService} from '../../services/mindory-api/deck/list-deck.service';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-home',

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Deck} from '../../../models/deck.model';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {DefaultErrorService} from '../error/default-error.service';

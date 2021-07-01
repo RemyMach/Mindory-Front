@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { LoaderInterceptorsService } from './loader-interceptors.service';
+import {LoaderInterceptorsService} from './loader-interceptors.service';
 
 describe('LoaderInterceptorsService', () => {
   let service: LoaderInterceptorsService;

@@ -1,4 +1,4 @@
-import {Injectable, Renderer2} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Card, DisplayCard} from '../../models/card.model';
 import {delay} from '../../utils/delay';
 

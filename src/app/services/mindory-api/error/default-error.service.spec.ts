@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { DefaultErrorService } from './default-error.service';
+import {DefaultErrorService} from './default-error.service';
 
 describe('DefaultErrorService', () => {
   let service: DefaultErrorService;
