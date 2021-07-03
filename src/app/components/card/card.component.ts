@@ -26,6 +26,7 @@ export class CardComponent implements OnInit {
     if (this.playSoloService.gameStart === false) {
       this.playSoloService.gameStart = true;
       this.playSoloService.startGameChronometer();
+      this.playSoloService.createPart();
     }
     const element = this.elementClickable.nativeElement;
 

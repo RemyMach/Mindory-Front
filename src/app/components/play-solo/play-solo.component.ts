@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {ListDeckCardsService} from '../../services/mindory-api/deck/list-deck-cards.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 
 @Component({
@@ -14,11 +14,12 @@ export class PlaySoloComponent implements OnInit {
   constructor(
     public listDeckCardsService: ListDeckCardsService,
     public router: Router,
+    public route: ActivatedRoute,
     @Inject(DOCUMENT) private document: Document
   ) { }
 
   ngOnInit(): void {
-    this.listDeckCardsService.getDeck();
+    this.listDeckCardsService.getDeck(this.route.snapshot.params.deckTitle);
     this.currentUrl = this.router.url;
   }
 

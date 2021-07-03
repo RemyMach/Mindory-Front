@@ -2,6 +2,8 @@ import {Injectable, Renderer2} from '@angular/core';
 import {Card, DisplayCard} from '../../models/card.model';
 import {delay} from '../../utils/delay';
 import {interval, Subscription} from 'rxjs';
+import {ListDeckCardsService} from '../mindory-api/deck/list-deck-cards.service';
+import {PartCreateService} from '../mindory-api/part/part-create.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,11 @@ export class PlaySoloService {
   pairsFound = 0;
   time: Date = new Date(0);
   interval$: Subscription;
-  constructor() { }
+  constructor(
+    private listDeckCardsService: ListDeckCardsService,
+    private partCreateService: PartCreateService
+  ) { }
+
   public async clickOnCard(card: Card, element: HTMLDivElement): Promise<void> {
     if (this.cardsClicked.size < this.NUMBER_CARD_COMPARE) {
       if (card.displayCard === undefined) {
@@ -30,15 +36,22 @@ export class PlaySoloService {
       }
     }
   }
+
   public startGameChronometer(): void {
     this.interval$ = interval(1000).subscribe((d) => {
       this.time = new Date(d + 1);
       this.time.setSeconds(d + 1);
     });
   }
+
   public stopGameChronometer(): void {
     this.interval$.unsubscribe();
   }
+
+  public createPart(): void {
+    this.partCreateService.create(this.listDeckCardsService.deck.Cards, this.listDeckCardsService.deck.id);
+  }
+
   private async compareCardsToSeeIfItsAMatch(): Promise<void> {
     const iterator = this.cardsClicked.values();
     const firstElement: Card = iterator.next().value;
@@ -58,21 +71,26 @@ export class PlaySoloService {
       this.stopGameChronometer();
     }
   }
+
   private itsNotAPair(cardA: Card, cardB: Card): boolean {
     return cardA.id !== cardB.cardAssociate.id;
   }
+
   private gameIsFinished(): boolean {
     return this.pairsFound === this.NUMBER_OF_PAIRS_TO_BE_FOUND;
   }
+
   private hideFrontOfTheCards(): void {
     for (const currentCard of this.cardsClicked) {
       currentCard.displayCard.display = false;
     }
   }
+
   private addCardToTheGame(card: Card, element: HTMLDivElement): void {
     this.cardsClicked.add(card);
     this.listElementClicked.add(element);
   }
+
   private clearTheCurrentCard(): void {
     this.cardsClicked.clear();
     this.listElementClicked.clear();
