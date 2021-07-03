@@ -14,7 +14,7 @@ import {Part} from '../../../models/part.model';
 export class PartCreateService {
 
   private httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json', Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYiLCJpYXQiOjE2MjUzMDczMjV9.pn9kHCLg5haneHSOXiGozJkis7JvXtNoT-HY2AXkpog' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json', Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYiLCJpYXQiOjE2MjUzNDAwNzZ9.ndmD8mvtR3txp_yvsEOBeBiwnnibhhhVU1eN5yF4gSI' })
   };
   private baseUrl = 'http://localhost:3000/parts';
 

@@ -4,6 +4,9 @@ import {delay} from '../../utils/delay';
 import {interval, Subscription} from 'rxjs';
 import {ListDeckCardsService} from '../mindory-api/deck/list-deck-cards.service';
 import {PartCreateService} from '../mindory-api/part/part-create.service';
+import {Part} from '../../models/part.model';
+import {SnackbarService} from '../snackbar.service';
+import {ShotCreateService} from '../mindory-api/shot/shot-create.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,9 +21,12 @@ export class PlaySoloService {
   pairsFound = 0;
   time: Date = new Date(0);
   interval$: Subscription;
+  part: Part;
   constructor(
     private listDeckCardsService: ListDeckCardsService,
-    private partCreateService: PartCreateService
+    private partCreateService: PartCreateService,
+    private snackBarService: SnackbarService,
+    private shotCreatService: ShotCreateService
   ) { }
 
   public async clickOnCard(card: Card, element: HTMLDivElement): Promise<void> {
@@ -32,6 +38,7 @@ export class PlaySoloService {
       }
       this.addCardToTheGame(card, element);
       if (this.cardsClicked.size === this.NUMBER_CARD_COMPARE) {
+        this.createShot();
         await this.compareCardsToSeeIfItsAMatch();
       }
     }
@@ -49,7 +56,18 @@ export class PlaySoloService {
   }
 
   public createPart(): void {
-    this.partCreateService.create(this.listDeckCardsService.deck.Cards, this.listDeckCardsService.deck.id).subscribe();
+    this.partCreateService.create(this.listDeckCardsService.deck.Cards, this.listDeckCardsService.deck.id).subscribe(
+      data => this.part = data,
+      error => this.snackBarService.openSnackBar('Our services have a problem please retry later', 'OK', 'error')
+    );
+  }
+
+  public createShot(): void {
+
+    this.shotCreatService.create(this.cardsClicked, this.part.id).subscribe(
+      data => {},
+      error  => this.snackBarService.openSnackBar('Our services have a problem please retry later', 'OK', 'error')
+    );
   }
 
   private async compareCardsToSeeIfItsAMatch(): Promise<void> {
