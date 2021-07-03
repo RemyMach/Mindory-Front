@@ -49,7 +49,7 @@ export class PlaySoloService {
   }
 
   public createPart(): void {
-    this.partCreateService.create(this.listDeckCardsService.deck.Cards, this.listDeckCardsService.deck.id);
+    this.partCreateService.create(this.listDeckCardsService.deck.Cards, this.listDeckCardsService.deck.id).subscribe();
   }
 
   private async compareCardsToSeeIfItsAMatch(): Promise<void> {
