@@ -39,6 +39,8 @@ import { BannerPlayComponent } from './components/banner-play/banner-play.compon
 import { PlaySoloComponent } from './components/play-solo/play-solo.component';
 import { CardComponent } from './components/card/card.component';
 import { GameBoardComponent } from './components/game-board/game-board.component';
+import { PlayModeComponent } from './components/play-mode/play-mode.component';
+import { CardChoiceComponent } from './components/card-choice/card-choice.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +62,8 @@ import { GameBoardComponent } from './components/game-board/game-board.component
     PlaySoloComponent,
     CardComponent,
     GameBoardComponent,
+    PlayModeComponent,
+    CardChoiceComponent,
   ],
   imports: [
     BrowserModule,
