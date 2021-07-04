@@ -41,6 +41,7 @@ import { CardComponent } from './components/card/card.component';
 import { GameBoardComponent } from './components/game-board/game-board.component';
 import { PlayModeComponent } from './components/play-mode/play-mode.component';
 import { CardChoiceComponent } from './components/card-choice/card-choice.component';
+import { PlayDeckComponent } from './components/play-deck/play-deck.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { CardChoiceComponent } from './components/card-choice/card-choice.compon
     GameBoardComponent,
     PlayModeComponent,
     CardChoiceComponent,
+    PlayDeckComponent,
   ],
   imports: [
     BrowserModule,
