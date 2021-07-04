@@ -64,7 +64,7 @@ export class PlaySoloService {
 
   public createShot(): void {
 
-    this.shotCreatService.create(this.cardsClicked, this.part.id).subscribe(
+    this.shotCreatService.create(this.cardsClicked, this.part.id, this.time.getSeconds()).subscribe(
       data => {},
       error  => this.snackBarService.openSnackBar('Our services have a problem please retry later', 'OK', 'error')
     );

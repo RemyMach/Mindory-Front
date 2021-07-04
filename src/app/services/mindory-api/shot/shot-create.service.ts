@@ -13,7 +13,7 @@ import {Shot} from '../../../models/shot.model';
 export class ShotCreateService {
 
   private httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json', Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYiLCJpYXQiOjE2MjUzNDAwNzZ9.ndmD8mvtR3txp_yvsEOBeBiwnnibhhhVU1eN5yF4gSI' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json', Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYiLCJpYXQiOjE2MjUzODgzNDN9.yC5xO9XvyN6F7rUFmLckMfHHkNRA7kDLXfYQfTq6k-4' })
   };
   private baseUrl = 'http://localhost:3000/shots';
 
@@ -22,10 +22,10 @@ export class ShotCreateService {
     private defaultErrorService: DefaultErrorService,
   ) { }
 
-  public create(cards: Set<Card>, partId: number): Observable<any> {
+  public create(cards: Set<Card>, partId: number, time: number): Observable<any> {
     const cardIds: number[] = [];
     cards.forEach(card => cardIds.push(card.id));
-    return this.http.post<Shot>(`${this.baseUrl}`, {cardIds, partId}, this.httpOptions)
+    return this.http.post<Shot>(`${this.baseUrl}`, {cardIds, partId, time}, this.httpOptions)
       .pipe(
         tap(data => {
           return;
