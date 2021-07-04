@@ -5,19 +5,7 @@
 }
 
 
-.credit {
-  margin: 10px 0px;
-  color: #888888;
-  font-size: 25px;
-  transition: all 0.5s;
-}
-
-.credit a {
-  color: inherit;
-}
-
 a,
-.card__exit,
 .card__icon {
   position: relative;
   text-decoration: none;
@@ -63,7 +51,6 @@ a:hover::after {
 
 .card__icon {
   grid-row: 2/3;
-  font-size: 30px;
 }
 
 .card__title {
@@ -75,8 +62,10 @@ a:hover::after {
 }
 
 .card__text {
+  margin-top: 10px;
   grid-row: 3/4;
-  font-weight: 400;
+  font-weight: 200;
+  font-size: 1.2em;
   color: #ffffff;
   font-family: "Chewy", Arial,Helvetica, sans-serif;
 }
