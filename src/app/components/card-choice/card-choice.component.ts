@@ -10,9 +10,11 @@ export class CardChoiceComponent implements OnInit {
   @Input() text: string;
   @Input() title: string;
   @Input() mode_icon: string;
+  @Input() urlPlay: string;
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.urlPlay);
   }
 
 }
