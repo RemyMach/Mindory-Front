@@ -1,0 +1,13 @@
+.card-container {
+  margin-top: 10vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  height: 55vh;
+}
+
+@media (max-width: 1600px) {
+  .card-container {
+    justify-content: center;
+  }
+}
