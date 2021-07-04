@@ -7,6 +7,7 @@ import {PartCreateService} from '../mindory-api/part/part-create.service';
 import {Part} from '../../models/part.model';
 import {SnackbarService} from '../snackbar.service';
 import {ShotCreateService} from '../mindory-api/shot/shot-create.service';
+import {calculateTimeInSeconds, getTimeInHourMinuteSecondsFormat} from '../../utils/Time/calculateTime';
 
 @Injectable({
   providedIn: 'root'
@@ -64,7 +65,7 @@ export class PlaySoloService {
 
   public createShot(): void {
 
-    this.shotCreatService.create(this.cardsClicked, this.part.id, this.time.getSeconds()).subscribe(
+    this.shotCreatService.create(this.cardsClicked, this.part.id, calculateTimeInSeconds(this.time)).subscribe(
       data => {},
       error  => this.snackBarService.openSnackBar('Our services have a problem please retry later', 'OK', 'error')
     );
@@ -85,8 +86,8 @@ export class PlaySoloService {
     }
     this.clearTheCurrentCard();
     if (this.gameIsFinished()) {
-      // on a gagné
       this.stopGameChronometer();
+      this.snackBarService.openSnackBar(`Felicitation vous avez gagnée en ${getTimeInHourMinuteSecondsFormat(this.time)}`, 'OK', 'Success');
     }
   }
 
@@ -113,4 +114,5 @@ export class PlaySoloService {
     this.cardsClicked.clear();
     this.listElementClicked.clear();
   }
+
 }

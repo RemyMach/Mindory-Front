@@ -6,6 +6,7 @@ import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {Card} from '../../../models/card.model';
 import {DefaultErrorService} from '../error/default-error.service';
 import {Shot} from '../../../models/shot.model';
+import {environment} from '../../../../environments/environment.dev';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ import {Shot} from '../../../models/shot.model';
 export class ShotCreateService {
 
   private httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json', Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYiLCJpYXQiOjE2MjUzODgzNDN9.yC5xO9XvyN6F7rUFmLckMfHHkNRA7kDLXfYQfTq6k-4' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json', Authorization: environment.BEARER_EXAMPLE as string })
   };
   private baseUrl = 'http://localhost:3000/shots';
 
