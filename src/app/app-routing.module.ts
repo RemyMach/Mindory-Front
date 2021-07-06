@@ -9,6 +9,8 @@ import {ForgetPasswordComponent} from './components/forget-password/forget-passw
 import {ResetPasswordComponent} from './components/reset-password/reset-password.component';
 import {PlaySoloComponent} from './components/play-solo/play-solo.component';
 import {PlayModeComponent} from './components/play-mode/play-mode.component';
+import {PlayDeckComponent} from './components/play-deck/play-deck.component';
+import {PlayDeckDuoComponent} from './components/play-deck-duo/play-deck-duo.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -18,7 +20,8 @@ const routes: Routes = [
   {path: 'reset/:token', component: ResetPasswordComponent},
   {path: 'play/decks/:deckTitle', component: PlaySoloComponent},
   {path: 'play/mode', component: PlayModeComponent},
-  {path: 'play/solo/deck', component: PlayModeComponent},
+  {path: 'play/solo/deck', component: PlayDeckComponent},
+  {path: 'play/solo/deck', component: PlayDeckDuoComponent},
   {path: 'play/decks/load/refresh', component: PageNotFoundComponent},
   {path: '**', component: PageNotFoundComponent}
 ];
