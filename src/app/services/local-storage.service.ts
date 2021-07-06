@@ -41,8 +41,9 @@ export class LocalStorageService {
     let paramGameModel: ParamGameModel;
     if (object !== null) {
       paramGameModel = new ParamGameModel(object);
-      paramGameModel.deckId = paramGameProps.deckId !== null ? paramGameProps.deckId : paramGameModel.deckId;
-      paramGameModel.mode = paramGameProps.mode !== null ? paramGameProps.mode : paramGameModel.mode;
+      paramGameModel.deckId = paramGameProps.deckId  ? paramGameProps.deckId : paramGameModel.deckId;
+      paramGameModel.mode = paramGameProps.mode  ? paramGameProps.mode : paramGameModel.mode;
+      paramGameModel.link = paramGameProps.link  ? paramGameProps.link : paramGameModel.link;
     }else {
       paramGameModel = new ParamGameModel(paramGameProps);
     }

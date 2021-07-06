@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router';
+import {LocalStorageService} from '../../services/local-storage.service';
 
 @Component({
   selector: 'app-play-duo-choice-link',
@@ -15,10 +17,25 @@ export class PlayDuoChoiceLinkComponent implements OnInit {
   joinIcon = 'directions_run';
   createURL = 'play/duo/create';
   joinURL = 'play/duo/join';
+  createTitle = 'create';
+  joinTitle = 'join';
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private localStorage: LocalStorageService
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  handleCardClicked(event): void {
+    if(event[0] === 'create') {
+      this.router.navigate(['/play/decks']);
+      this.localStorage.setParamGame({link: event[0], time: Date.now()});
+    }else if(event[0] === 'join') {
+      this.localStorage.setParamGame({link: event[0], time: Date.now()});
+      this.router.navigate(['play/join']);
+    }
   }
 
 }

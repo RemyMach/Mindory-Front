@@ -26,6 +26,10 @@ export class CardChoiceComponent implements OnInit {
   }
 
   public handleModeClick(): void {
-    this.cardClicked.emit([this.nameMode, this.urlPlay]);
+    if(this.nameMode === 'solo' || this.nameMode === 'duo') {
+      this.cardClicked.emit([this.nameMode, this.urlPlay]);
+    }else {
+      this.cardClicked.emit([this.nameMode, this.urlPlay]);
+    }
   }
 }

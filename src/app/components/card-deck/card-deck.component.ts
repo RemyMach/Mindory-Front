@@ -24,11 +24,15 @@ export class CardDeckComponent implements OnInit {
       if (this.localStorageService.paramGame.mode === 'solo') {
         this.router.navigate([`play/solo/decks/${this.deck.id}`]);
       }else if (this.localStorageService.paramGame.mode === 'duo') {
-        this.router.navigate(['play/duo/link']);
+        if (this.localStorageService.paramGame.link !== null && this.localStorageService.paramGame.link === 'create') {
+          this.router.navigate(['play/create']);
+        }else {
+          this.router.navigate(['play/duo/link']);
+        }
       }
     }else {
       this.localStorageService.setParamGame({deckId: this.deck.id, time: Date.now()});
-      this.router.navigate([`play/mode`]);
+      this.router.navigate([`play/solo/decks/${this.deck.id}`]);
     }
   }
 

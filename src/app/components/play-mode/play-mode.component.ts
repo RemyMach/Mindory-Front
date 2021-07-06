@@ -37,7 +37,7 @@ export class PlayModeComponent implements OnInit {
       }
     }else {
       this.localStorageService.setParamGame({mode: event[0] , time: Date.now()});
-      this.router.navigate([event[1] ]);
+      this.router.navigate([event[1]]);
     }
   }
 

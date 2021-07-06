@@ -12,6 +12,8 @@ import {PlayModeComponent} from './components/play-mode/play-mode.component';
 import {PlayDeckComponent} from './components/play-deck/play-deck.component';
 import {PlayDuoComponent} from './components/play-duo/play-duo.component';
 import {PlayDuoChoiceLinkComponent} from './components/play-duo-choice-link/play-duo-choice-link.component';
+import {JoinPartComponent} from './components/join-part/join-part.component';
+import {CreatePartComponent} from './components/create-part/create-part.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -25,6 +27,8 @@ const routes: Routes = [
   {path: 'play/duo/decks/:deckTitle', component: PlayDuoComponent},
   {path: 'play/duo/link', component: PlayDuoChoiceLinkComponent},
   {path: 'play/decks/load/refresh', component: PageNotFoundComponent},
+  {path: 'play/create', component: CreatePartComponent},
+  {path: 'play/join', component: JoinPartComponent},
   {path: '**', component: PageNotFoundComponent}
 ];
 
