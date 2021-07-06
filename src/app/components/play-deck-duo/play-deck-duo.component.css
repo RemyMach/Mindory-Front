@@ -14,9 +14,12 @@
   display: grid;
   grid-template-columns: repeat(3, 20%);
   grid-auto-rows: 55vh;
+  /*display: flex;*/
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  /*flex-direction: row;*/
+  /*height: 55vh;*/
 }
 
 @media (max-width: 1050px) {

@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import {ListDeckService} from '../../services/mindory-api/deck/list-deck.service';
 
 @Component({
-  selector: 'app-play-deck',
-  templateUrl: './play-deck.component.html',
-  styleUrls: ['./play-deck.component.css']
+  selector: 'app-play-deck-duo',
+  templateUrl: './play-deck-duo.component.html',
+  styleUrls: ['./play-deck-duo.component.css']
 })
-export class PlayDeckComponent implements OnInit {
+export class PlayDeckDuoComponent implements OnInit {
 
   constructor(
     public listDeckService: ListDeckService
