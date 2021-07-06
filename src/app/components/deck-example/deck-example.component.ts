@@ -23,11 +23,11 @@ export class DeckExampleComponent implements OnInit {
   public handleDeckClick(deckId: number): void {
     this.localStorageService.updateLocalStorageAttributes();
     console.log(this.localStorageService.paramGame);
-    if(this.localStorageService.paramGame !== null && Date.now() - this.localStorageService.paramGame.time >= 5000 && this.localStorageService.paramGame.mode) {
+    if (this.localStorageService.paramGame !== null && Date.now() - this.localStorageService.paramGame.time >= 5000 && this.localStorageService.paramGame.mode) {
       if (this.localStorageService.paramGame.mode === 'solo') {
         this.router.navigate([`play/solo/decks/${deckId}`]);
       }else if (this.localStorageService.paramGame.mode === 'duo') {
-        this.router.navigate([`play/duo/decks/${deckId}`]);
+        this.router.navigate(['play/duo/link']);
       }
     }else {
       this.localStorageService.setParamGame({deckId, time: Date.now()});

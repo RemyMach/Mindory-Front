@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Router} from '@angular/router';
 import {LocalStorageService} from '../../services/local-storage.service';
 
@@ -14,6 +14,8 @@ export class CardChoiceComponent implements OnInit {
   @Input() nameMode: 'solo' | 'duo';
   @Input() mode_icon: string;
   @Input() urlPlay: string;
+  @Input() TextClickable?: string;
+  @Output() cardClicked: EventEmitter<string[]> = new EventEmitter<string[]>();
   constructor(
     private router: Router,
     private localStorageService: LocalStorageService
@@ -24,13 +26,6 @@ export class CardChoiceComponent implements OnInit {
   }
 
   public handleModeClick(): void {
-    this.localStorageService.updateLocalStorageAttributes();
-    if(this.localStorageService.paramGame !== null && Date.now() - this.localStorageService.paramGame.time <= 5000 && this.localStorageService.paramGame.deckId) {
-      this.router.navigate([`play/${this.nameMode}/decks/${this.localStorageService.paramGame.deckId}`]);
-      this.router.navigate([`play/${this.nameMode}/decks/${this.localStorageService.paramGame.deckId}`]);
-    }else {
-      this.localStorageService.setParamGame({mode: this.nameMode, time: Date.now()});
-      this.router.navigate([this.urlPlay]);
-    }
+    this.cardClicked.emit([this.nameMode, this.urlPlay]);
   }
 }

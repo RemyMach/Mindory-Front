@@ -1,6 +1,6 @@
 <app-header></app-header>
 <div class="card-container">
-  <app-card-choice [text]="textFirstCard" [title]="titleFirstCard" [mode_icon]="modeSoloIcon" [urlPlay]="deckURL" [nameMode]="nameModeSolo"></app-card-choice>
-  <app-card-choice [text]="textSecondCard" [title]="titleSecondCard" [mode_icon]="modeTwoIcon" [urlPlay]="deckURL" [nameMode]="nameModeDuo"></app-card-choice>
+  <app-card-choice [text]="textFirstCard" [title]="titleFirstCard" [mode_icon]="modeSoloIcon" [urlPlay]="deckURL" [nameMode]="nameModeSolo" (cardClicked)="cardEventHandler($event)"></app-card-choice>
+  <app-card-choice [text]="textSecondCard" [title]="titleSecondCard" [mode_icon]="modeTwoIcon" [urlPlay]="createJoinURL" [nameMode]="nameModeDuo" (cardClicked)="cardEventHandler($event)"></app-card-choice>
 </div>
 <app-footer></app-footer>

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PlayDeckDuoComponent } from './play-deck-duo.component';
+import { PlayDuoChoiceLinkComponent } from './play-duo-choice-link.component';
 
-describe('PlayDeckDuoComponent', () => {
-  let component: PlayDeckDuoComponent;
-  let fixture: ComponentFixture<PlayDeckDuoComponent>;
+describe('PlayDuoChoiceLinkComponent', () => {
+  let component: PlayDuoChoiceLinkComponent;
+  let fixture: ComponentFixture<PlayDuoChoiceLinkComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PlayDeckDuoComponent ]
+      declarations: [ PlayDuoChoiceLinkComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PlayDeckDuoComponent);
+    fixture = TestBed.createComponent(PlayDuoChoiceLinkComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
