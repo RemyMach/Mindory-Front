@@ -11,6 +11,7 @@ import {PlaySoloComponent} from './components/play-solo/play-solo.component';
 import {PlayModeComponent} from './components/play-mode/play-mode.component';
 import {PlayDeckComponent} from './components/play-deck/play-deck.component';
 import {PlayDeckDuoComponent} from './components/play-deck-duo/play-deck-duo.component';
+import {PlayDuoComponent} from './components/play-duo/play-duo.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -18,10 +19,10 @@ const routes: Routes = [
   {path: 'subscribe', component: SubscribeComponent},
   {path: 'forget', component: ForgetPasswordComponent},
   {path: 'reset/:token', component: ResetPasswordComponent},
-  {path: 'play/decks/:deckTitle', component: PlaySoloComponent},
   {path: 'play/mode', component: PlayModeComponent},
-  {path: 'play/solo/deck', component: PlayDeckComponent},
-  {path: 'play/solo/deck', component: PlayDeckDuoComponent},
+  {path: 'play/decks', component: PlayDeckComponent},
+  {path: 'play/solo/decks/:deckTitle', component: PlaySoloComponent},
+  {path: 'play/duo/decks/:deckTitle', component: PlayDuoComponent},
   {path: 'play/decks/load/refresh', component: PageNotFoundComponent},
   {path: '**', component: PageNotFoundComponent}
 ];

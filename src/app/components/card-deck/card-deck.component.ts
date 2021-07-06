@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Deck} from '../../models/deck.model';
 import {Router} from '@angular/router';
+import {LocalStorageService} from '../../services/local-storage.service';
 
 @Component({
   selector: 'app-card-deck',
@@ -10,10 +11,25 @@ import {Router} from '@angular/router';
 export class CardDeckComponent implements OnInit {
   @Input() deck: Deck;
   constructor(
-    public router: Router
+    public router: Router,
+    private localStorageService: LocalStorageService
   ) { }
 
   ngOnInit(): void {
+  }
+
+  public handleDeckClick(): void {
+    this.localStorageService.updateLocalStorageAttributes();
+    if(this.localStorageService.paramGame !== null && Date.now() - this.localStorageService.paramGame.time >= 5000 && this.localStorageService.paramGame.mode) {
+      if (this.localStorageService.paramGame.mode === 'solo') {
+        this.router.navigate([`play/solo/decks/${this.deck.id}`]);
+      }else if (this.localStorageService.paramGame.mode === 'duo') {
+        this.router.navigate([`play/duo/decks/${this.deck.id}`]);
+      }
+    }else {
+      this.localStorageService.setParamGame({deckId: this.deck.id, time: Date.now()});
+      this.router.navigate([`play/mode`]);
+    }
   }
 
 }

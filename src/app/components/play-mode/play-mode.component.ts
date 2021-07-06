@@ -12,8 +12,10 @@ export class PlayModeComponent implements OnInit {
   titleSecondCard = '2 joueurs';
   modeSoloIcon = 'accessibility';
   modeTwoIcon = 'group';
-  modeSoloURL = '/play/solo/deck';
-  modeDuoURL = '/play/duo/deck';
+  deckURL = '/play/decks';
+  nameModeSolo = 'solo';
+  nameModeDuo = 'duo';
+
 
   constructor(
   ) { }

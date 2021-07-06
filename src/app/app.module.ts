@@ -44,6 +44,7 @@ import { CardChoiceComponent } from './components/card-choice/card-choice.compon
 import { PlayDeckComponent } from './components/play-deck/play-deck.component';
 import { CardDeckComponent } from './components/card-deck/card-deck.component';
 import { PlayDeckDuoComponent } from './components/play-deck-duo/play-deck-duo.component';
+import { PlayDuoComponent } from './components/play-duo/play-duo.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { PlayDeckDuoComponent } from './components/play-deck-duo/play-deck-duo.c
     PlayDeckComponent,
     CardDeckComponent,
     PlayDeckDuoComponent,
+    PlayDuoComponent,
   ],
   imports: [
     BrowserModule,

@@ -18,7 +18,7 @@ export class ListDeckService {
   ) { }
 
   private getDecks(offset: number, limit: number, minCard: number = 0): Observable<Deck[]> {
-    return this.http.get<Deck[]>(`http://localhost:3000/decks/all?offset=${offset}&limit=${limit}&minCard=${minCards}`).pipe(
+    return this.http.get<Deck[]>(`http://localhost:3000/decks/all?offset=${offset}&limit=${limit}&minCard=${minCard}`).pipe(
       tap(data => data),
       catchError((err: HttpErrorResponse) => {
         return this.defaultErrorService.handleError<Deck[]>(err, 'Incorrect request');

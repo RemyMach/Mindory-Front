@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ListDeckService} from '../../services/mindory-api/deck/list-deck.service';
+import {LocalStorageService} from '../../services/local-storage.service';
 
 @Component({
   selector: 'app-home',
@@ -9,9 +10,11 @@ import {ListDeckService} from '../../services/mindory-api/deck/list-deck.service
 export class HomeComponent implements OnInit {
 
   constructor(
+    private localStorageService: LocalStorageService
   ) { }
 
   ngOnInit(): void {
+    this.localStorageService.deleteParamGame();
   }
 
 }
