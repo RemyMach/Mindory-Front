@@ -1,0 +1,13 @@
+.create-part-content {
+  font-family: "Chewy", Arial,Helvetica, sans-serif;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  margin: auto;
+}
+
+.create-part-content {
+  font-size: 1.2em;
+}
