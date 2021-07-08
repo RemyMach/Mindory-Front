@@ -2,7 +2,7 @@
   <img (click)="router.navigate(['/'])" id="image_logo" src="../../../assets/images/logo_seul.png" alt="Logo">
   <span id="nav-bar-link-content">
     <a>À propos</a>
-    <a>Jouer</a>
+    <a (click)="router.navigate(['/play/mode'])">Jouer</a>
     <a>Admin</a>
 
     <span *ngIf="isConnect; else elseBlock">

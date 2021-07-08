@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, ViewChild} from '@angular/core';
 import {Card} from '../../models/card.model';
 import {Deck} from '../../models/deck.model';
 import {ListDeckCardsService} from '../../services/mindory-api/deck/list-deck-cards.service';
@@ -12,6 +12,7 @@ import {PlaySoloService} from '../../services/play/play-solo.service';
 export class CardComponent implements OnInit {
   @Input() card: Card;
   @ViewChild('elementClickable') elementClickable: ElementRef<HTMLDivElement>;
+
 
   constructor(
     public listDeckCardsService: ListDeckCardsService,

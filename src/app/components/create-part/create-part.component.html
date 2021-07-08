@@ -1,0 +1,28 @@
+<link rel="stylesheet" href="../login/login.component.css">
+<app-header></app-header>
+<div class="create-part-content">
+  <h1>Vous avez créer une partie</h1>
+  <p class="create-part-content">
+    Vous pouvez choisir d'envoyez l'URL ci-dessous à l'autre personne ou de générer un mot de passe qu'elle pourra rentré
+    elle même dans la partie rejoindre partie
+  </p>
+  <h2>URL</h2>
+  <a [routerLink]="'/play/duo/' + playDuoService.room.token ?  playDuoService.room.token: ''">http://localhost:4200/play/duo/{{playDuoService.room.token}}</a>
+  <h2>Mot de passe custom</h2>
+  {{playDuoService.room.keyword !== undefined ?  playDuoService.room.keyword: 'Vous n\'en avez pas pour l\'instant'}}
+  <h3>Formulaire de création de mot de passe Custom</h3>
+  <form id="form-keyword" [formGroup]="createKeyWordForm" (ngSubmit)="postKeyWordForm()">
+
+    <span id="inputs_form">
+        <mat-form-field class="example-form-field">
+          <mat-label>Mot de passe custom</mat-label>
+          <input matInput type="text" name="keyWord" id="keyWord" formControlName="keyWord" required>
+        </mat-form-field>
+    </span>
+
+    <span id="button-validation">
+        <button id="button_connect" [ngClass]="{'button_connect_active': !createKeyWordForm.invalid && !playDuoService.buttonCreatePart}" mat-raised-button [disabled]="createKeyWordForm.invalid || playDuoService.buttonCreatePart">Créer</button>
+    </span>
+
+  </form>
+</div>

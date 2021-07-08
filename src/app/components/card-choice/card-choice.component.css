@@ -88,6 +88,7 @@ a:hover::after {
   display: flex;
   flex-direction: row;
   align-content: baseline;
+  cursor: pointer;
 }
 
 .card-1 {

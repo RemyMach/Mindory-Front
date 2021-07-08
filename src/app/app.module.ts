@@ -42,6 +42,12 @@ import { GameBoardComponent } from './components/game-board/game-board.component
 import { PlayModeComponent } from './components/play-mode/play-mode.component';
 import { CardChoiceComponent } from './components/card-choice/card-choice.component';
 import { PlayDeckComponent } from './components/play-deck/play-deck.component';
+import { CardDeckComponent } from './components/card-deck/card-deck.component';
+import { PlayDuoComponent } from './components/play-duo/play-duo.component';
+import { PlayDuoChoiceLinkComponent } from './components/play-duo-choice-link/play-duo-choice-link.component';
+import { JoinPartComponent } from './components/join-part/join-part.component';
+import { CreatePartComponent } from './components/create-part/create-part.component';
+import { CardDuoComponent } from './components/card-duo/card-duo.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +72,12 @@ import { PlayDeckComponent } from './components/play-deck/play-deck.component';
     PlayModeComponent,
     CardChoiceComponent,
     PlayDeckComponent,
+    CardDeckComponent,
+    PlayDuoComponent,
+    PlayDuoChoiceLinkComponent,
+    JoinPartComponent,
+    CreatePartComponent,
+    CardDuoComponent,
   ],
   imports: [
     BrowserModule,
