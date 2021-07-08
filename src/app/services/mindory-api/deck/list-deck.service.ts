@@ -25,6 +25,15 @@ export class ListDeckService {
       })
     );
   }
+
+  public getDeckFromPartId(partId: number): Observable<Deck> {
+    return this.http.get<Deck>(`http://localhost:3000/decks/part/${partId}`).pipe(
+      tap(data => data),
+      catchError((err: HttpErrorResponse) => {
+        return this.defaultErrorService.handleError<Deck>(err, 'Incorrect request');
+      })
+    );
+  }
   public getDecksFromHome(minCard: number = 0): void{
     this.getDecks(0, 3, minCard).subscribe(
       value => this.decksHome = value,

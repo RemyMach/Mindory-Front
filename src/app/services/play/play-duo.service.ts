@@ -6,19 +6,23 @@ import {SnackbarService} from '../snackbar.service';
 import {Observable, of, Subscription} from 'rxjs';
 import {RoomValidService} from '../mindory-api/room/room-valid.service';
 import {map, take, tap} from 'rxjs/operators';
+import {Deck} from '../../models/deck.model';
+import {ListDeckService} from '../mindory-api/deck/list-deck.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlayDuoService {
   room: Room;
+  deck: Deck;
   buttonCreatePart = false;
 
   constructor(
     private roomCreateService: RoomCreateService,
     private roomListUserService: RoomListUserService,
     private snackBar: SnackbarService,
-    private roomValidService: RoomValidService
+    private roomValidService: RoomValidService,
+    public listDeckService: ListDeckService,
   ) { }
 
   public createRoom(deckId: number): void {
@@ -32,6 +36,13 @@ export class PlayDuoService {
   public getActualRoom(): void {
     this.roomListUserService.get().subscribe(
       data => this.room = data,
+      error => console.log(error)
+    );
+  }
+
+  public getActualDeck(): void {
+    this.listDeckService.getDeckFromPartId(this.room.id).subscribe(
+      data => this.deck = data,
       error => console.log(error)
     );
   }
@@ -50,12 +61,7 @@ export class PlayDuoService {
     return this.roomValidService.isValidToken(token).pipe(
       take(1),
       map(result => {
-        console.log(result);
-        if (result) {
-          return true;
-        }else{
-          return false;
-        }
+        return !!result;
       })
     );
   }
