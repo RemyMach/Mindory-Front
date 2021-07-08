@@ -5,7 +5,7 @@
     <a (click)="router.navigate(['/play/mode'])">Jouer</a>
 
     <span *ngIf="isAdmin;">
-      <a class="header-sign" (click)="router.navigate(['/admin/decks'])">Admin</a>
+      <a (click)="router.navigate(['/admin/decks'])">Admin</a>
     </span>
 
     <span *ngIf="isConnect; else elseBlock">
