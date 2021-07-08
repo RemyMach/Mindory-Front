@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRouteSnapshot, Router, RouterStateSnapshot} from '@angular/router';
-import {AuthenticateGuard} from '../../guard/authenticate.guard';
+import {Router} from '@angular/router';
 import {AuthService} from '../../services/auth.service';
 
 @Component({
@@ -22,5 +21,8 @@ export class HeaderComponent implements OnInit {
     return this.authService.isConnect();
   }
 
+  get isAdmin(): boolean {
+    return this.authService.isAdmin();
+  }
 
 }

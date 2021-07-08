@@ -3,7 +3,10 @@
   <span id="nav-bar-link-content">
     <a>À propos</a>
     <a (click)="router.navigate(['/play/mode'])">Jouer</a>
-    <a>Admin</a>
+
+    <span *ngIf="isAdmin;">
+      <a class="header-sign" (click)="router.navigate(['/admin/decks'])">Admin</a>
+    </span>
 
     <span *ngIf="isConnect; else elseBlock">
       <mat-icon class="account_icon" matSuffix>account_circle</mat-icon>
