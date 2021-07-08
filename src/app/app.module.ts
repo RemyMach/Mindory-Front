@@ -49,6 +49,7 @@ import { JoinPartComponent } from './components/join-part/join-part.component';
 import { CreatePartComponent } from './components/create-part/create-part.component';
 import { CardDuoComponent } from './components/card-duo/card-duo.component';
 import {AdminDecksListComponent} from './components/admin/decks-list/admin-decks-list.component';
+import {AdminDecksTabComponent} from './components/admin/deck-tab/admin-decks-tab.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +80,8 @@ import {AdminDecksListComponent} from './components/admin/decks-list/admin-decks
     JoinPartComponent,
     CreatePartComponent,
     CardDuoComponent,
-    AdminDecksListComponent
+    AdminDecksListComponent,
+    AdminDecksTabComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,19 @@
+#decks-tab-container{
+  display: flex;
+  justify-content: center;
+  margin: 3em;
+}
+
+table{
+  border-radius: 10px;
+}
+thead{
+  background-color: red;
+  color: white;
+}
+tbody{
+  border: black solid 1px;
+}
+th, td{
+  padding: 1em;
+}
