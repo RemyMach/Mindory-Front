@@ -7,7 +7,7 @@
     elle même dans la partie rejoindre partie
   </p>
   <h2>URL</h2>
-  <a [routerLink]="'/socket?token=' + playDuoService.room.token">http://localhost:4200/socket?token={{playDuoService.room.token}}</a>
+  <a [routerLink]="'/play/duo/' + playDuoService.room.token ?  playDuoService.room.token: ''">http://localhost:4200/play/duo/{{playDuoService.room.token}}</a>
   <h2>Mot de passe custom</h2>
   {{playDuoService.room.keyword !== undefined ?  playDuoService.room.keyword: 'Vous n\'en avez pas pour l\'instant'}}
   <h3>Formulaire de création de mot de passe Custom</h3>
