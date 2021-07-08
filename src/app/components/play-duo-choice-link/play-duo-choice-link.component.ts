@@ -29,7 +29,7 @@ export class PlayDuoChoiceLinkComponent implements OnInit {
   }
 
   handleCardClicked(event): void {
-    if(event[0] === 'create') {
+    if (event[0] === 'create') {
       this.router.navigate(['/play/decks']);
       this.localStorage.setParamGame({link: event[0], time: Date.now()});
     }else if(event[0] === 'join') {

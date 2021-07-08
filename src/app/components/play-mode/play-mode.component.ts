@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {LocalStorageService} from '../../services/local-storage.service';
+import {PlayDuoService} from '../../services/play/play-duo.service';
 
 @Component({
   selector: 'app-play-mode',
@@ -22,7 +23,8 @@ export class PlayModeComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private playDuoService: PlayDuoService
   ) { }
 
   ngOnInit(): void {

@@ -11,3 +11,30 @@
 .create-part-content {
   font-size: 1.2em;
 }
+
+#form-keyword {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#inputs_form {
+  margin-top: 15%;
+  margin-bottom: 15%;
+  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+
+#inputs_form mat-form-field {
+  margin-right: 10%;
+  margin-left: 10%;
+}
+
+#inputs_form mat-form-field mat-label{
+
+  font-family: "Chewy", Arial,Helvetica, sans-serif;
+}

@@ -47,6 +47,7 @@ import { PlayDuoComponent } from './components/play-duo/play-duo.component';
 import { PlayDuoChoiceLinkComponent } from './components/play-duo-choice-link/play-duo-choice-link.component';
 import { JoinPartComponent } from './components/join-part/join-part.component';
 import { CreatePartComponent } from './components/create-part/create-part.component';
+import { CardDuoComponent } from './components/card-duo/card-duo.component';
 
 @NgModule({
   declarations: [
@@ -76,6 +77,7 @@ import { CreatePartComponent } from './components/create-part/create-part.compon
     PlayDuoChoiceLinkComponent,
     JoinPartComponent,
     CreatePartComponent,
+    CardDuoComponent,
   ],
   imports: [
     BrowserModule,

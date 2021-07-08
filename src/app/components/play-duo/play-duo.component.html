@@ -1,1 +1,7 @@
-<p>play-duo works!</p>
+<app-header></app-header>
+<app-banner-play [deck]="listDeckCardsService.deck"></app-banner-play>
+<app-game-board [cards]="listDeckCardsService.deck?.Cards"></app-game-board>
+<div id="solo-content-button">
+  <button mat-raised-button id="button_restart" (click)="refreshPage()">Recommencer</button>
+</div>
+<app-footer></app-footer>

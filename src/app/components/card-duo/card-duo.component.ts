@@ -1,15 +1,14 @@
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {Card} from '../../models/card.model';
-import {Deck} from '../../models/deck.model';
 import {ListDeckCardsService} from '../../services/mindory-api/deck/list-deck-cards.service';
 import {PlaySoloService} from '../../services/play/play-solo.service';
 
 @Component({
-  selector: 'app-card',
-  templateUrl: './card.component.html',
-  styleUrls: ['./card.component.css']
+  selector: 'app-card-duo',
+  templateUrl: './card-duo.component.html',
+  styleUrls: ['./card-duo.component.css']
 })
-export class CardComponent implements OnInit {
+export class CardDuoComponent implements OnInit {
   @Input() card: Card;
   @ViewChild('elementClickable') elementClickable: ElementRef<HTMLDivElement>;
 
@@ -35,4 +34,5 @@ export class CardComponent implements OnInit {
     this.renderer.setStyle(element,  'cursor', 'default');
     this.renderer.addClass(element,  'flip');
   }
+
 }
