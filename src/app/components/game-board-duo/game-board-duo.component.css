@@ -1,0 +1,24 @@
+.game-board-content {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 5px;
+  grid-auto-rows: minmax(20vh, 30vh);
+  width: 60%;
+  margin: auto;
+}
+
+.game-card-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /*perspective: 1000px;*/
+}
+
+
+app-card-duo {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}

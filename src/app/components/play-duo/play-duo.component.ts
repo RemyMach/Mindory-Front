@@ -17,13 +17,12 @@ export class PlayDuoComponent implements OnInit {
 
     public router: Router,
     public route: ActivatedRoute,
-    private playDuoService: PlayDuoService,
+    public playDuoService: PlayDuoService,
     @Inject(DOCUMENT) private document: Document
   ) { }
 
   ngOnInit(): void {
-
-    this.playDuoService.getActualDeck();
+    this.playDuoService.getActualRoom();
     this.currentUrl = this.router.url;
   }
 

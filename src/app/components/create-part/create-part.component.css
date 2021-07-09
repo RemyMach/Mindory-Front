@@ -38,3 +38,8 @@
 
   font-family: "Chewy", Arial,Helvetica, sans-serif;
 }
+
+.link-create {
+  cursor: pointer;
+  color: blue;
+}

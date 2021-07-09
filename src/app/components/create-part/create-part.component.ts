@@ -15,7 +15,8 @@ export class CreatePartComponent implements OnInit {
   constructor(
     public playDuoService: PlayDuoService,
     private formBuilder: FormBuilder,
-    private snackBar: SnackbarService
+    private snackBar: SnackbarService,
+    public router: Router
   ) { }
 
   createKeyWordForm: FormGroup = this.formBuilder.group({

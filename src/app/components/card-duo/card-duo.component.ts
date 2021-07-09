@@ -2,6 +2,7 @@ import {Component, ElementRef, Input, OnInit, Renderer2, ViewChild} from '@angul
 import {Card} from '../../models/card.model';
 import {ListDeckCardsService} from '../../services/mindory-api/deck/list-deck-cards.service';
 import {PlaySoloService} from '../../services/play/play-solo.service';
+import {PlayDuoService} from '../../services/play/play-duo.service';
 
 @Component({
   selector: 'app-card-duo',
@@ -14,8 +15,7 @@ export class CardDuoComponent implements OnInit {
 
 
   constructor(
-    public listDeckCardsService: ListDeckCardsService,
-    public playSoloService: PlaySoloService,
+    public playDuoService: PlayDuoService,
     private elementRef: ElementRef,
     private renderer: Renderer2,
   ) { }
@@ -23,7 +23,7 @@ export class CardDuoComponent implements OnInit {
   ngOnInit(): void {
   }
   public async handleClick(): Promise<void> {
-    if (this.playSoloService.gameStart === false) {
+    /*if (this.playSoloService.gameStart === false) {
       this.playSoloService.gameStart = true;
       this.playSoloService.startGameChronometer();
       this.playSoloService.createPart();
@@ -32,7 +32,7 @@ export class CardDuoComponent implements OnInit {
 
     await this.playSoloService.clickOnCard(this.card, element);
     this.renderer.setStyle(element,  'cursor', 'default');
-    this.renderer.addClass(element,  'flip');
+    this.renderer.addClass(element,  'flip');*/
   }
 
 }
