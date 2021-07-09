@@ -2,18 +2,18 @@
   display: flex;
   justify-content: center;
   margin: 3em;
+  font-family: "Chewy", Arial,Helvetica, sans-serif;
 }
 
-table{
-  border-radius: 10px;
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  padding: 10px;
 }
-thead{
-  background-color: red;
+.grid-container > span {
+  padding: 10px;
+}
+.grid-header {
   color: white;
-}
-tbody{
-  border: black solid 1px;
-}
-th, td{
-  padding: 1em;
+  background-color: red;
 }
