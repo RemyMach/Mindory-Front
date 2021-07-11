@@ -1,0 +1,9 @@
+
+  <div class="card card-1">
+    <div class="card__icon"><mat-icon matSuffix>{{mode_icon}}</mat-icon></div>
+    <div class="card-content">
+      <h1 class="card__title">{{title}}</h1>
+      <h2 class="card__text">{{text}}</h2>
+    </div>
+    <p class="card__apply"><a (click)="handleModeClick()" id="link-content">{{TextClickable !== undefined ? TextClickable: 'Jouer'}}<mat-icon matSuffix>arrow_forward</mat-icon></a></p>
+  </div>

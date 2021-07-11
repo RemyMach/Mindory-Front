@@ -16,16 +16,16 @@ export class ListDeckCardsService {
     private defaultErrorService: DefaultErrorService,
   ) { }
 
-  private getDeckWithCards(): Observable<Deck> {
-    return this.http.get<Deck>(`http://localhost:3000/decks/play/1`).pipe(
+  private getDeckWithCards(idDeck: number): Observable<Deck> {
+    return this.http.get<Deck>(`http://localhost:3000/decks/play/${idDeck}`).pipe(
       tap(data => data),
       catchError((err: HttpErrorResponse) => {
         return this.defaultErrorService.handleError<Deck>(err, 'Incorrect request');
       })
     );
   }
-  public getDeck(): void{
-    this.getDeckWithCards().subscribe(
+  public getDeck(idDeck: number): void{
+    this.getDeckWithCards(idDeck).subscribe(
       value =>  this.deck = value,
       err => console.log(err),
       () => console.log('on a finit ici')

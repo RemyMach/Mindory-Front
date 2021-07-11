@@ -1,0 +1,6 @@
+<app-header></app-header>
+<div class="card-container">
+  <app-card-choice [text]="textFirstCard" [title]="titleFirstCard" [mode_icon]="createIcon" [urlPlay]="createURL" [nameMode]="createTitle" [TextClickable]="'Créer'" (cardClicked)="handleCardClicked($event)" ></app-card-choice>
+  <app-card-choice [text]="textSecondCard" [title]="titleSecondCard" [mode_icon]="joinIcon" [urlPlay]="joinURL" [nameMode]="joinTitle" [TextClickable]="'Rejoindre'" (cardClicked)="handleCardClicked($event)" ></app-card-choice>
+</div>
+<app-footer></app-footer>

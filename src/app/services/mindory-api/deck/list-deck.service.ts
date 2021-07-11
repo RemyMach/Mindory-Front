@@ -15,16 +15,16 @@ export class ListDeckService {
     private defaultErrorService: DefaultErrorService,
   ) { }
 
-  private getDecks(offset: number, limit: number): Observable<Deck[]> {
-    return this.http.get<Deck[]>(`http://localhost:3000/decks/all?offset=${offset}&limit=${limit}`).pipe(
+  private getDecks(offset: number, limit: number, minCard: number = 0): Observable<Deck[]> {
+    return this.http.get<Deck[]>(`http://localhost:3000/decks/all?offset=${offset}&limit=${limit}&minCard=${minCard}`).pipe(
       tap(data => data),
       catchError((err: HttpErrorResponse) => {
         return this.defaultErrorService.handleError<Deck[]>(err, 'Incorrect request');
       })
     );
   }
-  public getDecksFromHome(): void{
-    this.getDecks(0, 3).subscribe(
+  public getDecksFromHome(minCard: number = 0): void{
+    this.getDecks(0, 3, minCard).subscribe(
       value => this.decksHome = value,
           err => console.log(err),
       () => console.log('on a finit ici')

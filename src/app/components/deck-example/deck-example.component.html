@@ -1,8 +1,8 @@
-<h1 id="deck-example-title">Exemple de Decks</h1>
+<h1 id="deck-example-title">Jouer en mode Solo</h1>
 <div id="deck-example-content">
 
   <div class="deck-example-logo-content" *ngFor="let deck of listDeckService.decksHome">
     <img class="deck-example-logo" src="{{ 'http://localhost:3000/' + deck.image}}">
-    <button (click)="router.navigate(['/play/decks/'+deck.id])" class="deck-example-button" mat-raised-button color="primary">Jouer au Deck {{ deck.title}}</button>
+    <button (click)="handleDeckClick(deck.id)" class="deck-example-button" mat-raised-button color="primary">Jouer au Deck {{ deck.title}}</button>
   </div>
 </div>

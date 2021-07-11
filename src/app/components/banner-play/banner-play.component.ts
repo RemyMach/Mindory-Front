@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {Deck} from '../../models/deck.model';
 import {interval} from 'rxjs';
+import {PlaySoloService} from '../../services/play/play-solo.service';
 
 @Component({
   selector: 'app-banner-play',
@@ -10,19 +11,14 @@ import {interval} from 'rxjs';
 })
 export class BannerPlayComponent implements OnInit {
   @Input() deck: Deck | undefined;
-  @Input() startGame: boolean;
   public lastRecord: Date;
-  public time: Date;
+  public time: Date = new Date(0);
   constructor(
     private router: Router,
+    public playSoloService: PlaySoloService
   ) { }
 
-  ngOnInit(): void {
-    interval(1000).subscribe((d) => {
-      this.time = new Date(d);
-      this.time.setSeconds(d);
-    });
-  }
+  ngOnInit(): void {}
   public handleDeckClick(): void {
     this.router.navigate(['play/decks']);
   }

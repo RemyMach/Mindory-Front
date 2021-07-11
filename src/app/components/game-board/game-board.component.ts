@@ -9,10 +9,7 @@ import {PlaySoloService} from '../../services/play/play-solo.service';
 })
 export class GameBoardComponent implements OnInit {
   @Input() cards: Card[];
-  constructor(
-    public playSoloService: PlaySoloService,
-    private renderer: Renderer2
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
   }
