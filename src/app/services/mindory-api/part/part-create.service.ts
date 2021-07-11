@@ -1,10 +1,8 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {SessionModel} from '../../../models/session.model';
 import {catchError, tap} from 'rxjs/operators';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {Card} from '../../../models/card.model';
-import {LocalStorageService} from '../../local-storage.service';
 import {DefaultErrorService} from '../error/default-error.service';
 import {Part} from '../../../models/part.model';
 import {environment} from '../../../../environments/environment.dev';

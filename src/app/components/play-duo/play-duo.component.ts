@@ -1,9 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ListDeckCardsService} from '../../services/mindory-api/deck/list-deck-cards.service';
 import {DOCUMENT} from '@angular/common';
 import {PlayDuoService} from '../../services/play/play-duo.service';
-import {ListDeckService} from '../../services/mindory-api/deck/list-deck.service';
 
 @Component({
   selector: 'app-play-duo',

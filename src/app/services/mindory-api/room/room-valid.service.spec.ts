@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { RoomValidService } from './room-valid.service';
+import {RoomValidService} from './room-valid.service';
 
 describe('RoomValidService', () => {
   let service: RoomValidService;

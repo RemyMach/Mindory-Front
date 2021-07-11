@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { PlayDeckComponent } from './play-deck.component';
+import {PlayDeckComponent} from './play-deck.component';
 
 describe('PlayDeckComponent', () => {
   let component: PlayDeckComponent;
