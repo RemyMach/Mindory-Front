@@ -13,7 +13,7 @@
     <span *ngFor="let deck of listDeckService.decks">W.I.P.</span>
 
     <span class="grid-header"></span>
-    <span *ngFor="let deck of listDeckService.decks"><a style="text-decoration: underline">Éditer</a></span>
+    <span *ngFor="let deck of listDeckService.decks"><a (click)="handleDeckClick(deck.id)" style="text-decoration: underline">Éditer</a></span>
 
     <span class="grid-header"><a style="text-decoration: underline">Ajouter un deck</a></span>
     <span *ngFor="let deck of listDeckService.decks"><a style="color: red; text-decoration: underline">Supprimer</a></span>

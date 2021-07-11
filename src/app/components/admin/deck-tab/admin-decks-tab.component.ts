@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ListDeckService} from '../../../services/mindory-api/deck/list-deck.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-admin-decks-tab',
@@ -8,10 +9,14 @@ import {ListDeckService} from '../../../services/mindory-api/deck/list-deck.serv
 })
 export class AdminDecksTabComponent implements OnInit {
   constructor(
-    public listDeckService: ListDeckService
+    public listDeckService: ListDeckService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
     this.listDeckService.getAllDecks(0, 24);
+  }
+  public handleDeckClick(deckId: number): void {
+    this.router.navigate(['admin/decks/' + deckId]);
   }
 }
