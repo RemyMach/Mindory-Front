@@ -1,0 +1,19 @@
+#decks-tab-container{
+  display: flex;
+  justify-content: center;
+  margin: 3em;
+  font-family: "Chewy", Arial,Helvetica, sans-serif;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  padding: 10px;
+}
+.grid-container > span {
+  padding: 10px;
+}
+.grid-header {
+  color: white;
+  background-color: red;
+}

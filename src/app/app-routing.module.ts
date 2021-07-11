@@ -14,6 +14,7 @@ import {PlayDuoChoiceLinkComponent} from './components/play-duo-choice-link/play
 import {JoinPartComponent} from './components/join-part/join-part.component';
 import {CreatePartComponent} from './components/create-part/create-part.component';
 import {TokenValidGuard} from './guard/token-valid.guard';
+import {AdminDecksListComponent} from './components/admin/decks-list/admin-decks-list.component';
 import {AboutComponent} from './components/about/about.component';
 
 const routes: Routes = [
@@ -31,6 +32,7 @@ const routes: Routes = [
   {path: 'play/decks/load/refresh', component: PageNotFoundComponent},
   {path: 'play/create', component: CreatePartComponent},
   {path: 'play/join', component: JoinPartComponent},
+  {path: 'admin/decks', component: AdminDecksListComponent},
   {path: '**', component: PageNotFoundComponent}
 ];
 
