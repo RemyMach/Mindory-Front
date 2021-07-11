@@ -17,10 +17,12 @@ import {TokenValidGuard} from './guard/token-valid.guard';
 import {AdminDecksListComponent} from './components/admin/decks-list/admin-decks-list.component';
 import {AboutComponent} from './components/about/about.component';
 import {LegalNoticeComponent} from './components/legal-notice/legal-notice.component';
+import {DataComponent} from './components/data/data.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'about', component: AboutComponent},
+  {path: 'data', component: DataComponent},
   {path: 'legal', component: LegalNoticeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'subscribe', component: SubscribeComponent},
