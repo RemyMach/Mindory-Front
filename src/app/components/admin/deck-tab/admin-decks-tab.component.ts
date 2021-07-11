@@ -19,4 +19,7 @@ export class AdminDecksTabComponent implements OnInit {
   public handleDeckClick(deckId: number): void {
     this.router.navigate(['admin/decks/' + deckId]);
   }
+  public deleteDeck(deckId: number): void {
+    this.listDeckService.deleteDeck(deckId);
+  }
 }
