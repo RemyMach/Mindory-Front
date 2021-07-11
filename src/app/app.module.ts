@@ -50,6 +50,7 @@ import {CardDuoComponent} from './components/card-duo/card-duo.component';
 import {AboutComponent} from './components/about/about.component';
 import {AdminDecksListComponent} from './components/admin/decks-list/admin-decks-list.component';
 import {AdminDecksTabComponent} from './components/admin/deck-tab/admin-decks-tab.component';
+import { LegalNoticeComponent } from './components/legal-notice/legal-notice.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +83,8 @@ import {AdminDecksTabComponent} from './components/admin/deck-tab/admin-decks-ta
     CardDuoComponent,
     AboutComponent,
     AdminDecksListComponent,
-    AdminDecksTabComponent
+    AdminDecksTabComponent,
+    LegalNoticeComponent
   ],
   imports: [
     BrowserModule,
