@@ -16,14 +16,12 @@ export class AuthService {
     return this.localStorageService.user !== null && this.localStorageService.session !== null;
   }
   public isAdmin(): boolean {
-    this.localStorageService.updateLocalStorageAttributes();
-    const token = this.localStorageService.session.token;
-    if (token === null){
+    if (this.isConnect() === false){
       return false;
     }
-    return true;
     // TODO: Make getRole not create a infinite loop of the dead
     // this.roleService.getRole(token);
     // return this.roleService.userRole === 'admin';
+    return true;
   }
 }
