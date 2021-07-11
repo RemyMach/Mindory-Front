@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { io } from 'socket.io-client/dist/socket.io';
-import { Observable, Subscriber } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {io} from 'socket.io-client/dist/socket.io';
+import {Observable} from 'rxjs';
 import {Card} from '../../models/card.model';
 
 @Injectable({

@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { PlayModeComponent } from './play-mode.component';
+import {PlayModeComponent} from './play-mode.component';
 
 describe('PlayModeComponent', () => {
   let component: PlayModeComponent;

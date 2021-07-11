@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {RoomCreateService} from '../mindory-api/room/room-create.service';
 import {Room} from '../../models/room.model';
 import {RoomListUserService} from '../mindory-api/room/room-list-user.service';
 import {SnackbarService} from '../snackbar.service';
-import {Observable, of, Subscription} from 'rxjs';
+import {Observable} from 'rxjs';
 import {RoomValidService} from '../mindory-api/room/room-valid.service';
-import {map, take, tap} from 'rxjs/operators';
+import {map, take} from 'rxjs/operators';
 import {Deck} from '../../models/deck.model';
 import {ListDeckService} from '../mindory-api/deck/list-deck.service';
 

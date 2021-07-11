@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { TokenValidGuard } from './token-valid.guard';
+import {TokenValidGuard} from './token-valid.guard';
 
 describe('TokenValidGuard', () => {
   let guard: TokenValidGuard;
