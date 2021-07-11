@@ -10,6 +10,7 @@ import {DefaultErrorService} from '../error/default-error.service';
 })
 export class ListDeckService {
   public decksHome: Deck[];
+  public decks: Deck[];
   constructor(
     private http: HttpClient,
     private defaultErrorService: DefaultErrorService,
@@ -39,5 +40,11 @@ export class ListDeckService {
       () => console.log('on a finit ici')
     );
   }
-
+  public getAllDecks(offset: number, limit: number): void {
+    this.getDecks(offset, limit).subscribe(
+      value => this.decks = value,
+      err => console.log(err),
+      () => console.log('on a finit ici')
+    );
+  }
 }

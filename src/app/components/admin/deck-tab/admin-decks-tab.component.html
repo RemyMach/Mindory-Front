@@ -1,23 +1,21 @@
 <div id="decks-tab-container">
-  <div class="grid-container">
+  <div class="grid-container" [ngStyle]="{'grid-template-rows': 'repeat(' + (listDeckService.decks.length + 1) + ', 1fr)'}">
     <span class="grid-header">ID</span>
-    <span class="grid-header">Nom</span>
-    <span class="grid-header">Créé par</span>
-    <span class="grid-header">Nombre de cartes</span>
-    <span class="grid-header"></span>
-    <span class="grid-header"><a style="text-decoration: underline">Ajouter un deck</a></span>
+    <span *ngFor="let deck of listDeckService.decks">{{deck.id}}</span>
 
-    <span>1</span>
-    <span>Python</span>
-    <span>W.I.P.</span>
-    <span>30</span>
-    <span><a style="text-decoration: underline">Voir / Modifier le deck</a></span>
-    <span><a style="color: red; text-decoration: underline">Supprimer</a></span>
-    <span>1</span>
-    <span>Python</span>
-    <span>W.I.P.</span>
-    <span>30</span>
-    <span><a style="text-decoration: underline">Voir / Modifier le deck</a></span>
-    <span><a style="color: red; text-decoration: underline">Supprimer</a></span>
+    <span class="grid-header">Nom</span>
+    <span *ngFor="let deck of listDeckService.decks">{{deck.title}}</span>
+
+    <span class="grid-header">Créé par</span>
+    <span *ngFor="let deck of listDeckService.decks">W.I.P.</span>
+
+    <span class="grid-header">Nombre de cartes</span>
+    <span *ngFor="let deck of listDeckService.decks">W.I.P.</span>
+
+    <span class="grid-header"></span>
+    <span *ngFor="let deck of listDeckService.decks"><a style="text-decoration: underline">Éditer</a></span>
+
+    <span class="grid-header"><a style="text-decoration: underline">Ajouter un deck</a></span>
+    <span *ngFor="let deck of listDeckService.decks"><a style="color: red; text-decoration: underline">Supprimer</a></span>
   </div>
 </div>
