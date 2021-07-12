@@ -21,5 +21,8 @@ export class HeaderComponent implements OnInit {
     return this.authService.isConnect();
   }
 
+  get isAdmin(): boolean {
+    return this.authService.isAdmin();
+  }
 
 }

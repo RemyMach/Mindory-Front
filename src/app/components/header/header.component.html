@@ -1,16 +1,19 @@
 <span id="header_content">
-  <img (click)="router.navigate(['/'])" id="image_logo" src="../../../assets/images/logo_seul.png">
+  <img (click)="router.navigate(['/'])" id="image_logo" src="../../../assets/images/logo_seul.png" alt="Logo">
   <span id="nav-bar-link-content">
     <a (click)="router.navigate(['/about'])">À propos</a>
     <a (click)="router.navigate(['/play/mode'])">Jouer</a>
-    <a>Admin</a>
+
+    <span *ngIf="isAdmin;">
+      <a (click)="router.navigate(['/admin/decks'])">Admin</a>
+    </span>
 
     <span *ngIf="isConnect; else elseBlock">
       <mat-icon class="account_icon" matSuffix>account_circle</mat-icon>
       <mat-icon class="account_icon" matSuffix>expand_more</mat-icon>
     </span>
     <ng-template #elseBlock>
-      <a class="header-sign" (click)="router.navigate(['/login'])">Connection</a>
+      <a class="header-sign" (click)="router.navigate(['/login'])">Connexion</a>
       <a class="header-sign" (click)="router.navigate(['/subscribe'])">Inscription</a>
     </ng-template>
   </span>

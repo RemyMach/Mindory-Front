@@ -1,0 +1,24 @@
+#decks-tab-container{
+  display: flex;
+  justify-content: center;
+  margin: 3em;
+  font-family: "Chewy", Arial,Helvetica, sans-serif;
+}
+
+.grid-container {
+  min-width: 50%;
+  display: grid;
+  padding: 10px;
+  grid-auto-flow: column;
+}
+.grid-container > span {
+  padding: 10px;
+  text-align: center;
+}
+.grid-header {
+  color: white;
+  background-color: red;
+}
+a {
+  cursor: pointer;
+}

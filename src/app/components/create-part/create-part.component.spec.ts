@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { CreatePartComponent } from './create-part.component';
+import {CreatePartComponent} from './create-part.component';
 
 describe('CreatePartComponent', () => {
   let component: CreatePartComponent;

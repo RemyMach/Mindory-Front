@@ -2,7 +2,6 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Deck} from '../../models/deck.model';
 import {Router} from '@angular/router';
 import {LocalStorageService} from '../../services/local-storage.service';
-import {RoomCreateService} from '../../services/mindory-api/room/room-create.service';
 import {PlayDuoService} from '../../services/play/play-duo.service';
 
 @Component({

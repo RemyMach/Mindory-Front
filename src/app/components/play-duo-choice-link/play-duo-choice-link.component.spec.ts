@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { PlayDuoChoiceLinkComponent } from './play-duo-choice-link.component';
+import {PlayDuoChoiceLinkComponent} from './play-duo-choice-link.component';
 
 describe('PlayDuoChoiceLinkComponent', () => {
   let component: PlayDuoChoiceLinkComponent;

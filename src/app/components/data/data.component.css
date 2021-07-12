@@ -1,0 +1,16 @@
+#data-content {
+  font-family: "Chewy", Arial,Helvetica, sans-serif;
+  color: #47525E;
+  margin: 0 10vw;
+}
+
+.data-title {
+  color: #000000;
+  text-align: center;
+  margin: 32px;
+}
+
+.data-sub-title {
+  color: #000000;
+  text-align: center;
+}

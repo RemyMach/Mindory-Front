@@ -1,8 +1,6 @@
-import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
-import {Observable, of} from 'rxjs';
-import {RoomValidService} from '../services/mindory-api/room/room-valid.service';
-import {error} from '@angular/compiler/src/util';
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree} from '@angular/router';
+import {Observable} from 'rxjs';
 import {PlayDuoService} from '../services/play/play-duo.service';
 
 @Injectable({

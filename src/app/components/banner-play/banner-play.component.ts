@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {Deck} from '../../models/deck.model';
-import {interval} from 'rxjs';
 import {PlaySoloService} from '../../services/play/play-solo.service';
 
 @Component({

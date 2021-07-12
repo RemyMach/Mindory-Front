@@ -133,6 +133,7 @@ export class PlayDuoService {
   }
 
   public createRoom(deckId: number): void {
+    console.log('on passe ici');
     this.roomCreateService.create(deckId).subscribe(
       data => this.room = data,
       error => console.log(error)
