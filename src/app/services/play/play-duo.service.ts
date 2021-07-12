@@ -9,6 +9,9 @@ import {map, take, tap} from 'rxjs/operators';
 import {Deck} from '../../models/deck.model';
 import {ListDeckService} from '../mindory-api/deck/list-deck.service';
 import {Part} from '../../models/part.model';
+import {SocketService} from '../socket/socket.service';
+import {environment} from '../../../environments/environment.dev';
+import {log} from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +21,7 @@ export class PlayDuoService {
   deck: Deck;
   part: Part;
   buttonCreatePart = false;
+  idUserWhoPlay: string;
 
   constructor(
     private roomCreateService: RoomCreateService,
@@ -25,17 +29,28 @@ export class PlayDuoService {
     private snackBar: SnackbarService,
     private roomValidService: RoomValidService,
     public listDeckService: ListDeckService,
+    private socketService: SocketService
   ) { }
 
   public createRoom(deckId: number): void {
-    console.log('on passe ici');
     this.roomCreateService.create(deckId).subscribe(
       data => this.room = data,
       error => console.log(error)
     );
   }
 
-  public getActualRoom(): void {
+  public getActualRoomAndInitiateStartOfTheGame(): void {
+    this.roomListUserService.get().subscribe(
+      data => {
+        this.room = data;
+        this.getActualDeck();
+        this.initiateTheStartOfTheGame();
+      },
+      error => console.log(error)
+    );
+  }
+
+  public getActualRoomWithoutSocket(): void {
     this.roomListUserService.get().subscribe(
       data => {
         this.room = data;
@@ -46,7 +61,6 @@ export class PlayDuoService {
   }
 
   public getActualDeck(): void {
-    console.log(this.room);
     this.listDeckService.getDeckFromPartId(this.room.part.id).subscribe(
       data => {
         this.deck = data;
@@ -64,5 +78,21 @@ export class PlayDuoService {
         this.buttonCreatePart = false;
       }
     );
+  }
+
+  public getIdFromTheFirstPlayer(): void {
+    this.socketService.listenMessage('userWhoPlayInFirst').subscribe(
+      data => {
+        this.idUserWhoPlay = data;
+        console.log(data);
+      },
+      err => console.log(err)
+    );
+  }
+
+  private initiateTheStartOfTheGame(): void {
+    const tokenBearerSplit = environment.BEARER_EXAMPLE.split(' ');
+    this.socketService.connect(this.room.id, tokenBearerSplit[1]);
+    this.getIdFromTheFirstPlayer();
   }
 }

@@ -43,7 +43,7 @@ export class RoomValidService {
             return true;
           }
           else {
-            this.route.parseUrl('/');
+            this.route.navigate(['/']);
             return false;
           }
         }),

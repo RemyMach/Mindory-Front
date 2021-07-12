@@ -9,9 +9,17 @@ import {Card} from '../../models/card.model';
 export class SocketService {
 
   socket: any;
-  readonly uri: string = 'http://localhost:3000/socket';
+  readonly uri: string = 'http://localhost:3000';
   constructor() {
-    this.socket = io(this.uri);
+  }
+
+  disconnect(): void {
+    this.socket.emit('disconnectCustom');
+  }
+  connect(roomId: number, sessionToken?: string): void {
+    this.socket = io(this.uri, { transports: ['websocket', 'polling', 'flashsocket'], query: {
+        room: roomId, userToken: sessionToken
+      }});
   }
 
   listen(eventName: string): Observable<Card>{
@@ -22,7 +30,15 @@ export class SocketService {
     });
   }
 
-  emit(eventName: string, data: any) {
+  listenMessage(eventName: string): Observable<string>{
+    return new Observable((subscriber) => {
+      this.socket.on(eventName, (data) => {
+        subscriber.next(data);
+      });
+    });
+  }
+
+  emit(eventName: string, data: any): void {
     console.log(data);
     this.socket.emit(eventName, data);
   }

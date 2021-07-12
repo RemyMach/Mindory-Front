@@ -24,7 +24,7 @@ export class CreatePartComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.playDuoService.getActualRoom();
+    this.playDuoService.getActualRoomWithoutSocket();
   }
 
 
@@ -34,7 +34,7 @@ export class CreatePartComponent implements OnInit {
     }
     this.playDuoService.buttonCreatePart = true;
     this.playDuoService.createKeywordForARoom(this.createKeyWordForm.get('keyWord').value);
-    this.playDuoService.getActualRoom();
+    this.playDuoService.getActualRoomWithoutSocket();
   }
 
 }
