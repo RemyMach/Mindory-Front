@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { io } from 'socket.io-client/dist/socket.io';
+import { io, Socket } from 'socket.io-client/dist/socket.io';
 import { Observable, Subscriber } from 'rxjs';
 import {Card} from '../../models/card.model';
 
@@ -8,7 +8,7 @@ import {Card} from '../../models/card.model';
 })
 export class SocketService {
 
-  socket: any;
+  socket: Socket;
   readonly uri: string = 'http://localhost:3000';
   constructor() {
   }
@@ -42,4 +42,5 @@ export class SocketService {
     console.log(data);
     this.socket.emit(eventName, data);
   }
+
 }

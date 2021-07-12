@@ -49,6 +49,7 @@ import { JoinPartComponent } from './components/join-part/join-part.component';
 import { CreatePartComponent } from './components/create-part/create-part.component';
 import { CardDuoComponent } from './components/card-duo/card-duo.component';
 import { GameBoardDuoComponent } from './components/game-board-duo/game-board-duo.component';
+import { BannerPlayDuoComponent } from './components/banner-play-duo/banner-play-duo.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +81,7 @@ import { GameBoardDuoComponent } from './components/game-board-duo/game-board-du
     CreatePartComponent,
     CardDuoComponent,
     GameBoardDuoComponent,
+    BannerPlayDuoComponent,
   ],
   imports: [
     BrowserModule,

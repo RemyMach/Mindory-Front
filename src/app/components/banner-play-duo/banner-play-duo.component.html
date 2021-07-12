@@ -1,0 +1,25 @@
+<div id="banner-play-content">
+  <div id="back-button-content">
+    <mat-icon (click)="handleDeckClick()">arrow_back</mat-icon>
+    <p (click)="handleDeckClick()">Decks</p>
+  </div>
+  <div id="banner-time-logo">
+    <div class="banner-play-timer">
+      <h1 *ngIf="socketService.socket.id && playDuoService.idUserWhoPlay; else elseBlock">
+        {{socketService.socket.id == playDuoService.idUserWhoPlay ? 'A vous de jouer': 'A votre adverssaire de jouer'}}
+      </h1>
+      <ng-template #elseBlock>
+        les deux jouers doivent-être connecté pour connaître le nom du premier
+      </ng-template>
+      {{lastRecord}}
+    </div>
+    <div id="logo-play-content banner-play-timer">
+      <!--<img class="banner-play-logo" *ngIf="deck" src="http://localhost:3000/{{deck?.image}}" alt="{{deck?.image}}">-->
+      <h1>{{deck?.title}}</h1>
+    </div>
+    <div class="banner-play-timer">
+      <h1>Temps</h1>
+      <h1>{{playDuoService.time |date:'HH:mm:ss':'UTC'}}</h1>
+    </div>
+  </div>
+</div>

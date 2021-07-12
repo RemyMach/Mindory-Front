@@ -1,0 +1,54 @@
+#banner-play-content {
+  width: 90%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  font-family: "Chewy", Arial, Helvetica, sans-serif;
+}
+
+#back-button-content {
+  display: flex;
+  flex-direction: row;
+  color: #F73C3B;
+  justify-content: flex-start;
+  align-items: center;
+  font-weight: bold;
+}
+
+#back-button-content p {
+  margin-left: 10px;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+
+#back-button-content mat-icon {
+  cursor: pointer;
+}
+
+#banner-time-logo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  height: 10%;
+  width: 70%;
+  margin:auto;
+}
+
+.banner-play-logo {
+  max-width:100%;
+  max-height:100%;
+}
+
+#logo-play-content {
+  width: 20%;
+}
+
+.banner-play-timer {
+  width: 20%;
+  text-align: center;
+}
+
+.banner-play-timer h1 {
+  font-size: 1.5em;
+}

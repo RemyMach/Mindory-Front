@@ -1,5 +1,5 @@
 <app-header></app-header>
-<app-banner-play [deck]="playDuoService.deck"></app-banner-play>
+<app-banner-play-duo [deck]="playDuoService.deck"></app-banner-play-duo>
 <app-game-board-duo [cards]="playDuoService.part?.Cards"></app-game-board-duo>
 <div id="solo-content-button">
   <button mat-raised-button id="button_restart" (click)="refreshPage()">Recommencer</button>

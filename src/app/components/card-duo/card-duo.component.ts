@@ -23,16 +23,15 @@ export class CardDuoComponent implements OnInit {
   ngOnInit(): void {
   }
   public async handleClick(): Promise<void> {
-    /*if (this.playSoloService.gameStart === false) {
-      this.playSoloService.gameStart = true;
-      this.playSoloService.startGameChronometer();
-      this.playSoloService.createPart();
+    if (this.playDuoService.gameStart === false) {
+      this.playDuoService.gameStart = true;
+      this.playDuoService.startGameChronometer();
     }
     const element = this.elementClickable.nativeElement;
 
-    await this.playSoloService.clickOnCard(this.card, element);
+    await this.playDuoService.clickOnCard(this.card, element);
     this.renderer.setStyle(element,  'cursor', 'default');
-    this.renderer.addClass(element,  'flip');*/
+    this.renderer.addClass(element,  'flip');
   }
 
 }
