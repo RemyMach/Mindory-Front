@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router} from '@angular/router';
-import {Observable, of, Subscriber, Subscription} from 'rxjs';
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
+import {Observable, Subscriber} from 'rxjs';
 import {LocalStorageService} from '../services/local-storage.service';
 import {UserService} from '../services/mindory-api/user.service';
 

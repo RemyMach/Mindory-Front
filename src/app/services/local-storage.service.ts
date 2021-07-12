@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {UserModel} from '../models/User.model';
 import {SessionModel} from '../models/session.model';
 import {ParamGameModel, ParamGameProps} from '../models/paramGame.model';

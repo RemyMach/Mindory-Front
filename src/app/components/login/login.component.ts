@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AuthService} from '../../services/mindory-api/auth.service';
-import {interval} from 'rxjs';
 import {SnackbarService} from '../../services/snackbar.service';
 
 @Component({

@@ -1,0 +1,20 @@
+.not-found-canvas {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  width: 100%;
+}
+
+.not-found-title {
+  color: #f73c3b;
+  font-family: "Chewy", Arial,Helvetica, sans-serif;
+  font-size: 12em;
+}
+
+.not-found-text {
+  font-family: "Chewy", Arial,Helvetica, sans-serif;
+  font-size: 2em;
+  cursor: pointer;
+}

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {ListDeckService} from '../../services/mindory-api/deck/list-deck.service';
 import {LocalStorageService} from '../../services/local-storage.service';
 
 @Component({

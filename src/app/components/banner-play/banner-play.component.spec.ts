@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { BannerPlayComponent } from './banner-play.component';
+import {BannerPlayComponent} from './banner-play.component';
 
 describe('BannerPlayComponent', () => {
   let component: BannerPlayComponent;

@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {ListDeckCardsService} from '../../services/mindory-api/deck/list-deck-cards.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import { DOCUMENT } from '@angular/common';
+import {DOCUMENT} from '@angular/common';
 
 @Component({
   selector: 'app-play-solo',

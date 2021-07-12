@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../services/mindory-api/auth.service';
 import {SnackbarService} from '../../services/snackbar.service';
-import {log} from 'util';
 import {PasswordResetService} from '../../services/mindory-api/password-reset.service';
 
 @Component({

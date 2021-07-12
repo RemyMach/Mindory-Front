@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ValidateFn} from 'codelyzer/walkerFactory/walkerFn';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../services/mindory-api/auth.service';
 import {Router} from '@angular/router';
 import {SnackbarService} from '../../services/snackbar.service';

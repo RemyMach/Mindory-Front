@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {UserModel} from '../../models/User.model';
-import {catchError, map, retry, tap} from 'rxjs/operators';
-import { Observable, throwError} from 'rxjs';
+import {catchError, tap} from 'rxjs/operators';
+import {Observable} from 'rxjs';
 import {LocalStorageService} from '../local-storage.service';
 import {SessionModel} from '../../models/session.model';
 import {DefaultErrorService} from './error/default-error.service';

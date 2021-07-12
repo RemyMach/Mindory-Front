@@ -1,1 +1,4 @@
-<p>page-not-found works!</p>
+<div class="not-found-canvas">
+  <h1 class="not-found-title">404</h1>
+  <p class="not-found-text" (click)="router.navigate(['/'])" >La page {{router.url.substr(1, router.url.length)}} est introuvable, clickez pour revenir à l'acceuil</p>
+</div>
