@@ -49,6 +49,9 @@ export class ListDeckService {
 
   public deleteDeck(deckId: number): void
   {
+    this.decks = this.decks.filter(deck => {
+      return deck.id !== deckId;
+    });
     this.callDeleteDeck(deckId).subscribe(
       value => console.log(value),
       err => console.log(err)
