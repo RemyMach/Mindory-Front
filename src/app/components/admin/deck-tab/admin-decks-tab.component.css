@@ -6,14 +6,19 @@
 }
 
 .grid-container {
+  min-width: 50%;
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
   padding: 10px;
+  grid-auto-flow: column;
 }
 .grid-container > span {
   padding: 10px;
+  text-align: center;
 }
 .grid-header {
   color: white;
   background-color: red;
+}
+a {
+  cursor: pointer;
 }
