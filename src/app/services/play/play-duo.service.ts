@@ -15,6 +15,7 @@ import {calculateTimeInSeconds, getTimeInHourMinuteSecondsFormat} from '../../ut
 import {Card, DisplayCard} from '../../models/card.model';
 import {delay} from '../../utils/delay';
 import {ShotCreateService} from '../mindory-api/shot/shot-create.service';
+import {shuffleArray} from '../../utils/array/shuffle';
 
 @Injectable({
   providedIn: 'root'
@@ -60,6 +61,22 @@ export class PlayDuoService {
         await this.compareCardsToSeeIfItsAMatch();
       }
     }
+  }
+
+  public activateCardFromTheOtherUser(cardId: number): void {
+    this.part.Cards.forEach(card => {
+      if (card.id === cardId) {
+        card.displayCard = {display: true};
+      }
+    });
+    console.log(this.part.Cards);
+  }
+  public deactivateCardFromTheOtherUser(cardId: number): void {
+    this.part.Cards.forEach(card => {
+      if (card.id === cardId) {
+        card.displayCard = {display: false};
+      }
+    });
   }
 
   public createShot(): void {
@@ -147,7 +164,9 @@ export class PlayDuoService {
     this.listDeckService.getDeckFromPartId(this.room.part.id).subscribe(
       data => {
         this.deck = data;
+        shuffleArray(data.Parts[0].Cards, null);
         this.part = data.Parts[0];
+        this.activateCardFromTheOtherUser(11);
       },
       error => console.log(error)
     );
@@ -167,8 +186,6 @@ export class PlayDuoService {
     this.socketService.listenMessage('userWhoPlayInFirst').subscribe(
       data => {
         this.idUserWhoPlay = data;
-        console.log(data);
-        console.log(this.socketService.socket.id);
       },
       err => console.log(err)
     );

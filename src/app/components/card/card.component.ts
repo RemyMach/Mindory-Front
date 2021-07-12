@@ -32,7 +32,7 @@ export class CardComponent implements OnInit {
     const element = this.elementClickable.nativeElement;
 
     await this.playSoloService.clickOnCard(this.card, element);
-    this.renderer.setStyle(element,  'cursor', 'default');
-    this.renderer.addClass(element,  'flip');
+    /*this.renderer.setStyle(element,  'cursor', 'default');
+    this.renderer.addClass(element,  'flip');*/
   }
 }

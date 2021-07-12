@@ -5,7 +5,7 @@
   </div>
   <div id="banner-time-logo">
     <div class="banner-play-timer">
-      <h1 *ngIf="socketService.socket.id && playDuoService.idUserWhoPlay; else elseBlock">
+      <h1 *ngIf="socketService.socket && playDuoService.idUserWhoPlay; else elseBlock">
         {{socketService.socket.id == playDuoService.idUserWhoPlay ? 'A vous de jouer': 'A votre adverssaire de jouer'}}
       </h1>
       <ng-template #elseBlock>
