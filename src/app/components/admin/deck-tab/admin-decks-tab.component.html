@@ -10,7 +10,7 @@
     <span *ngFor="let deck of listDeckService.decks">W.I.P.</span>
 
     <span class="grid-header">Nombre de cartes</span>
-    <span *ngFor="let deck of listDeckService.decks">W.I.P.</span>
+    <span *ngFor="let deck of listDeckService.decks">{{deck.count}}</span>
 
     <span class="grid-header"></span>
     <span *ngFor="let deck of listDeckService.decks"><a (click)="handleDeckClick(deck.id)" style="text-decoration: underline">Éditer</a></span>
