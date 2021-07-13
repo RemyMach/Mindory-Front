@@ -194,6 +194,7 @@ export class PlayDuoService {
       error => {
         this.snackBar.openSnackBar(error, 'OK', 'Error');
         this.buttonCreatePart = false;
+        this.getActualRoomWithoutSocket();
       }
     );
   }

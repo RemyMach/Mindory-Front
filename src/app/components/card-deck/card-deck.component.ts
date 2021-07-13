@@ -9,6 +9,7 @@ import {PlayDuoService} from '../../services/play/play-duo.service';
   templateUrl: './card-deck.component.html',
   styleUrls: ['./card-deck.component.css']
 })
+
 export class CardDeckComponent implements OnInit {
   @Input() deck: Deck;
   constructor(
