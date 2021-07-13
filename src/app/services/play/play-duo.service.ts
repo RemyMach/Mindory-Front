@@ -35,7 +35,8 @@ export class PlayDuoService {
   listElementClicked: Set<HTMLDivElement> = new Set();
   listElementToRefresh: Set<HTMLDivElement> = new Set();
   gameStart = false;
-  pairsFound = 0;
+  pairsFoundByMe = 7;
+  pairsFoundByOther = 7;
 
   constructor(
     private roomCreateService: RoomCreateService,
@@ -79,8 +80,8 @@ export class PlayDuoService {
       }
     });
   }
-  public incrementPairNumber(): void {
-    this.pairsFound ++;
+  public incrementOtherPairNumber(): void {
+    this.pairsFoundByOther++;
   }
 
   public createShot(): void {
@@ -100,16 +101,26 @@ export class PlayDuoService {
       this.socketService.emit('hideCards', {card_id_a: firstElement.id, card_id_b: secondElement.id});
       this.hideFrontOfTheCards();
     }else {
-      this.pairsFound++;
+      this.pairsFoundByMe++;
+      this.socketService.emit('pairFound', '');
     }
     for (const elementToRefresh of this.listElementClicked) {
       this.listElementToRefresh.add(elementToRefresh);
     }
     this.clearTheCurrentCard();
     if (this.gameIsFinished()) {
-      this.stopGameChronometer();
-      this.snackBarService.openSnackBar(`Felicitation vous avez gagnée en ${getTimeInHourMinuteSecondsFormat(this.time)}`, 'OK', 'Success');
+      this.socketService.emit('gameFinished', '');
+      const endMessage = this.pairsFoundByMe > this.pairsFoundByOther ? 'victory' : 'defeat';
+      this.endGame(endMessage);
     }
+  }
+
+  private endGame(message: 'victory' | 'defeat'): void {
+    this.stopGameChronometer();
+    if (message === 'victory')
+      this.snackBarService.openSnackBar(`Felicitation vous avez gagnée en ${getTimeInHourMinuteSecondsFormat(this.time)}`, 'OK', 'Success');
+    else
+      this.snackBarService.openSnackBar(`Votre adversaire a gagné en  ${getTimeInHourMinuteSecondsFormat(this.time)}`, 'OK', 'Error');
   }
 
   private itsNotAPair(cardA: Card, cardB: Card): boolean {
@@ -118,7 +129,7 @@ export class PlayDuoService {
 
 
   private gameIsFinished(): boolean {
-    return this.pairsFound === this.NUMBER_OF_PAIRS_TO_BE_FOUND;
+    return this.pairsFoundByMe + this.pairsFoundByOther === this.NUMBER_OF_PAIRS_TO_BE_FOUND;
   }
 
   private hideFrontOfTheCards(): void {
@@ -187,23 +198,24 @@ export class PlayDuoService {
     );
   }
 
-  public getIdFromTheFirstPlayer(): void {
-    this.socketService.listenMessage('userWhoPlayInFirst').subscribe(
-      data => {
-        this.idUserWhoPlay = data;
-      },
-      err => console.log(err)
-    );
-  }
-
   private initiateTheStartOfTheGame(): void {
     const tokenBearerSplit = environment.BEARER_EXAMPLE.split(' ');
     this.socketService.connect(this.room.id, tokenBearerSplit[1]);
     this.getIdFromTheFirstPlayer();
     this.activateCardFromTheOtherUser();
     this.hideCardsFromTheOtherUser();
-    this.pairFound();
+    this.pairFoundByOther();
     this.switchActivePlayer();
+    this.gameFinished();
+  }
+
+  private getIdFromTheFirstPlayer(): void {
+    this.socketService.listenMessage('userWhoPlayInFirst').subscribe(
+      data => {
+        this.idUserWhoPlay = data;
+      },
+      err => console.log(err)
+    );
   }
 
   private activateCardFromTheOtherUser(): void {
@@ -224,10 +236,10 @@ export class PlayDuoService {
     );
   }
 
-  private pairFound(): void {
-    this.socketService.listenMessage('pairFound').subscribe(
+  private pairFoundByOther(): void {
+    this.socketService.listenMessage('pairFoundByOther').subscribe(
       _ => {
-        this.incrementPairNumber();
+        this.incrementOtherPairNumber();
       }
     );
   }
@@ -236,6 +248,15 @@ export class PlayDuoService {
     this.socketService.listenMessage('switchActivePlayer').subscribe(
       data => {
         this.idUserWhoPlay = data;
+      },
+      err => console.log(err)
+    );
+  }
+  private gameFinished(): void {
+    this.socketService.listenMessage('gameFinished').subscribe(
+      data => {
+        const endMessage = this.pairsFoundByMe > this.pairsFoundByOther ? 'victory' : 'defeat';
+        this.endGame(endMessage);
       },
       err => console.log(err)
     );
