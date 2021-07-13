@@ -190,11 +190,14 @@ export class PlayDuoService {
 
   public createKeywordForARoom(keyWord: string): void {
     this.roomCreateService.createKeyWordForExistingRoom(keyWord, this.room.id).subscribe(
-      data => this.room = data,
+      data => {
+        this.room = data;
+        this.snackBar.openSnackBar(`Vous avez bien créer un nouveau mot de passe custom`, 'OK', 'Success');
+        this.getActualRoomWithoutSocket();
+      },
       error => {
         this.snackBar.openSnackBar(error, 'OK', 'Error');
         this.buttonCreatePart = false;
-        this.getActualRoomWithoutSocket();
       }
     );
   }
