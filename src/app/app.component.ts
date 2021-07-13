@@ -16,7 +16,10 @@ export class AppComponent implements OnDestroy{
   constructor(private router: Router) {
     this.subscription = router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
+        console.log("juste avant le refresh");
+        console.log(router.navigated);
         browserRefresh = !router.navigated;
+        // mettre la modal pour le refresh
       }
     });
   }
