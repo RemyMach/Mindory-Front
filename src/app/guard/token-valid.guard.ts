@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree} from '@angular/router';
 import {Observable} from 'rxjs';
 import {PlayDuoService} from '../services/play/play-duo.service';
+import {RoomValidService} from '../services/mindory-api/room/room-valid.service';
 
 @Injectable({
   providedIn: 'root'

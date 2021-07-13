@@ -17,8 +17,7 @@ export class CardDeckComponent implements OnInit {
     private playDuoService: PlayDuoService
   ) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   public handleDeckClick(): void {
     this.localStorageService.updateLocalStorageAttributes();
@@ -38,5 +37,4 @@ export class CardDeckComponent implements OnInit {
       this.router.navigate([`play/solo/decks/${this.deck.id}`]);
     }
   }
-
 }

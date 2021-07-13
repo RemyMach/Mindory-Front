@@ -29,10 +29,23 @@ export class SocketService {
       });
     });
   }
-
+  listenActivateCard(): Observable<string> {
+    return new Observable((subscriber) => {
+      this.socket.on('activateCard', (data) => {
+        subscriber.next(data);
+      });
+    });
+  }
   listenMessage(eventName: string): Observable<string>{
     return new Observable((subscriber) => {
       this.socket.on(eventName, (data) => {
+        subscriber.next(data);
+      });
+    });
+  }
+  listenPairOfCards(eventName: string): Observable<{card_id_a: number, card_id_b: number}> {
+    return new Observable((subscriber) => {
+      this.socket.on(eventName, (data: {card_id_a: number, card_id_b: number}) => {
         subscriber.next(data);
       });
     });

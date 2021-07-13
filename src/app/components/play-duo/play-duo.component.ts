@@ -25,7 +25,7 @@ export class PlayDuoComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.playDuoService.getActualRoomAndInitiateStartOfTheGame();
-    //this.playDuoService.getIdFromTheFirstPlayer();
+    /*this.playDuoService.getIdFromTheFirstPlayer();*/
   }
 
   ngOnDestroy(): void {

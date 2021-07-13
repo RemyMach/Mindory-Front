@@ -55,6 +55,7 @@ export class PlayDuoService {
       } else {
         card.displayCard.display = true;
       }
+      this.socketService.emit('cardReturn', card.id);
       this.addCardToTheGame(card, element);
       if (this.cardsClicked.size === this.NUMBER_CARD_COMPARE) {
         this.createShot();
@@ -63,20 +64,23 @@ export class PlayDuoService {
     }
   }
 
-  public activateCardFromTheOtherUser(cardId: number): void {
+  public activateCard(cardId: string): void {
+    const id = (+cardId);
     this.part.Cards.forEach(card => {
-      if (card.id === cardId) {
+      if (card.id === id) {
         card.displayCard = {display: true};
       }
     });
-    console.log(this.part.Cards);
   }
-  public deactivateCardFromTheOtherUser(cardId: number): void {
+  public deactivateCard(cardId: number): void {
     this.part.Cards.forEach(card => {
       if (card.id === cardId) {
         card.displayCard = {display: false};
       }
     });
+  }
+  public incrementPairNumber(): void {
+    this.pairsFound ++;
   }
 
   public createShot(): void {
@@ -93,6 +97,7 @@ export class PlayDuoService {
     const secondElement: Card = iterator.next().value;
     if (this.itsNotAPair(firstElement, secondElement)) {
       await delay(2000);
+      this.socketService.emit('hideCards', {card_id_a: firstElement.id, card_id_b: secondElement.id});
       this.hideFrontOfTheCards();
     }else {
       this.pairsFound++;
@@ -167,7 +172,6 @@ export class PlayDuoService {
         this.deck = data;
         shuffleArray(data.Parts[0].Cards, null);
         this.part = data.Parts[0];
-        this.activateCardFromTheOtherUser(11);
       },
       error => console.log(error)
     );
@@ -196,6 +200,45 @@ export class PlayDuoService {
     const tokenBearerSplit = environment.BEARER_EXAMPLE.split(' ');
     this.socketService.connect(this.room.id, tokenBearerSplit[1]);
     this.getIdFromTheFirstPlayer();
+    this.activateCardFromTheOtherUser();
+    this.hideCardsFromTheOtherUser();
+    this.pairFound();
+    this.switchActivePlayer();
+  }
+
+  private activateCardFromTheOtherUser(): void {
+    this.socketService.listenActivateCard().subscribe(
+      data => {
+        console.log(data);
+        this.activateCard(data);
+      },
+      err => console.log(err)
+    );
+  }
+  private hideCardsFromTheOtherUser(): void {
+    this.socketService.listenPairOfCards('hideCards').subscribe(
+      data => {
+        this.deactivateCard(data.card_id_a);
+        this.deactivateCard(data.card_id_b);
+      }
+    );
+  }
+
+  private pairFound(): void {
+    this.socketService.listenMessage('pairFound').subscribe(
+      _ => {
+        this.incrementPairNumber();
+      }
+    );
+  }
+
+  private switchActivePlayer(): void {
+    this.socketService.listenMessage('switchActivePlayer').subscribe(
+      data => {
+        this.idUserWhoPlay = data;
+      },
+      err => console.log(err)
+    );
   }
 
   public startGameChronometer(): void {
