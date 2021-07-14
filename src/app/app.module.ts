@@ -47,6 +47,8 @@ import {PlayDuoChoiceLinkComponent} from './components/play-duo-choice-link/play
 import {JoinPartComponent} from './components/join-part/join-part.component';
 import {CreatePartComponent} from './components/create-part/create-part.component';
 import {CardDuoComponent} from './components/card-duo/card-duo.component';
+import {GameBoardDuoComponent} from './components/game-board-duo/game-board-duo.component';
+import {BannerPlayDuoComponent} from './components/banner-play-duo/banner-play-duo.component';
 import {AboutComponent} from './components/about/about.component';
 import {AdminDecksListComponent} from './components/admin/decks-list/admin-decks-list.component';
 import {AdminDecksTabComponent} from './components/admin/deck-tab/admin-decks-tab.component';
@@ -84,6 +86,8 @@ import { DeckEditorComponent } from './components/admin/deck-editor/deck-editor.
     JoinPartComponent,
     CreatePartComponent,
     CardDuoComponent,
+    GameBoardDuoComponent,
+    BannerPlayDuoComponent,
     AboutComponent,
     AdminDecksListComponent,
     AdminDecksTabComponent,

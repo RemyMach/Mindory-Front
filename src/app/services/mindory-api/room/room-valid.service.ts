@@ -1,9 +1,11 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
-import {catchError, tap} from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import {Observable, of} from 'rxjs';
+import {Part} from '../../../models/part.model';
+import {catchError, map, take, tap} from 'rxjs/operators';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../../../environments/environment.dev';
 import {DefaultErrorService} from '../error/default-error.service';
+import { Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +20,7 @@ export class RoomValidService {
   constructor(
     private http: HttpClient,
     private defaultErrorService: DefaultErrorService,
+    private route: Router
   ) { }
 
   public isValidToken(token: string): Observable<any> {
@@ -29,5 +32,25 @@ export class RoomValidService {
           return this.defaultErrorService.handleError<string>(err, 'Please retry later');
         })
       );
+  }
+
+  public validateToken(token: string): Observable<boolean> {
+    return this.isValidToken(token).pipe(
+        take(1),
+        map(result => {
+          console.log(result);
+          if (result) {
+            return true;
+          }
+          else {
+            this.route.navigate(['/']);
+            return false;
+          }
+        }),
+      catchError(async () => {
+        this.route.navigate(['/']);
+        return false;
+      })
+    );
   }
 }
