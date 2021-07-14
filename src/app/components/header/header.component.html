@@ -9,7 +9,7 @@
     </span>
 
     <span *ngIf="isConnect; else elseBlock">
-      <a title="Se déconnecter" (click)="router.navigate(['/profil'])"><mat-icon class="account_icon" matSuffix>account_circle</mat-icon></a>
+      <a title="Mon profile" (click)="router.navigate(['/profil'])"><mat-icon class="account_icon" matSuffix>account_circle</mat-icon></a>
     </span>
     <span *ngIf="isConnect">
       <a class="header-sign" title="Se déconnecter" (click)="router.navigate(['/logout'])"><mat-icon class="logout" matSuffix>logout</mat-icon></a>
