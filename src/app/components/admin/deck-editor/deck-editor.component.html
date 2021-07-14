@@ -1,0 +1,22 @@
+<app-header></app-header>
+{{getPairs()}}
+<div id="deck-editor-container">
+  <span id="editor-data-container">
+    <p>Nombre de cartes: {{listDeckService.deck.Cards.length}}</p>
+    <p>Nombre de paires: {{pairs.length}}</p>
+  </span>
+  <span id="add-pair-container">
+    <h2>Ajouter une paire</h2>
+    <span id="add-pair-textarea-container">
+      <textarea [(ngModel)]="newCardA" rows="2" cols="25" placeholder="Contenu de la premiere carte"></textarea>
+      <textarea [(ngModel)]="newCardB" rows="2" cols="25" placeholder="Contenu de la deuxieme carte"></textarea>
+    </span>
+    <p (click)="addPair()">Ajouter</p>
+  </span>
+  <span *ngFor="let pair of pairs" class="editor-pair-container">
+      <p class="card-content pair-content" *ngIf="pair.cards[0].image === null">{{pair.cards[0].text}}</p>
+      <p class="card-content pair-content" *ngIf="pair.cards[1].image === null">{{pair.cards[1].text}}</p>
+      <p class="delete-pair pair-content" (click)="deletePair(pair)">Supprimer</p>
+  </span>
+</div>
+<app-footer></app-footer>

@@ -17,7 +17,7 @@ export class AdminDecksTabComponent implements OnInit {
     this.listDeckService.getAllDecks(0, 24);
   }
   public handleDeckClick(deckId: number): void {
-    this.router.navigate(['admin/decks/' + deckId]);
+    this.router.navigate(['admin/deck/' + deckId]);
   }
   public deleteDeck(deckId: number): void {
     this.listDeckService.deleteDeck(deckId);
