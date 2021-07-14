@@ -64,8 +64,7 @@ export class ListDeckService {
   public getAllDecks(offset: number, limit: number): void {
     this.getDecks(offset, limit).subscribe(
       value => this.decks = value,
-      err => console.log(err),
-      () => console.log('on a finit ici')
+      err => console.log(err)
     );
   }
 }

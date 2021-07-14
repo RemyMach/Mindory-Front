@@ -64,8 +64,7 @@ export class AuthService {
           return this.defaultErrorService.handleError<string>(err, err.message);
         })
       ).subscribe(
-      err => console.log(err),
-      () => console.log('déco !')
+      err => console.log(err)
     );
     this.localStorageService.deleteSession();
   }
