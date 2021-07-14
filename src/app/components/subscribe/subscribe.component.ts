@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AuthService} from '../../services/mindory-api/auth.service';
+import {AuthenticationService} from '../../services/mindory-api/authentication.service';
 import {Router} from '@angular/router';
 import {SnackbarService} from '../../services/snackbar.service';
 
@@ -16,7 +16,7 @@ export class SubscribeComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService,
+    private authService: AuthenticationService,
     private router: Router,
     private snackBar: SnackbarService
   ) { }

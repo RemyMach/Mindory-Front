@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AuthService} from '../../services/mindory-api/auth.service';
+import {AuthenticationService} from '../../services/mindory-api/authentication.service';
 import {SnackbarService} from '../../services/snackbar.service';
 import {PasswordResetService} from '../../services/mindory-api/password-reset.service';
 
@@ -17,7 +17,7 @@ export class ResetPasswordComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService,
+    private authService: AuthenticationService,
     private router: Router,
     private snackBar: SnackbarService,
     private activatedRoute: ActivatedRoute,

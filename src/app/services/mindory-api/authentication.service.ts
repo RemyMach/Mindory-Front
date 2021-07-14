@@ -6,12 +6,18 @@ import {Observable} from 'rxjs';
 import {LocalStorageService} from '../local-storage.service';
 import {SessionModel} from '../../models/session.model';
 import {DefaultErrorService} from './error/default-error.service';
+import {environment} from '../../../environments/environment.dev';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class AuthenticationService {
+  tokenValue: string = '';
+
+  httpOptionsAuthentified = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json', Authorization: this.localStorageService.getSessionToken() })
+  };
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -36,6 +42,19 @@ export class AuthService {
         catchError((err: HttpErrorResponse) => {
           return this.defaultErrorService.handleError<string>(err, 'Incorrect email ou/et mot de passe');
           })
+      );
+  }
+
+  public verifyToken(): Observable<any> {
+    return this.http.post(`${this.baseUrl}/token`, {} , this.httpOptionsAuthentified)
+      .pipe(
+        tap(data => data),
+        catchError((err: HttpErrorResponse) => {
+          if (this.localStorageService.session) {
+            this.localStorageService.deleteSession();
+          }
+          return this.defaultErrorService.handleError<string>(err, 'Incorrect token');
+        })
       );
   }
 
@@ -64,7 +83,6 @@ export class AuthService {
   private saveToken(data): void {
     if (data.token) {
       this.localStorageService.setSession({token: data.token});
-      return;
     }
   }
 }

@@ -53,4 +53,14 @@ export class LocalStorageService {
   deleteParamGame(): void {
     localStorage.removeItem('paramGame');
   }
+  deleteSession(): void {
+    localStorage.removeItem('session');
+  }
+  getSessionToken(): string {
+    this.updateLocalStorageAttributes();
+    console.log(this.session);
+    if (this.session) {
+      return 'Bearer ' + this.session.token;
+    }
+  }
 }

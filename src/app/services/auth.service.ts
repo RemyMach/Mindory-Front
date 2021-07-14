@@ -1,16 +1,28 @@
 import {Injectable} from '@angular/core';
 import {LocalStorageService} from './local-storage.service';
 import {RoleService} from './mindory-api/role.service';
+import {AuthenticationService} from './mindory-api/authentication.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
+  connectionValidate: boolean;
   constructor(
     private localStorageService: LocalStorageService,
-    private roleService: RoleService
+    private roleService: RoleService,
+    private authenticationService: AuthenticationService
   ) { }
+  public tryConnect(): void {
+    this.authenticationService.verifyToken().subscribe(
+      data => {
+        this.connectionValidate = true;
+      },
+      error => {
+        this.connectionValidate = false;
+      }
+    );
+  }
   public isConnect(): boolean {
     this.localStorageService.updateLocalStorageAttributes();
     return this.localStorageService.user !== null && this.localStorageService.session !== null;

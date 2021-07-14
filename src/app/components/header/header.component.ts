@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.authService.tryConnect();
   }
 
   get isConnect(): boolean {
