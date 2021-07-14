@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Router} from '@angular/router';
 import {SnackbarComponent} from '../components/snackbar/snackbar.component';
+import {Observable, of, Subscriber, Subscription} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -35,5 +36,23 @@ export class SnackbarService {
       this.snackBar.dismiss();
     });
 
+  }
+  public openSnackBarWithANullReturn(message: string, action: string, snackType?: string, duration?: number | null, redirectionPath?: string | null): Observable<null> {
+    const _snackType: string = snackType !== undefined ? snackType : 'Success';
+
+
+    const snack = this.snackBar.openFromComponent(SnackbarComponent, {
+      duration,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      data: { message, snackType: _snackType, snackActionMessage: action}
+    });
+
+    return new Observable((subscriber) => {
+      snack.onAction().subscribe(() => {
+        this.snackBar.dismiss();
+        return subscriber.next(null);
+      });
+    });
   }
 }

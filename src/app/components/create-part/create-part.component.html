@@ -7,9 +7,9 @@
     elle même dans la partie rejoindre partie
   </p>
   <h2>URL</h2>
-  <a class="link-create" (click)="router.navigate([playDuoService.room.token ? '/play/duo/' + playDuoService.room.token: ''])">http://localhost:4200/play/duo/{{playDuoService.room.token}}</a>
+  <a class="link-create" (click)="router.navigate([playDuoService.room &&  playDuoService.room.token ? '/play/duo/' + playDuoService.room.token: ''])">http://localhost:4200/play/duo/{{playDuoService.room?.token }}</a>
   <h2>Mot de passe custom</h2>
-  {{playDuoService.room.keyword !== undefined ?  playDuoService.room.keyword: 'Vous n\'en avez pas pour l\'instant'}}
+  {{playDuoService.room &&  playDuoService.room.keyword ?  playDuoService.room.keyword: 'Vous n\'en avez pas pour l\'instant'}}
   <h3>Formulaire de création de mot de passe Custom</h3>
   <form id="form-keyword" [formGroup]="createKeyWordForm" (ngSubmit)="postKeyWordForm()">
 

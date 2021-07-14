@@ -16,6 +16,7 @@ import {Card, DisplayCard} from '../../models/card.model';
 import {delay} from '../../utils/delay';
 import {ShotCreateService} from '../mindory-api/shot/shot-create.service';
 import {shuffleArray} from '../../utils/array/shuffle';
+import {DialogConfirmationService} from '../dialog-confirmation.service';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,7 @@ export class PlayDuoService {
   idUserWhoPlay: string;
   time: Date = new Date(0);
   interval$: Subscription;
+  dialogOptions;
 
   NUMBER_CARD_COMPARE = 2;
   NUMBER_OF_PAIRS_TO_BE_FOUND = 15;
@@ -35,7 +37,8 @@ export class PlayDuoService {
   listElementClicked: Set<HTMLDivElement> = new Set();
   listElementToRefresh: Set<HTMLDivElement> = new Set();
   gameStart = false;
-  pairsFound = 0;
+  pairsFoundByMe = 7;
+  pairsFoundByOther = 7;
 
   constructor(
     private roomCreateService: RoomCreateService,
@@ -45,7 +48,8 @@ export class PlayDuoService {
     public listDeckService: ListDeckService,
     private socketService: SocketService,
     private snackBarService: SnackbarService,
-    private shotCreateService: ShotCreateService
+    private shotCreateService: ShotCreateService,
+    private dialogConfirmationService: DialogConfirmationService,
   ) { }
 
   public async clickOnCard(card: Card, element: HTMLDivElement): Promise<void> {
@@ -55,6 +59,7 @@ export class PlayDuoService {
       } else {
         card.displayCard.display = true;
       }
+      this.socketService.emit('cardReturn', card.id);
       this.addCardToTheGame(card, element);
       if (this.cardsClicked.size === this.NUMBER_CARD_COMPARE) {
         this.createShot();
@@ -63,20 +68,23 @@ export class PlayDuoService {
     }
   }
 
-  public activateCardFromTheOtherUser(cardId: number): void {
+  public activateCard(cardId: string): void {
+    const id = (+cardId);
     this.part.Cards.forEach(card => {
-      if (card.id === cardId) {
+      if (card.id === id) {
         card.displayCard = {display: true};
       }
     });
-    console.log(this.part.Cards);
   }
-  public deactivateCardFromTheOtherUser(cardId: number): void {
+  public deactivateCard(cardId: number): void {
     this.part.Cards.forEach(card => {
       if (card.id === cardId) {
         card.displayCard = {display: false};
       }
     });
+  }
+  public incrementOtherPairNumber(): void {
+    this.pairsFoundByOther++;
   }
 
   public createShot(): void {
@@ -93,18 +101,29 @@ export class PlayDuoService {
     const secondElement: Card = iterator.next().value;
     if (this.itsNotAPair(firstElement, secondElement)) {
       await delay(2000);
+      this.socketService.emit('hideCards', {card_id_a: firstElement.id, card_id_b: secondElement.id});
       this.hideFrontOfTheCards();
     }else {
-      this.pairsFound++;
+      this.pairsFoundByMe++;
+      this.socketService.emit('pairFound', '');
     }
     for (const elementToRefresh of this.listElementClicked) {
       this.listElementToRefresh.add(elementToRefresh);
     }
     this.clearTheCurrentCard();
     if (this.gameIsFinished()) {
-      this.stopGameChronometer();
-      this.snackBarService.openSnackBar(`Felicitation vous avez gagnée en ${getTimeInHourMinuteSecondsFormat(this.time)}`, 'OK', 'Success');
+      this.socketService.emit('gameFinished', '');
+      const endMessage = this.pairsFoundByMe > this.pairsFoundByOther ? 'victory' : 'defeat';
+      this.endGame(endMessage);
     }
+  }
+
+  private endGame(message: 'victory' | 'defeat'): void {
+    this.stopGameChronometer();
+    if (message === 'victory')
+      this.snackBarService.openSnackBar(`Felicitation vous avez gagnée en ${getTimeInHourMinuteSecondsFormat(this.time)}`, 'OK', 'Success');
+    else
+      this.snackBarService.openSnackBar(`Votre adversaire a gagné en  ${getTimeInHourMinuteSecondsFormat(this.time)}`, 'OK', 'Error');
   }
 
   private itsNotAPair(cardA: Card, cardB: Card): boolean {
@@ -113,7 +132,7 @@ export class PlayDuoService {
 
 
   private gameIsFinished(): boolean {
-    return this.pairsFound === this.NUMBER_OF_PAIRS_TO_BE_FOUND;
+    return this.pairsFoundByMe + this.pairsFoundByOther === this.NUMBER_OF_PAIRS_TO_BE_FOUND;
   }
 
   private hideFrontOfTheCards(): void {
@@ -167,7 +186,6 @@ export class PlayDuoService {
         this.deck = data;
         shuffleArray(data.Parts[0].Cards, null);
         this.part = data.Parts[0];
-        this.activateCardFromTheOtherUser(11);
       },
       error => console.log(error)
     );
@@ -175,7 +193,11 @@ export class PlayDuoService {
 
   public createKeywordForARoom(keyWord: string): void {
     this.roomCreateService.createKeyWordForExistingRoom(keyWord, this.room.id).subscribe(
-      data => this.room = data,
+      data => {
+        this.room = data;
+        this.snackBar.openSnackBar(`Vous avez bien créer un nouveau mot de passe custom`, 'OK', 'Success');
+        this.getActualRoomWithoutSocket();
+      },
       error => {
         this.snackBar.openSnackBar(error, 'OK', 'Error');
         this.buttonCreatePart = false;
@@ -183,7 +205,20 @@ export class PlayDuoService {
     );
   }
 
-  public getIdFromTheFirstPlayer(): void {
+  private initiateTheStartOfTheGame(): void {
+    const tokenBearerSplit = environment.BEARER_EXAMPLE.split(' ');
+    this.socketService.connect(this.room.id, tokenBearerSplit[1]);
+    this.getIdFromTheFirstPlayer();
+    this.getTheMessageIfUsersAreAuthentified();
+    this.getTheMessageIfUsersAreNotAuthentified();
+    this.activateCardFromTheOtherUser();
+    this.hideCardsFromTheOtherUser();
+    this.pairFoundByOther();
+    this.switchActivePlayer();
+    this.gameFinished();
+  }
+
+  private getIdFromTheFirstPlayer(): void {
     this.socketService.listenMessage('userWhoPlayInFirst').subscribe(
       data => {
         this.idUserWhoPlay = data;
@@ -192,10 +227,78 @@ export class PlayDuoService {
     );
   }
 
-  private initiateTheStartOfTheGame(): void {
-    const tokenBearerSplit = environment.BEARER_EXAMPLE.split(' ');
-    this.socketService.connect(this.room.id, tokenBearerSplit[1]);
-    this.getIdFromTheFirstPlayer();
+  private getTheMessageIfUsersAreAuthentified(): void {
+    this.socketService.listenMessage('UsersAreAuthentified').subscribe(
+      data => {
+        this.dialogOptions = {
+          title: 'Authentification Message',
+          subTitle: 'Vous êtes tous les deux connectés',
+          message: `VOus pouvez donc refresh la page tant que la partie n'est pas finit même après son début ou revenir sur le lien pour finir la partie plus tard sans rencontrer de problèmes`,
+          confirmText: 'Confirm'
+        };
+        this.dialogConfirmationService.open(this.dialogOptions);
+      },
+      err => console.log(err)
+    );
+  }
+
+  private getTheMessageIfUsersAreNotAuthentified(): void {
+    this.socketService.listenMessage('UsersAreNotAuthentified').subscribe(
+      data => {
+        this.dialogOptions = {
+          title: 'Authentification Message',
+          subTitle: 'Vous n\'êtes pas tous les deux connectés',
+          message: `Vous ne pouvez donc pas actualiser la page où la quitter sinon vos données de partie seront perdus`,
+          confirmText: 'Confirm'
+        };
+        this.dialogConfirmationService.open(this.dialogOptions);
+      },
+      err => console.log(err)
+    );
+  }
+
+  private activateCardFromTheOtherUser(): void {
+    this.socketService.listenActivateCard().subscribe(
+      data => {
+        console.log(data);
+        this.activateCard(data);
+      },
+      err => console.log(err)
+    );
+  }
+  private hideCardsFromTheOtherUser(): void {
+    this.socketService.listenPairOfCards('hideCards').subscribe(
+      data => {
+        this.deactivateCard(data.card_id_a);
+        this.deactivateCard(data.card_id_b);
+      }
+    );
+  }
+
+  private pairFoundByOther(): void {
+    this.socketService.listenMessage('pairFoundByOther').subscribe(
+      _ => {
+        this.incrementOtherPairNumber();
+      }
+    );
+  }
+
+  private switchActivePlayer(): void {
+    this.socketService.listenMessage('switchActivePlayer').subscribe(
+      data => {
+        this.idUserWhoPlay = data;
+      },
+      err => console.log(err)
+    );
+  }
+  private gameFinished(): void {
+    this.socketService.listenMessage('gameFinished').subscribe(
+      data => {
+        const endMessage = this.pairsFoundByMe > this.pairsFoundByOther ? 'victory' : 'defeat';
+        this.endGame(endMessage);
+      },
+      err => console.log(err)
+    );
   }
 
   public startGameChronometer(): void {

@@ -33,7 +33,6 @@ export class CreatePartComponent implements OnInit {
     }
     this.playDuoService.buttonCreatePart = true;
     this.playDuoService.createKeywordForARoom(this.createKeyWordForm.get('keyWord').value);
-    this.playDuoService.getActualRoomWithoutSocket();
   }
 
 }

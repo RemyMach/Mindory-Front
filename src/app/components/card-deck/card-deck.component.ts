@@ -9,6 +9,7 @@ import {PlayDuoService} from '../../services/play/play-duo.service';
   templateUrl: './card-deck.component.html',
   styleUrls: ['./card-deck.component.css']
 })
+
 export class CardDeckComponent implements OnInit {
   @Input() deck: Deck;
   constructor(
@@ -17,8 +18,7 @@ export class CardDeckComponent implements OnInit {
     private playDuoService: PlayDuoService
   ) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   public handleDeckClick(): void {
     this.localStorageService.updateLocalStorageAttributes();
@@ -38,5 +38,4 @@ export class CardDeckComponent implements OnInit {
       this.router.navigate([`play/solo/decks/${this.deck.id}`]);
     }
   }
-
 }
