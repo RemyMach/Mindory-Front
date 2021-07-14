@@ -55,6 +55,7 @@ import {AdminDecksTabComponent} from './components/admin/deck-tab/admin-decks-ta
 import { LegalNoticeComponent } from './components/legal-notice/legal-notice.component';
 import { DataComponent } from './components/data/data.component';
 import { ContactComponent } from './components/contact/contact.component';
+import {LogoutComponent} from './components/logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -92,7 +93,8 @@ import { ContactComponent } from './components/contact/contact.component';
     AdminDecksTabComponent,
     LegalNoticeComponent,
     DataComponent,
-    ContactComponent
+    ContactComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,

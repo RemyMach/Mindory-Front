@@ -54,6 +54,22 @@ export class AuthService {
         })
       );
   }
+
+  public logout(): void {
+    this.localStorageService.updateLocalStorageAttributes();
+    this.setAuthorizationHeader(this.localStorageService.session.token);
+    this.http.delete<UserModel>(`${this.baseUrl}/logout`, this.httpOptions)
+      .pipe(
+        catchError((err: HttpErrorResponse) => {
+          return this.defaultErrorService.handleError<string>(err, err.message);
+        })
+      ).subscribe(
+      err => console.log(err),
+      () => console.log('déco !')
+    );
+    this.localStorageService.deleteSession();
+  }
+
   private saveUser(data): void {
     if (data.username) {
       this.localStorageService.setUser(data);
@@ -66,5 +82,9 @@ export class AuthService {
       this.localStorageService.setSession({token: data.token});
       return;
     }
+  }
+
+  private setAuthorizationHeader(token: string): void {
+    this.httpOptions.headers = this.httpOptions.headers.append('Authorization', `Bearer ${token}`);
   }
 }

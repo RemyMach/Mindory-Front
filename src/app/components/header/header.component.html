@@ -12,7 +12,7 @@
       <a title="Se déconnecter" (click)="router.navigate(['/profil'])"><mat-icon class="account_icon" matSuffix>account_circle</mat-icon></a>
     </span>
     <span *ngIf="isConnect">
-      <a class="header-sign" title="Se déconnecter" (click)="router.navigate(['/disconnect'])"><mat-icon class="logout" matSuffix>logout</mat-icon></a>
+      <a class="header-sign" title="Se déconnecter" (click)="router.navigate(['/logout'])"><mat-icon class="logout" matSuffix>logout</mat-icon></a>
     </span>
     <ng-template #elseBlock>
       <a class="header-sign" (click)="router.navigate(['/login'])">Connexion</a>

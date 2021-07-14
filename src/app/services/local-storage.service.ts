@@ -53,4 +53,8 @@ export class LocalStorageService {
   deleteParamGame(): void {
     localStorage.removeItem('paramGame');
   }
+
+  deleteSession(): void {
+    localStorage.removeItem('session');
+  }
 }

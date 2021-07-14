@@ -19,6 +19,7 @@ import {AboutComponent} from './components/about/about.component';
 import {LegalNoticeComponent} from './components/legal-notice/legal-notice.component';
 import {DataComponent} from './components/data/data.component';
 import {ContactComponent} from './components/contact/contact.component';
+import {LogoutComponent} from './components/logout/logout.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -39,6 +40,7 @@ const routes: Routes = [
   {path: 'play/create', component: CreatePartComponent},
   {path: 'play/join', component: JoinPartComponent},
   {path: 'admin/decks', component: AdminDecksListComponent},
+  {path: 'logout', component: LogoutComponent},
   {path: '**', component: PageNotFoundComponent}
 ];
 
