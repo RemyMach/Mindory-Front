@@ -16,6 +16,7 @@ import {Card, DisplayCard} from '../../models/card.model';
 import {delay} from '../../utils/delay';
 import {ShotCreateService} from '../mindory-api/shot/shot-create.service';
 import {shuffleArray} from '../../utils/array/shuffle';
+import {DialogConfirmationService} from '../dialog-confirmation.service';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,7 @@ export class PlayDuoService {
   idUserWhoPlay: string;
   time: Date = new Date(0);
   interval$: Subscription;
+  dialogOptions;
 
   NUMBER_CARD_COMPARE = 2;
   NUMBER_OF_PAIRS_TO_BE_FOUND = 15;
@@ -46,7 +48,8 @@ export class PlayDuoService {
     public listDeckService: ListDeckService,
     private socketService: SocketService,
     private snackBarService: SnackbarService,
-    private shotCreateService: ShotCreateService
+    private shotCreateService: ShotCreateService,
+    private dialogConfirmationService: DialogConfirmationService,
   ) { }
 
   public async clickOnCard(card: Card, element: HTMLDivElement): Promise<void> {
@@ -206,6 +209,8 @@ export class PlayDuoService {
     const tokenBearerSplit = environment.BEARER_EXAMPLE.split(' ');
     this.socketService.connect(this.room.id, tokenBearerSplit[1]);
     this.getIdFromTheFirstPlayer();
+    this.getTheMessageIfUsersAreAuthentified();
+    this.getTheMessageIfUsersAreNotAuthentified();
     this.activateCardFromTheOtherUser();
     this.hideCardsFromTheOtherUser();
     this.pairFoundByOther();
@@ -217,6 +222,36 @@ export class PlayDuoService {
     this.socketService.listenMessage('userWhoPlayInFirst').subscribe(
       data => {
         this.idUserWhoPlay = data;
+      },
+      err => console.log(err)
+    );
+  }
+
+  private getTheMessageIfUsersAreAuthentified(): void {
+    this.socketService.listenMessage('UsersAreAuthentified').subscribe(
+      data => {
+        this.dialogOptions = {
+          title: 'Authentification Message',
+          subTitle: 'Vous êtes tous les deux connectés',
+          message: `VOus pouvez donc refresh la page tant que la partie n'est pas finit même après son début ou revenir sur le lien pour finir la partie plus tard sans rencontrer de problèmes`,
+          confirmText: 'Confirm'
+        };
+        this.dialogConfirmationService.open(this.dialogOptions);
+      },
+      err => console.log(err)
+    );
+  }
+
+  private getTheMessageIfUsersAreNotAuthentified(): void {
+    this.socketService.listenMessage('UsersAreNotAuthentified').subscribe(
+      data => {
+        this.dialogOptions = {
+          title: 'Authentification Message',
+          subTitle: 'Vous n\'êtes pas tous les deux connectés',
+          message: `Vous ne pouvez donc pas actualiser la page où la quitter sinon vos données de partie seront perdus`,
+          confirmText: 'Confirm'
+        };
+        this.dialogConfirmationService.open(this.dialogOptions);
       },
       err => console.log(err)
     );

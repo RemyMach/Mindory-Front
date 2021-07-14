@@ -5,6 +5,7 @@ import {PlayDuoService} from '../../services/play/play-duo.service';
 import {SocketService} from '../../services/socket/socket.service';
 import {SnackbarService} from '../../services/snackbar.service';
 import {Subscription} from 'rxjs';
+import {DialogConfirmationService} from '../../services/dialog-confirmation.service';
 
 @Component({
   selector: 'app-play-duo',
@@ -34,26 +35,5 @@ export class PlayDuoComponent implements OnInit, OnDestroy {
 
   public refreshPage(): void {
     this.document.defaultView.location.reload();
-  }
-
-  /*@HostListener('window:beforeunload', ['$event']) unloadHandler(event: Event): string {
-    const result = confirm('Si vous rechargez cette page la partie sera finit et vous serez redirigé');
-    if (result) {
-      // Do more processing...
-      console.log('pomme');
-    }
-    event.returnValue = false; // stay on same page
-    return 'bang bang';
-  }*/
-
-  @HostListener('window:beforeunload', ['$event']) onBeforeUnload(event: Event): Subscription {
-    event.returnValue = false;
-    return this.snackbarService.openSnackBarWithANullReturn('yoyo', 'OK', 'success').subscribe(
-      data => {
-        event.returnValue = false;
-        console.log('jean');
-        //const result = confirm('Si vous rechargez cette page la partie sera finit et vous serez redirigé');
-      }
-    );
   }
 }
