@@ -37,22 +37,18 @@ export class ListDeckService {
     );
   }
 
-  public callDeleteDeck(deckId: number): Observable<string>
-  {
-    return this.http.delete<string>(`${this.baseUrl}/${deckId}`).pipe(
-      tap(() => this.snackBarService.openSnackBar('Ce deck a bien été supprimé', 'OK', 'Success')),
-      catchError((err: HttpErrorResponse) => {
-        return this.defaultErrorService.handleError<string>(err, 'Incorrect request');
-      })
-    );
-  }
-
   public deleteDeck(deckId: number): void
   {
     this.decks = this.decks.filter(deck => {
       return deck.id !== deckId;
     });
-    this.callDeleteDeck(deckId).subscribe(
+
+    this.http.delete<string>(`${this.baseUrl}/${deckId}`).pipe(
+      tap(() => this.snackBarService.openSnackBar('Ce deck a bien été supprimé', 'OK', 'Success')),
+      catchError((err: HttpErrorResponse) => {
+        return this.defaultErrorService.handleError<string>(err, 'Incorrect request');
+      })
+    ).subscribe(
       value => console.log(value),
       err => console.log(err)
     );
