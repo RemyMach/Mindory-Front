@@ -18,9 +18,9 @@ import {ShotCreateService} from '../mindory-api/shot/shot-create.service';
 import {shuffleArray} from '../../utils/array/shuffle';
 import {DialogConfirmationService} from '../dialog-confirmation.service';
 import {LocalStorageService} from '../local-storage.service';
-import {log} from 'util';
 import {PartCreateService} from '../mindory-api/part/part-create.service';
 import {CardPlayStatusService} from '../mindory-api/card/card-play-status.service';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -56,7 +56,9 @@ export class PlayDuoService {
     private dialogConfirmationService: DialogConfirmationService,
     private localStorageService: LocalStorageService,
     private partCreateService: PartCreateService,
-    private cardPlayStatusService: CardPlayStatusService
+    private cardPlayStatusService: CardPlayStatusService,
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   public async clickOnCard(card: Card, element: HTMLDivElement): Promise<void> {
@@ -69,7 +71,9 @@ export class PlayDuoService {
       this.socketService.emit('cardReturn', card.id);
       this.addCardToTheGame(card, element);
       if (this.cardsClicked.size === this.NUMBER_CARD_COMPARE) {
-        this.createShot();
+        if (this.localStorageService.getSessionToken()) {
+          this.createShot();
+        }
         await this.compareCardsToSeeIfItsAMatch();
       }
     }
@@ -159,7 +163,6 @@ export class PlayDuoService {
   }
 
   public createRoom(deckId: number): void {
-    console.log('on passe ici');
     this.roomCreateService.create(deckId).subscribe(
       data => this.room = data,
       error => console.log(error)
@@ -183,6 +186,19 @@ export class PlayDuoService {
       data => {
         this.room = data;
         this.getActualDeckForCreation();
+      },
+      error => console.log(error)
+    );
+  }
+
+  public getActualRoomForAnonymous(token: string): void {
+
+    this.roomListUserService.getForAnonymous(token).subscribe(
+      data => {
+        console.log(data);
+        this.room = data;
+        this.getActualDeck();
+        this.initiateTheStartOfTheGame();
       },
       error => console.log(error)
     );
@@ -225,8 +241,10 @@ export class PlayDuoService {
     this.listDeckService.getDeckFromPartId(this.room.part.id).subscribe(
       data => {
         this.deck = data;
-        this.addUserToAPart();
-        this.getPlayStatus();
+        if (this.localStorageService.getSessionToken()) {
+          this.addUserToAPart();
+          this.getPlayStatus();
+        }
         shuffleArray(data.Parts[0].Cards, null);
         this.part = data.Parts[0];
       },

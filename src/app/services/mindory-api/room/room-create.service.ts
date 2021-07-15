@@ -6,29 +6,35 @@ import {Observable} from 'rxjs';
 import {Part} from '../../../models/part.model';
 import {catchError, tap} from 'rxjs/operators';
 import {LocalStorageService} from '../../local-storage.service';
+import {HttpOptionsService} from '../../utils/http-options.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoomCreateService {
 
-  private httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json', Authorization: this.localStorageService.getSessionToken() })
-  };
+  private httpOptions: {headers: HttpHeaders};
   private baseUrl = 'http://localhost:3000/rooms';
 
   constructor(
     private http: HttpClient,
     private defaultErrorService: DefaultErrorService,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private httpOptionsService: HttpOptionsService
   ) { }
 
+
   public create(deckId: number): Observable<any> {
+    this.httpOptions = this.httpOptionsService.generateHttpOptions();
     return this.http.post<Part>(`${this.baseUrl}`, {deckId}, this.httpOptions)
       .pipe(
-        tap(data => data
+        tap(data => {
+            console.log(data);
+            return data;
+          }
         ),
         catchError((err: HttpErrorResponse) => {
+          console.log("on a une erreur");
           return this.defaultErrorService.handleError<string>(err, 'Please retry later');
         })
       );
