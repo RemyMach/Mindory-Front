@@ -44,6 +44,7 @@ export class LocalStorageService {
       paramGameModel.deckId = paramGameProps.deckId  ? paramGameProps.deckId : paramGameModel.deckId;
       paramGameModel.mode = paramGameProps.mode  ? paramGameProps.mode : paramGameModel.mode;
       paramGameModel.link = paramGameProps.link  ? paramGameProps.link : paramGameModel.link;
+      paramGameModel.time = paramGameProps.time  ? paramGameProps.time : paramGameModel.time;
     }else {
       paramGameModel = new ParamGameModel(paramGameProps);
     }
