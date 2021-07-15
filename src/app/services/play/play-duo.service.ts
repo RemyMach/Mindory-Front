@@ -20,6 +20,7 @@ import {DialogConfirmationService} from '../dialog-confirmation.service';
 import {LocalStorageService} from '../local-storage.service';
 import {log} from 'util';
 import {PartCreateService} from '../mindory-api/part/part-create.service';
+import {CardPlayStatusService} from '../mindory-api/card/card-play-status.service';
 
 @Injectable({
   providedIn: 'root'
@@ -40,8 +41,8 @@ export class PlayDuoService {
   listElementClicked: Set<HTMLDivElement> = new Set();
   listElementToRefresh: Set<HTMLDivElement> = new Set();
   gameStart = false;
-  pairsFoundByMe = 7;
-  pairsFoundByOther = 7;
+  pairsFoundByMe = 0;
+  pairsFoundByOther = 0;
 
   constructor(
     private roomCreateService: RoomCreateService,
@@ -54,7 +55,8 @@ export class PlayDuoService {
     private shotCreateService: ShotCreateService,
     private dialogConfirmationService: DialogConfirmationService,
     private localStorageService: LocalStorageService,
-    private partCreateService: PartCreateService
+    private partCreateService: PartCreateService,
+    private cardPlayStatusService: CardPlayStatusService
   ) { }
 
   public async clickOnCard(card: Card, element: HTMLDivElement): Promise<void> {
@@ -95,7 +97,7 @@ export class PlayDuoService {
   public createShot(): void {
 
     this.shotCreateService.create(this.cardsClicked, this.part.id, calculateTimeInSeconds(this.time)).subscribe(
-      data => {},
+      data => {console.log(`mes points ${this.pairsFoundByMe}, tes points ${this.pairsFoundByOther}`); },
       error  => this.snackBarService.openSnackBar('Our services have a problem please retry later', 'OK', 'error')
     );
   }
@@ -193,11 +195,27 @@ export class PlayDuoService {
     );
   }
 
+  private getPlayStatus(): void {
+    this.cardPlayStatusService.getPairAndPoints(this.deck.Parts[0].id).subscribe(
+      data => {
+        this.pairsFoundByMe = data.myPoints;
+        this.pairsFoundByOther = data.oponnentPoints;
+        this.part.Cards.forEach(card => {
+          if (data.cards.includes(card.id)) {
+            card.displayCard = {display: true};
+          }
+        });
+      },
+      error => console.log(error)
+    );
+  }
+
   public getActualDeck(): void {
     this.listDeckService.getDeckFromPartId(this.room.part.id).subscribe(
       data => {
         this.deck = data;
         this.addUserToAPart();
+        this.getPlayStatus();
         shuffleArray(data.Parts[0].Cards, null);
         this.part = data.Parts[0];
       },
