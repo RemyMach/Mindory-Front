@@ -198,7 +198,7 @@ export class PlayDuoService {
         console.log(data);
         this.room = data;
         this.getActualDeck();
-        this.initiateTheStartOfTheGame();
+        this.initiateTheStartOfTheGameForAnonymous();
       },
       error => console.log(error)
     );
@@ -269,6 +269,18 @@ export class PlayDuoService {
   private initiateTheStartOfTheGame(): void {
     const tokenBearerSplit = this.localStorageService.getSessionToken().split(' ');
     this.socketService.connect(this.room.id, tokenBearerSplit[1]);
+    this.getIdFromTheFirstPlayer();
+    this.getTheMessageIfUsersAreAuthentified();
+    this.getTheMessageIfUsersAreNotAuthentified();
+    this.activateCardFromTheOtherUser();
+    this.hideCardsFromTheOtherUser();
+    this.pairFoundByOther();
+    this.switchActivePlayer();
+    this.gameFinished();
+  }
+
+  private initiateTheStartOfTheGameForAnonymous(): void {
+    this.socketService.connect(this.room.id);
     this.getIdFromTheFirstPlayer();
     this.getTheMessageIfUsersAreAuthentified();
     this.getTheMessageIfUsersAreNotAuthentified();

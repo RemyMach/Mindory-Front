@@ -34,7 +34,6 @@ export class RoomCreateService {
           }
         ),
         catchError((err: HttpErrorResponse) => {
-          console.log("on a une erreur");
           return this.defaultErrorService.handleError<string>(err, 'Please retry later');
         })
       );
