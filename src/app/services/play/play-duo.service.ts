@@ -182,7 +182,7 @@ export class PlayDuoService {
     this.roomListUserService.get().subscribe(
       data => {
         this.room = data;
-        this.getActualDeck();
+        this.getActualDeckForCreation();
       },
       error => console.log(error)
     );
@@ -205,6 +205,17 @@ export class PlayDuoService {
             card.displayCard = {display: true};
           }
         });
+      },
+      error => console.log(error)
+    );
+  }
+
+  private getActualDeckForCreation(): void {
+    this.listDeckService.getDeckFromPartId(this.room.part.id).subscribe(
+      data => {
+        this.deck = data;
+        shuffleArray(data.Parts[0].Cards, null);
+        this.part = data.Parts[0];
       },
       error => console.log(error)
     );
