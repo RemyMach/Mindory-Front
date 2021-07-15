@@ -17,6 +17,9 @@ import {delay} from '../../utils/delay';
 import {ShotCreateService} from '../mindory-api/shot/shot-create.service';
 import {shuffleArray} from '../../utils/array/shuffle';
 import {DialogConfirmationService} from '../dialog-confirmation.service';
+import {LocalStorageService} from '../local-storage.service';
+import {log} from 'util';
+import {PartCreateService} from '../mindory-api/part/part-create.service';
 
 @Injectable({
   providedIn: 'root'
@@ -50,6 +53,8 @@ export class PlayDuoService {
     private snackBarService: SnackbarService,
     private shotCreateService: ShotCreateService,
     private dialogConfirmationService: DialogConfirmationService,
+    private localStorageService: LocalStorageService,
+    private partCreateService: PartCreateService
   ) { }
 
   public async clickOnCard(card: Card, element: HTMLDivElement): Promise<void> {
@@ -162,6 +167,7 @@ export class PlayDuoService {
   public getActualRoomAndInitiateStartOfTheGame(): void {
     this.roomListUserService.get().subscribe(
       data => {
+        console.log(data);
         this.room = data;
         this.getActualDeck();
         this.initiateTheStartOfTheGame();
@@ -180,10 +186,18 @@ export class PlayDuoService {
     );
   }
 
+  private addUserToAPart(): void {
+    this.partCreateService.addUserToAPart(this.deck.Parts[0].id).subscribe(
+      data => data,
+      error => console.log(error)
+    );
+  }
+
   public getActualDeck(): void {
     this.listDeckService.getDeckFromPartId(this.room.part.id).subscribe(
       data => {
         this.deck = data;
+        this.addUserToAPart();
         shuffleArray(data.Parts[0].Cards, null);
         this.part = data.Parts[0];
       },
@@ -206,7 +220,7 @@ export class PlayDuoService {
   }
 
   private initiateTheStartOfTheGame(): void {
-    const tokenBearerSplit = environment.BEARER_EXAMPLE.split(' ');
+    const tokenBearerSplit = this.localStorageService.getSessionToken().split(' ');
     this.socketService.connect(this.room.id, tokenBearerSplit[1]);
     this.getIdFromTheFirstPlayer();
     this.getTheMessageIfUsersAreAuthentified();

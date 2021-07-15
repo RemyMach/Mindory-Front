@@ -37,6 +37,7 @@ export class AuthenticationService {
         tap(data => {
           if (data) {
             this.saveToken(data);
+
           }
         }),
         catchError((err: HttpErrorResponse) => {

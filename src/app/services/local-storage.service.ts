@@ -63,4 +63,9 @@ export class LocalStorageService {
       return 'Bearer ' + this.session.token;
     }
   }
+
+  getParamGame(): ParamGameProps | null {
+    this.updateLocalStorageAttributes();
+    return this.paramGame;
+  }
 }

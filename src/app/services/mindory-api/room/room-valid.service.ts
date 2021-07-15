@@ -6,6 +6,7 @@ import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../../../environments/environment.dev';
 import {DefaultErrorService} from '../error/default-error.service';
 import { Router} from '@angular/router';
+import {LocalStorageService} from '../../local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,14 +14,15 @@ import { Router} from '@angular/router';
 export class RoomValidService {
 
   private httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json', Authorization: environment.BEARER_EXAMPLE as string })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json', Authorization: this.localStorageService.getSessionToken() })
   };
   private baseUrl = 'http://localhost:3000/rooms/token';
 
   constructor(
     private http: HttpClient,
     private defaultErrorService: DefaultErrorService,
-    private route: Router
+    private route: Router,
+    private localStorageService: LocalStorageService
   ) { }
 
   public isValidToken(token: string): Observable<any> {
