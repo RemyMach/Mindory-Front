@@ -5,8 +5,9 @@
   </div>
   <div id="banner-time-logo">
     <div class="banner-play-timer">
-      <h1>Précédent Record</h1>
-      {{lastRecord}}
+      <h1 *ngIf="localStorageService.getSessionToken(); else NoConnect">Votre Record sur ce deck</h1>
+      <ng-template #NoConnect><h1>Connectez vous pour enregistrer vos temps</h1></ng-template>
+      <h1>{{playSoloService.betterPartTime |date:'HH:mm:ss':'UTC'}}</h1>
     </div>
     <div id="logo-play-content banner-play-timer">
       <!--<img class="banner-play-logo" *ngIf="deck" src="http://localhost:3000/{{deck?.image}}" alt="{{deck?.image}}">-->

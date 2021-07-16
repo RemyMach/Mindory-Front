@@ -21,6 +21,7 @@ import {LocalStorageService} from '../local-storage.service';
 import {PartCreateService} from '../mindory-api/part/part-create.service';
 import {CardPlayStatusService} from '../mindory-api/card/card-play-status.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {PartListService} from '../mindory-api/part/part-list.service';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +44,7 @@ export class PlayDuoService {
   gameStart = false;
   pairsFoundByMe = 0;
   pairsFoundByOther = 0;
+  betterPartTime: Date;
 
   constructor(
     private roomCreateService: RoomCreateService,
@@ -57,8 +59,8 @@ export class PlayDuoService {
     private localStorageService: LocalStorageService,
     private partCreateService: PartCreateService,
     private cardPlayStatusService: CardPlayStatusService,
-    private route: ActivatedRoute,
-    private router: Router
+    private partListService: PartListService
+
   ) { }
 
   public async clickOnCard(card: Card, element: HTMLDivElement): Promise<void> {
@@ -242,6 +244,7 @@ export class PlayDuoService {
       data => {
         this.deck = data;
         if (this.localStorageService.getSessionToken()) {
+          this.getBetterPart();
           this.addUserToAPart();
           this.getPlayStatus();
         }
@@ -263,6 +266,15 @@ export class PlayDuoService {
         this.snackBar.openSnackBar(error, 'OK', 'Error');
         this.buttonCreatePart = false;
       }
+    );
+  }
+  private getBetterPart(): void {
+    this.partListService.getBetterPartForADeck(this.deck.id).subscribe(
+      data => {
+        this.betterPartTime = new Date(0);
+        this.betterPartTime.setUTCSeconds(data.time);
+      },
+      error => console.log(error)
     );
   }
 
@@ -304,10 +316,10 @@ export class PlayDuoService {
     this.socketService.listenMessage('UsersAreAuthentified').subscribe(
       data => {
         this.dialogOptions = {
-          title: 'Authentification Message',
+          title: 'Message Informatif',
           subTitle: 'Vous êtes tous les deux connectés',
-          message: `VOus pouvez donc refresh la page tant que la partie n'est pas finit même après son début ou revenir sur le lien pour finir la partie plus tard sans rencontrer de problèmes`,
-          confirmText: 'Confirm'
+          message: `Vous pouvez donc refresh la page tant que la partie n'est pas finit même après son début ou revenir sur le lien pour finir la partie plus tard sans rencontrer de problèmes`,
+          confirmText: 'Ok'
         };
         this.dialogConfirmationService.open(this.dialogOptions);
       },
@@ -319,10 +331,10 @@ export class PlayDuoService {
     this.socketService.listenMessage('UsersAreNotAuthentified').subscribe(
       data => {
         this.dialogOptions = {
-          title: 'Authentification Message',
+          title: 'Message Informatif',
           subTitle: 'Vous n\'êtes pas tous les deux connectés',
-          message: `Vous ne pouvez donc pas actualiser la page où la quitter sinon vos données de partie seront perdus`,
-          confirmText: 'Confirm'
+          message: `Vous ne pouvez donc pas actualiser la page où la quitter sinon une nouvelle partie commencera`,
+          confirmText: 'Ok'
         };
         this.dialogConfirmationService.open(this.dialogOptions);
       },
