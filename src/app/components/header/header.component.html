@@ -8,7 +8,7 @@
       <a (click)="router.navigate(['/admin/decks'])">Admin</a>
     </span>
 
-    <span *ngIf="authService.connectionValidate; else elseBlock">
+    <span *ngIf="localStorageService.getSessionToken() && authService.connectionValidate; else elseBlock">
       <mat-icon class="account_icon" matSuffix>account_circle</mat-icon>
       <mat-icon class="account_icon" matSuffix>expand_more</mat-icon>
     </span>

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthService} from '../../services/auth.service';
+import {LocalStorageService} from '../../services/local-storage.service';
 
 @Component({
   selector: 'app-header',
@@ -11,11 +12,15 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     public router: Router,
-    public authService: AuthService
+    public authService: AuthService,
+    public localStorageService: LocalStorageService
   ) { }
 
   ngOnInit(): void {
-    this.authService.tryConnect();
+    this.authService.tryConnect().subscribe(
+      data => data,
+      error => error
+    );
   }
 
   get isConnect(): boolean {

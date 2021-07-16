@@ -17,6 +17,7 @@ export class HttpOptionsService {
         headers: new HttpHeaders({ 'Content-Type': 'application/json' })
       };
     }else {
+      console.log('on passe dans le bon endroit');
       return {
         headers: new HttpHeaders({ 'Content-Type': 'application/json', Authorization: this.localStorageService.getSessionToken() })
       };

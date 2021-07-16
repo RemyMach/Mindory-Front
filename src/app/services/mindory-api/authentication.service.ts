@@ -7,6 +7,7 @@ import {LocalStorageService} from '../local-storage.service';
 import {SessionModel} from '../../models/session.model';
 import {DefaultErrorService} from './error/default-error.service';
 import {environment} from '../../../environments/environment.dev';
+import {HttpOptionsService} from '../utils/http-options.service';
 
 
 @Injectable({
@@ -15,24 +16,19 @@ import {environment} from '../../../environments/environment.dev';
 export class AuthenticationService {
   tokenValue: string = '';
 
-  httpOptionsAuthentified = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json', Authorization: this.localStorageService.getSessionToken() })
-  };
-
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
+  private httpOptions: {headers: HttpHeaders};
   baseUrl = 'http://localhost:3000/auth';
 
   constructor(
     private http: HttpClient,
     private localStorageService: LocalStorageService,
     private defaultErrorService: DefaultErrorService,
+    private httpOptionsService: HttpOptionsService
   ) { }
 
   public login(email: string, password: string): Observable<any> {
-
-    return this.http.post<SessionModel>(`${this.baseUrl}/login`, {email, password}, this.httpOptions)
+    this.httpOptionsService.generateHttpOptions();
+    return this.http.post<SessionModel>(`${this.baseUrl}/login`, {email, password}, {headers: new HttpHeaders({ 'Content-Type': 'application/json'})})
       .pipe(
         tap(data => {
           if (data) {
@@ -47,7 +43,10 @@ export class AuthenticationService {
   }
 
   public verifyToken(): Observable<any> {
-    return this.http.post(`${this.baseUrl}/token`, {} , this.httpOptionsAuthentified)
+    this.httpOptions = this.httpOptionsService.generateHttpOptions();
+    console.log(this.localStorageService.getSessionToken());
+    console.log(this.httpOptions);
+    return this.http.post(`${this.baseUrl}/token`, {} , this.httpOptions)
       .pipe(
         tap(data => data),
         catchError((err: HttpErrorResponse) => {
@@ -60,7 +59,7 @@ export class AuthenticationService {
   }
 
   public subscribe(props: UserModel): Observable<string | UserModel> {
-
+    this.httpOptionsService.generateHttpOptions();
     return this.http.post<UserModel>(`${this.baseUrl}/subscribe`, props, this.httpOptions)
       .pipe(
         tap(data => {

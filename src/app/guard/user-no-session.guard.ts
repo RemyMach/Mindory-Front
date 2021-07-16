@@ -15,9 +15,11 @@ export class UserNoSessionGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this.localStorageService.getSessionToken() !== null || this.localStorageService.getSessionToken() !== undefined) {
+    if (this.localStorageService.getSessionToken() !== null && this.localStorageService.getSessionToken() !== undefined) {
+      console.log(this.localStorageService.getSessionToken());
       this.router.navigate(['']);
       return false;
     }
+    return true;
   }
 }
