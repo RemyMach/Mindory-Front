@@ -19,6 +19,7 @@ import {AboutComponent} from './components/about/about.component';
 import {LegalNoticeComponent} from './components/legal-notice/legal-notice.component';
 import {DataComponent} from './components/data/data.component';
 import {ContactComponent} from './components/contact/contact.component';
+import {UserNoSessionGuard} from './guard/user-no-session.guard';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -26,10 +27,10 @@ const routes: Routes = [
   {path: 'contact', component: ContactComponent},
   {path: 'data', component: DataComponent},
   {path: 'legal', component: LegalNoticeComponent},
-  {path: 'login', component: LoginComponent},
-  {path: 'subscribe', component: SubscribeComponent},
-  {path: 'forget', component: ForgetPasswordComponent},
-  {path: 'reset/:token', component: ResetPasswordComponent},
+  {path: 'login', component: LoginComponent, canActivate: [UserNoSessionGuard]},
+  {path: 'subscribe', component: SubscribeComponent, canActivate: [UserNoSessionGuard]},
+  {path: 'forget', component: ForgetPasswordComponent, canActivate: [UserNoSessionGuard]},
+  {path: 'reset/:token', component: ResetPasswordComponent, canActivate: [UserNoSessionGuard]},
   {path: 'play/mode', component: PlayModeComponent},
   {path: 'play/decks', component: PlayDeckComponent},
   {path: 'play/solo/decks/:deckTitle', component: PlaySoloComponent},
