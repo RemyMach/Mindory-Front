@@ -47,7 +47,7 @@ export class RoomJoinService {
         this.router.navigate(['play/duo/' + data.token]);
       },
       error => {
-        this.snackbarService.openSnackBar('keyWord non valid', 'OK', 'error');
+        this.snackbarService.openSnackBar('mot de passe custom non valid', 'OK', 'Error');
       }
     );
   }
