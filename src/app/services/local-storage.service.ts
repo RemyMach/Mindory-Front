@@ -59,7 +59,6 @@ export class LocalStorageService {
   }
   getSessionToken(): string {
     this.updateLocalStorageAttributes();
-    console.log(this.session);
     if (this.session) {
       return 'Bearer ' + this.session.token;
     }
