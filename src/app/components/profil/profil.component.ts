@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-import {AuthService} from '../../services/mindory-api/auth.service';
 import {SnackbarService} from '../../services/snackbar.service';
+import {PasswordResetService} from '../../services/mindory-api/password-reset.service';
+import {LocalStorageService} from '../../services/local-storage.service';
 
 @Component({
   selector: 'app-account',
@@ -16,61 +17,48 @@ export class ProfilComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService,
+    private passwordResetService: PasswordResetService,
+    private localStorageService: LocalStorageService,
     private router: Router,
     private snackBar: SnackbarService
   ) { }
 
-  subscribeForm: FormGroup = this.formBuilder.group({
-    name: ['', [Validators.required]],
-    surname: ['', [Validators.required]],
-    email: ['', [Validators.required, Validators.email]],
+  changePasswordForm: FormGroup = this.formBuilder.group({
+    oldPassword: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50)]],
     password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50)]],
-    confirmationPassword: ['', [Validators.required]],
-    username: ['', [Validators.required]]
+    confirmationPassword: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50)]]
   }, {validators: this.confirmPasswords('password', 'confirmationPassword')});
 
   ngOnInit(): void {
   }
 
-  public postSubscribeForm(): Promise<void> {
-    if (this.subscribeForm.invalid && !this.subscribeForm.dirty) {
+  public postChangePasswordForm(): Promise<void> {
+    if (this.changePasswordForm.invalid && !this.changePasswordForm.dirty) {
       return;
     }
 
     this.buttonIsInValidAfterClick = true;
 
-    this.attemptToSubscribe();
+    this.attemptToChangePassword();
   }
 
-  private attemptToSubscribe(): void {
-
-    this.authService.subscribe({
-      id: null,
-      name: this.subscribeForm.get('name').value as string,
-      surname: this.subscribeForm.get('surname').value as string,
-      email: this.subscribeForm.get('email').value as string,
-      password: this.subscribeForm.get('password').value as string,
-      username: this.subscribeForm.get('username').value as string
-    })
-      .subscribe(
-        data => {
-          this.authService.login(this.subscribeForm.get('email').value, this.subscribeForm.get('password').value)
-            .subscribe(
-              dataLogin => {
-                this.router.navigate(['']);
-              },
-              error => {
-                this.snackBar.openSnackBar('impossible to connect retry later in login page', 'OK', 'Error');
-                this.buttonIsInValidAfterClick = false;
-              }
-            );
-        },
-        error => {
-          this.snackBar.openSnackBar(error, 'OK', 'Error');
-          this.buttonIsInValidAfterClick = false;
-        }
-      );
+  private attemptToChangePassword(): void {
+    this.localStorageService.updateLocalStorageAttributes();
+    this.passwordResetService.change(
+      this.changePasswordForm.get('oldPassword').value as string,
+      this.changePasswordForm.get('password').value as string,
+      this.localStorageService.session.token
+    )
+    .subscribe(
+      () => {
+        this.snackBar.openSnackBar('Votre mot de passe a bien été changé', 'OK', 'Success');
+      },
+      error => {
+        this.snackBar.openSnackBar(error, 'OK', 'Error');
+        // this.snackBar.openSnackBar('Votre mot de passe est incorrect', 'OK', 'Error');
+        this.buttonIsInValidAfterClick = false;
+      }
+    );
   }
 
   confirmPasswords(controlName: string, matchingControlName: string): (formGroup: FormGroup) => void {
