@@ -20,6 +20,8 @@ import {LegalNoticeComponent} from './components/legal-notice/legal-notice.compo
 import {DataComponent} from './components/data/data.component';
 import {ContactComponent} from './components/contact/contact.component';
 import {UserNoSessionGuard} from './guard/user-no-session.guard';
+import {LogoutComponent} from './components/logout/logout.component';
+import {ProfilComponent} from './components/profil/profil.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -40,6 +42,8 @@ const routes: Routes = [
   {path: 'play/create', component: CreatePartComponent},
   {path: 'play/join', component: JoinPartComponent},
   {path: 'admin/decks', component: AdminDecksListComponent},
+  {path: 'logout', component: LogoutComponent},
+  {path: 'profil', component: ProfilComponent},
   {path: '**', component: PageNotFoundComponent}
 ];
 

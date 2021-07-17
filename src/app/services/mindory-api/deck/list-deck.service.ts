@@ -37,19 +37,18 @@ export class ListDeckService {
     );
   }
 
-  public callDeleteDeck(deckId: number): Observable<string>
+  public deleteDeck(deckId: number): void
   {
-    return this.http.delete<string>(`${this.baseUrl}/${deckId}`).pipe(
+    this.decks = this.decks.filter(deck => {
+      return deck.id !== deckId;
+    });
+
+    this.http.delete<string>(`${this.baseUrl}/${deckId}`).pipe(
       tap(() => this.snackBarService.openSnackBar('Ce deck a bien été supprimé', 'OK', 'Success')),
       catchError((err: HttpErrorResponse) => {
         return this.defaultErrorService.handleError<string>(err, 'Incorrect request');
       })
-    );
-  }
-
-  public deleteDeck(deckId: number): void
-  {
-    this.callDeleteDeck(deckId).subscribe(
+    ).subscribe(
       value => console.log(value),
       err => console.log(err)
     );
@@ -65,8 +64,7 @@ export class ListDeckService {
   public getAllDecks(offset: number, limit: number): void {
     this.getDecks(offset, limit).subscribe(
       value => this.decks = value,
-      err => console.log(err),
-      () => console.log('on a finit ici')
+      err => console.log(err)
     );
   }
 }

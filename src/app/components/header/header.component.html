@@ -9,8 +9,10 @@
     </span>
 
     <span *ngIf="localStorageService.getSessionToken() && authService.connectionValidate; else elseBlock">
-      <mat-icon class="account_icon" matSuffix>account_circle</mat-icon>
-      <mat-icon class="account_icon" matSuffix>expand_more</mat-icon>
+      <a title="Mon profile" (click)="router.navigate(['/profil'])"><mat-icon class="account_icon" matSuffix>account_circle</mat-icon></a>
+    </span>
+    <span *ngIf="localStorageService.getSessionToken() && authService.connectionValidate">
+      <a class="header-sign" title="Se déconnecter" (click)="router.navigate(['/logout'])"><mat-icon class="logout" matSuffix>logout</mat-icon></a>
     </span>
     <ng-template #elseBlock>
       <a class="header-sign" (click)="router.navigate(['/login'])">Connexion</a>
