@@ -5,6 +5,7 @@ export interface Deck {
   id: number;
   title: string;
   image: string;
+  count: number;
   Cards?: Card[];
   Parts?: Part[];
 }

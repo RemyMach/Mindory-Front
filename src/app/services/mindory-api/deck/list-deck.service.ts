@@ -5,6 +5,7 @@ import {Deck} from '../../../models/deck.model';
 import {catchError, tap} from 'rxjs/operators';
 import {DefaultErrorService} from '../error/default-error.service';
 import {SnackbarService} from '../../snackbar.service';
+import {Card} from '../../../models/card.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,9 @@ import {SnackbarService} from '../../snackbar.service';
 export class ListDeckService {
   public decksHome: Deck[];
   public decks: Deck[];
-  private baseUrl = 'http://localhost:3000/decks';
+  public deck: Deck;
+  private deckBaseUrl = 'http://localhost:3000/decks';
+  private cardBaseUrl = 'http://localhost:3000/cards';
   constructor(
     private http: HttpClient,
     private defaultErrorService: DefaultErrorService,
@@ -20,7 +23,7 @@ export class ListDeckService {
   ) { }
 
   private getDecks(offset: number, limit: number, minCard: number = 0): Observable<Deck[]> {
-    return this.http.get<Deck[]>(`${this.baseUrl}/all?offset=${offset}&limit=${limit}&minCard=${minCard}`).pipe(
+    return this.http.get<Deck[]>(`${this.deckBaseUrl}/all?offset=${offset}&limit=${limit}&minCard=${minCard}`).pipe(
       tap(data => data),
       catchError((err: HttpErrorResponse) => {
         return this.defaultErrorService.handleError<Deck[]>(err, 'Incorrect request');
@@ -29,7 +32,15 @@ export class ListDeckService {
   }
 
   public getDeckFromPartId(partId: number): Observable<Deck> {
-    return this.http.get<Deck>(`${this.baseUrl}/part/${partId}`).pipe(
+    return this.http.get<Deck>(`${this.deckBaseUrl}/part/${partId}`).pipe(
+      tap(data => data),
+      catchError((err: HttpErrorResponse) => {
+        return this.defaultErrorService.handleError<Deck>(err, 'Incorrect request');
+      })
+    );
+  }
+  public callGetDeck(deckId: number): Observable<Deck> {
+    return this.http.get<Deck>(`${this.deckBaseUrl}/${deckId}`).pipe(
       tap(data => data),
       catchError((err: HttpErrorResponse) => {
         return this.defaultErrorService.handleError<Deck>(err, 'Incorrect request');
@@ -43,7 +54,7 @@ export class ListDeckService {
       return deck.id !== deckId;
     });
 
-    this.http.delete<string>(`${this.baseUrl}/${deckId}`).pipe(
+    this.http.delete<string>(`${this.deckBaseUrl}/${deckId}`).pipe(
       tap(() => this.snackBarService.openSnackBar('Ce deck a bien été supprimé', 'OK', 'Success')),
       catchError((err: HttpErrorResponse) => {
         return this.defaultErrorService.handleError<string>(err, 'Incorrect request');
@@ -51,6 +62,15 @@ export class ListDeckService {
     ).subscribe(
       value => console.log(value),
       err => console.log(err)
+    );
+  }
+
+  public callDeleteCard(cardId: number): Observable<string> {
+    return this.http.delete<string>(`${this.cardBaseUrl}/${cardId}`).pipe(
+      tap(() => this.snackBarService.openSnackBar('Cette carte a bien été supprimé', 'OK', 'Success')),
+      catchError((err: HttpErrorResponse) => {
+        return this.defaultErrorService.handleError<string>(err, 'Incorrect request');
+      })
     );
   }
 
@@ -66,5 +86,19 @@ export class ListDeckService {
       value => this.decks = value,
       err => console.log(err)
     );
+  }
+  public getDeck(deckId: number): void {
+    this.callGetDeck(deckId).subscribe(
+      value => this.deck = value,
+      error => console.log(error),
+      () => this.deck
+    );
+  }
+  public deleteCards(cards: Card[]): void {
+    for (const card of cards) {
+      this.callDeleteCard(card.id).subscribe(
+        error => console.log(error)
+      );
+    }
   }
 }

@@ -6,7 +6,7 @@ import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {LoaderComponent} from './components/loader/loader.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {LoaderInterceptorService} from './interceptors/loader-interceptors.service';
 import {LoginComponent} from './components/login/login.component';
@@ -55,6 +55,7 @@ import {AdminDecksTabComponent} from './components/admin/deck-tab/admin-decks-ta
 import { LegalNoticeComponent } from './components/legal-notice/legal-notice.component';
 import { DataComponent } from './components/data/data.component';
 import { ContactComponent } from './components/contact/contact.component';
+import { DeckEditorComponent } from './components/admin/deck-editor/deck-editor.component';
 import {LogoutComponent} from './components/logout/logout.component';
 import {ProfilComponent} from './components/profil/profil.component';
 
@@ -95,30 +96,33 @@ import {ProfilComponent} from './components/profil/profil.component';
     LegalNoticeComponent,
     DataComponent,
     ContactComponent,
+    DeckEditorComponent,
+    ContactComponent,
     LogoutComponent,
     ProfilComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    MatProgressSpinnerModule,
-    BrowserAnimationsModule,
-    ReactiveFormsModule,
-    MatSnackBarModule,
-    MatButtonModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatCheckboxModule,
-    MatDividerModule,
-    MatIconModule,
-    MatProgressSpinnerModule,
-    MatDialogModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        MatProgressSpinnerModule,
+        BrowserAnimationsModule,
+        ReactiveFormsModule,
+        MatSnackBarModule,
+        MatButtonModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatCheckboxModule,
+        MatDividerModule,
+        MatIconModule,
+        MatProgressSpinnerModule,
+        MatDialogModule,
+        FormsModule
+    ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: LoaderInterceptorService,
