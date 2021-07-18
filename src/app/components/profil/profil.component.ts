@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {SnackbarService} from '../../services/snackbar.service';
 import {PasswordResetService} from '../../services/mindory-api/password-reset.service';
 import {LocalStorageService} from '../../services/local-storage.service';
+import {UserModel} from '../../models/User.model';
 
 @Component({
   selector: 'app-account',
@@ -76,5 +77,10 @@ export class ProfilComponent implements OnInit {
         matchingControl.setErrors(null);
       }
     };
+  }
+
+  getUserInformations(): UserModel
+  {
+    return this.localStorageService.user;
   }
 }
