@@ -13,6 +13,8 @@ import {Picture} from '../../models/picture.model';
 })
 export class ScrapPictureService {
 
+  pictures: Picture[] = [];
+
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json'})
   };
@@ -37,7 +39,7 @@ export class ScrapPictureService {
   private listScrapPictures(name: string): Observable<any> {
     return this.http.get<Picture[]>(`${this.baseUrl}/${name}`,  this.httpOptions)
       .pipe(
-        tap(data => console.log(data)
+        tap(data => data
         ),
         catchError((err: HttpErrorResponse) => {
           return this.defaultErrorService.handleError<string>(err, 'Please retry later');
@@ -54,7 +56,7 @@ export class ScrapPictureService {
 
   public getAllPictureFromAName(name: string): void {
     this.listScrapPictures(name).subscribe(
-      data => data,
+      data => this.pictures = data,
       error => error
     );
   }

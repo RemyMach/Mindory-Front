@@ -12,14 +12,14 @@
   font-size: 1.2em;
 }
 
-#form-keyword {
+.form-keyword {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-#inputs_form {
+.inputs_form {
   margin-top: 15%;
   margin-bottom: 15%;
   width: auto;
@@ -29,12 +29,12 @@
   flex-direction: row;
 }
 
-#inputs_form mat-form-field {
+.inputs_form mat-form-field {
   margin-right: 10%;
   margin-left: 10%;
 }
 
-#inputs_form mat-form-field mat-label{
+.inputs_form mat-form-field mat-label{
 
   font-family: "Chewy", Arial,Helvetica, sans-serif;
 }
@@ -43,3 +43,28 @@
   cursor: pointer;
   color: blue;
 }
+
+.images-content {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 5px;
+  grid-auto-rows: minmax(10vh, 15vh);
+  width: 60%;
+  margin: auto;
+  color: white;
+}
+
+.image-content {
+  justify-content: center;
+  align-items: center;
+  /*perspective: 1000px;*/
+}
+
+.scrap-picture {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+

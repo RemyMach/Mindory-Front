@@ -6,12 +6,12 @@
   </p>
 
   <h2>Ecrivez le sujet</h2>
-  <form id="form-keyword" [formGroup]="scrapForm" (ngSubmit)="scrapApi()">
+  <form class="form-keyword" [formGroup]="scrapForm" (ngSubmit)="scrapApi()">
 
-        <span id="inputs_form">
+        <span class="inputs_form">
             <mat-form-field class="example-form-field">
               <mat-label>Sujet</mat-label>
-              <input matInput type="text" name="name" id="name" formControlName="name" required>
+              <input matInput type="text" name="name" formControlName="name" required>
             </mat-form-field>
         </span>
 
@@ -20,4 +20,32 @@
         </span>
 
   </form>
+</div>
+
+<div class="create-part-content">
+  <h1>lister les photos d'un sujet</h1>
+  <p class="create-part-content">
+    regardez les photos d'un sujet précédement scrapé
+  </p>
+
+  <h2>Ecrivez le sujet</h2>
+  <form class="form-keyword" [formGroup]="listScrapForm" (ngSubmit)="listScrapApi()">
+
+        <span class="inputs_form">
+            <mat-form-field class="example-form-field">
+              <mat-label>Sujet</mat-label>
+              <input matInput type="text" name="name" formControlName="name" required>
+            </mat-form-field>
+        </span>
+
+    <span class="button-validation">
+            <button class="button_connect" [ngClass]="{'button_connect_active': !listScrapForm.invalid && !buttonCreatePart}" mat-raised-button [disabled]="listScrapForm.invalid || buttonCreatePart">Valider</button>
+        </span>
+
+  </form>
+</div>
+<div class="images-content">
+  <span class="image-content" *ngFor="let picture of scrapPictureService.pictures">
+    <a class="image-content" href="http://localhost:5000/static/{{picture.name}}"  target="_blank" ><img class="scrap-picture" src="http://localhost:5000/static/{{picture.name}}"></a>
+  </span>
 </div>

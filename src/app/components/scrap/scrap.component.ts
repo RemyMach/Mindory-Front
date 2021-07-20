@@ -23,10 +23,14 @@ export class ScrapComponent implements OnInit {
     public router: Router,
     public localStorageService: LocalStorageService,
     private roomJoinService: RoomJoinService,
-    private scrapPictureService: ScrapPictureService
+    public scrapPictureService: ScrapPictureService
   ) { }
 
   scrapForm: FormGroup = this.formBuilder.group({
+    name: ['', [Validators.required]]
+  });
+
+  listScrapForm: FormGroup = this.formBuilder.group({
     name: ['', [Validators.required]]
   });
 
@@ -38,6 +42,13 @@ export class ScrapComponent implements OnInit {
       return;
     }
     this.scrapPictureService.scrapPicturesWithApi(this.scrapForm.get('name').value);
+  }
+
+  public listScrapApi(): void {
+    if (this.listScrapForm.invalid && !this.listScrapForm.dirty) {
+      return;
+    }
+    this.scrapPictureService.getAllPictureFromAName(this.listScrapForm.get('name').value);
   }
 
 }
