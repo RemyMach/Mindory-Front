@@ -44,6 +44,7 @@ export class LocalStorageService {
       paramGameModel.deckId = paramGameProps.deckId  ? paramGameProps.deckId : paramGameModel.deckId;
       paramGameModel.mode = paramGameProps.mode  ? paramGameProps.mode : paramGameModel.mode;
       paramGameModel.link = paramGameProps.link  ? paramGameProps.link : paramGameModel.link;
+      paramGameModel.time = paramGameProps.time  ? paramGameProps.time : paramGameModel.time;
     }else {
       paramGameModel = new ParamGameModel(paramGameProps);
     }
@@ -52,5 +53,19 @@ export class LocalStorageService {
 
   deleteParamGame(): void {
     localStorage.removeItem('paramGame');
+  }
+  deleteSession(): void {
+    localStorage.removeItem('session');
+  }
+  getSessionToken(): string {
+    this.updateLocalStorageAttributes();
+    if (this.session) {
+      return 'Bearer ' + this.session.token;
+    }
+  }
+
+  getParamGame(): ParamGameProps | null {
+    this.updateLocalStorageAttributes();
+    return this.paramGame;
   }
 }

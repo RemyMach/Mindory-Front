@@ -56,6 +56,8 @@ import { LegalNoticeComponent } from './components/legal-notice/legal-notice.com
 import { DataComponent } from './components/data/data.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { DeckEditorComponent } from './components/admin/deck-editor/deck-editor.component';
+import {LogoutComponent} from './components/logout/logout.component';
+import {ProfilComponent} from './components/profil/profil.component';
 
 @NgModule({
   declarations: [
@@ -94,7 +96,10 @@ import { DeckEditorComponent } from './components/admin/deck-editor/deck-editor.
     LegalNoticeComponent,
     DataComponent,
     ContactComponent,
-    DeckEditorComponent
+    DeckEditorComponent,
+    ContactComponent,
+    LogoutComponent,
+    ProfilComponent
   ],
     imports: [
         BrowserModule,

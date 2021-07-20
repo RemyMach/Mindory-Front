@@ -1,1 +1,23 @@
-<p>join-part works!</p>
+<app-header></app-header>
+<div class="create-part-content">
+  <h1>Rejoindre une partie</h1>
+  <p class="create-part-content">
+    On vous a transmis un mot de passe custom pour participer à une partie ?
+  </p>
+
+  <h2>Rentrez votre le mot de passe custom</h2>
+  <form id="form-keyword" [formGroup]="createKeyWordForm" (ngSubmit)="postKeyWordForm()">
+
+        <span id="inputs_form">
+            <mat-form-field class="example-form-field">
+              <mat-label>Mot de passe custom</mat-label>
+              <input matInput type="text" name="keyWord" id="keyWord" formControlName="keyWord" required>
+            </mat-form-field>
+        </span>
+
+    <span id="button-validation">
+            <button id="button_connect" [ngClass]="{'button_connect_active': !createKeyWordForm.invalid && !buttonCreatePart}" mat-raised-button [disabled]="createKeyWordForm.invalid || playDuoService.buttonCreatePart">Valider</button>
+        </span>
+
+  </form>
+</div>

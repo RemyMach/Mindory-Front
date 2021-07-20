@@ -22,11 +22,16 @@ export class CardDeckComponent implements OnInit {
 
   public handleDeckClick(): void {
     this.localStorageService.updateLocalStorageAttributes();
-    if (this.localStorageService.paramGame !== null && Date.now() - this.localStorageService.paramGame.time >= 5000 && this.localStorageService.paramGame.mode) {
-      if (this.localStorageService.paramGame.mode === 'solo') {
+    console.log(this.localStorageService.getParamGame());
+    console.log(Date.now() - this.localStorageService.getParamGame().time);
+
+    if (this.localStorageService.getParamGame() !== null && Date.now() - this.localStorageService.getParamGame().time <= 10000 && this.localStorageService.getParamGame().mode) {
+      console.log(this.localStorageService.getParamGame().mode);
+      if (this.localStorageService.getParamGame().mode === 'solo') {
         this.router.navigate([`play/solo/decks/${this.deck.id}`]);
-      }else if (this.localStorageService.paramGame.mode === 'duo') {
-        if (this.localStorageService.paramGame.link !== null && this.localStorageService.paramGame.link === 'create') {
+      }else if (this.localStorageService.getParamGame().mode === 'duo') {
+        console.log(this.localStorageService.getParamGame().link);
+        if (this.localStorageService.getParamGame().link !== null && this.localStorageService.getParamGame().link === 'create') {
           this.playDuoService.createRoom(this.deck.id);
           this.router.navigate(['play/create']);
         }else {

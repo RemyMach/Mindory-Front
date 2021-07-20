@@ -48,14 +48,23 @@ export class ListDeckService {
     );
   }
 
-  public callDeleteDeck(deckId: number): Observable<string> {
-    return this.http.delete<string>(`${this.deckBaseUrl}/${deckId}`).pipe(
+  public deleteDeck(deckId: number): void
+  {
+    this.decks = this.decks.filter(deck => {
+      return deck.id !== deckId;
+    });
+
+    this.http.delete<string>(`${this.deckBaseUrl}/${deckId}`).pipe(
       tap(() => this.snackBarService.openSnackBar('Ce deck a bien été supprimé', 'OK', 'Success')),
       catchError((err: HttpErrorResponse) => {
         return this.defaultErrorService.handleError<string>(err, 'Incorrect request');
       })
+    ).subscribe(
+      value => console.log(value),
+      err => console.log(err)
     );
   }
+
   public callDeleteCard(cardId: number): Observable<string> {
     return this.http.delete<string>(`${this.cardBaseUrl}/${cardId}`).pipe(
       tap(() => this.snackBarService.openSnackBar('Cette carte a bien été supprimé', 'OK', 'Success')),
@@ -84,17 +93,6 @@ export class ListDeckService {
     }
   }
 
-  public deleteDeck(deckId: number): void
-  {
-    this.decks = this.decks.filter(deck => {
-      return deck.id !== deckId;
-    });
-    this.callDeleteDeck(deckId).subscribe(
-      value => console.log(value),
-      err => console.log(err)
-    );
-  }
-
   public getDecksFromHome(minCard: number = 0): void{
     this.getDecks(0, 3, minCard).subscribe(
       value => this.decksHome = value,
@@ -105,8 +103,7 @@ export class ListDeckService {
   public getAllDecks(offset: number, limit: number): void {
     this.getDecks(offset, limit).subscribe(
       value => this.decks = value,
-      err => console.log(err),
-      () => console.log('on a finit ici')
+      err => console.log(err)
     );
   }
   public getDeck(deckId: number): void {

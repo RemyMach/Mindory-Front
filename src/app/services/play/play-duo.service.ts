@@ -17,6 +17,11 @@ import {delay} from '../../utils/delay';
 import {ShotCreateService} from '../mindory-api/shot/shot-create.service';
 import {shuffleArray} from '../../utils/array/shuffle';
 import {DialogConfirmationService} from '../dialog-confirmation.service';
+import {LocalStorageService} from '../local-storage.service';
+import {PartCreateService} from '../mindory-api/part/part-create.service';
+import {CardPlayStatusService} from '../mindory-api/card/card-play-status.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {PartListService} from '../mindory-api/part/part-list.service';
 
 @Injectable({
   providedIn: 'root'
@@ -37,8 +42,9 @@ export class PlayDuoService {
   listElementClicked: Set<HTMLDivElement> = new Set();
   listElementToRefresh: Set<HTMLDivElement> = new Set();
   gameStart = false;
-  pairsFoundByMe = 7;
-  pairsFoundByOther = 7;
+  pairsFoundByMe = 0;
+  pairsFoundByOther = 0;
+  betterPartTime: Date;
 
   constructor(
     private roomCreateService: RoomCreateService,
@@ -50,6 +56,11 @@ export class PlayDuoService {
     private snackBarService: SnackbarService,
     private shotCreateService: ShotCreateService,
     private dialogConfirmationService: DialogConfirmationService,
+    private localStorageService: LocalStorageService,
+    private partCreateService: PartCreateService,
+    private cardPlayStatusService: CardPlayStatusService,
+    private partListService: PartListService
+
   ) { }
 
   public async clickOnCard(card: Card, element: HTMLDivElement): Promise<void> {
@@ -62,7 +73,9 @@ export class PlayDuoService {
       this.socketService.emit('cardReturn', card.id);
       this.addCardToTheGame(card, element);
       if (this.cardsClicked.size === this.NUMBER_CARD_COMPARE) {
-        this.createShot();
+        if (this.localStorageService.getSessionToken()) {
+          this.createShot();
+        }
         await this.compareCardsToSeeIfItsAMatch();
       }
     }
@@ -90,7 +103,7 @@ export class PlayDuoService {
   public createShot(): void {
 
     this.shotCreateService.create(this.cardsClicked, this.part.id, calculateTimeInSeconds(this.time)).subscribe(
-      data => {},
+      data => {console.log(`mes points ${this.pairsFoundByMe}, tes points ${this.pairsFoundByOther}`); },
       error  => this.snackBarService.openSnackBar('Our services have a problem please retry later', 'OK', 'error')
     );
   }
@@ -152,7 +165,6 @@ export class PlayDuoService {
   }
 
   public createRoom(deckId: number): void {
-    console.log('on passe ici');
     this.roomCreateService.create(deckId).subscribe(
       data => this.room = data,
       error => console.log(error)
@@ -162,6 +174,7 @@ export class PlayDuoService {
   public getActualRoomAndInitiateStartOfTheGame(): void {
     this.roomListUserService.get().subscribe(
       data => {
+        console.log(data);
         this.room = data;
         this.getActualDeck();
         this.initiateTheStartOfTheGame();
@@ -174,7 +187,53 @@ export class PlayDuoService {
     this.roomListUserService.get().subscribe(
       data => {
         this.room = data;
+        this.getActualDeckForCreation();
+      },
+      error => console.log(error)
+    );
+  }
+
+  public getActualRoomForAnonymous(token: string): void {
+
+    this.roomListUserService.getForAnonymous(token).subscribe(
+      data => {
+        console.log(data);
+        this.room = data;
         this.getActualDeck();
+        this.initiateTheStartOfTheGameForAnonymous();
+      },
+      error => console.log(error)
+    );
+  }
+
+  private addUserToAPart(): void {
+    this.partCreateService.addUserToAPart(this.deck.Parts[0].id).subscribe(
+      data => data,
+      error => console.log(error)
+    );
+  }
+
+  private getPlayStatus(): void {
+    this.cardPlayStatusService.getPairAndPoints(this.deck.Parts[0].id).subscribe(
+      data => {
+        this.pairsFoundByMe = data.myPoints;
+        this.pairsFoundByOther = data.oponnentPoints;
+        this.part.Cards.forEach(card => {
+          if (data.cards.includes(card.id)) {
+            card.displayCard = {display: true};
+          }
+        });
+      },
+      error => console.log(error)
+    );
+  }
+
+  private getActualDeckForCreation(): void {
+    this.listDeckService.getDeckFromPartId(this.room.part.id).subscribe(
+      data => {
+        this.deck = data;
+        shuffleArray(data.Parts[0].Cards, null);
+        this.part = data.Parts[0];
       },
       error => console.log(error)
     );
@@ -184,6 +243,11 @@ export class PlayDuoService {
     this.listDeckService.getDeckFromPartId(this.room.part.id).subscribe(
       data => {
         this.deck = data;
+        if (this.localStorageService.getSessionToken()) {
+          this.getBetterPart();
+          this.addUserToAPart();
+          this.getPlayStatus();
+        }
         shuffleArray(data.Parts[0].Cards, null);
         this.part = data.Parts[0];
       },
@@ -204,10 +268,31 @@ export class PlayDuoService {
       }
     );
   }
+  private getBetterPart(): void {
+    this.partListService.getBetterPartForADeck(this.deck.id).subscribe(
+      data => {
+        this.betterPartTime = new Date(0);
+        this.betterPartTime.setUTCSeconds(data.time);
+      },
+      error => console.log(error)
+    );
+  }
 
   private initiateTheStartOfTheGame(): void {
-    const tokenBearerSplit = environment.BEARER_EXAMPLE.split(' ');
+    const tokenBearerSplit = this.localStorageService.getSessionToken().split(' ');
     this.socketService.connect(this.room.id, tokenBearerSplit[1]);
+    this.getIdFromTheFirstPlayer();
+    this.getTheMessageIfUsersAreAuthentified();
+    this.getTheMessageIfUsersAreNotAuthentified();
+    this.activateCardFromTheOtherUser();
+    this.hideCardsFromTheOtherUser();
+    this.pairFoundByOther();
+    this.switchActivePlayer();
+    this.gameFinished();
+  }
+
+  private initiateTheStartOfTheGameForAnonymous(): void {
+    this.socketService.connect(this.room.id);
     this.getIdFromTheFirstPlayer();
     this.getTheMessageIfUsersAreAuthentified();
     this.getTheMessageIfUsersAreNotAuthentified();
@@ -231,10 +316,10 @@ export class PlayDuoService {
     this.socketService.listenMessage('UsersAreAuthentified').subscribe(
       data => {
         this.dialogOptions = {
-          title: 'Authentification Message',
+          title: 'Message Informatif',
           subTitle: 'Vous êtes tous les deux connectés',
-          message: `VOus pouvez donc refresh la page tant que la partie n'est pas finit même après son début ou revenir sur le lien pour finir la partie plus tard sans rencontrer de problèmes`,
-          confirmText: 'Confirm'
+          message: `Vous pouvez donc refresh la page tant que la partie n'est pas finit même après son début ou revenir sur le lien pour finir la partie plus tard sans rencontrer de problèmes`,
+          confirmText: 'Ok'
         };
         this.dialogConfirmationService.open(this.dialogOptions);
       },
@@ -246,10 +331,10 @@ export class PlayDuoService {
     this.socketService.listenMessage('UsersAreNotAuthentified').subscribe(
       data => {
         this.dialogOptions = {
-          title: 'Authentification Message',
+          title: 'Message Informatif',
           subTitle: 'Vous n\'êtes pas tous les deux connectés',
-          message: `Vous ne pouvez donc pas actualiser la page où la quitter sinon vos données de partie seront perdus`,
-          confirmText: 'Confirm'
+          message: `Vous ne pouvez donc pas actualiser la page où la quitter sinon une nouvelle partie commencera`,
+          confirmText: 'Ok'
         };
         this.dialogConfirmationService.open(this.dialogOptions);
       },

@@ -2,6 +2,7 @@ import {Component, ElementRef, Input, OnInit, Renderer2, ViewChild} from '@angul
 import {Card} from '../../models/card.model';
 import {ListDeckCardsService} from '../../services/mindory-api/deck/list-deck-cards.service';
 import {PlaySoloService} from '../../services/play/play-solo.service';
+import {LocalStorageService} from '../../services/local-storage.service';
 
 @Component({
   selector: 'app-card',
@@ -18,6 +19,7 @@ export class CardComponent implements OnInit {
     public playSoloService: PlaySoloService,
     private elementRef: ElementRef,
     private renderer: Renderer2,
+    private localStorageService: LocalStorageService
   ) { }
 
   ngOnInit(): void {
@@ -26,7 +28,9 @@ export class CardComponent implements OnInit {
     if (this.playSoloService.gameStart === false) {
       this.playSoloService.gameStart = true;
       this.playSoloService.startGameChronometer();
-      this.playSoloService.createPart();
+      if (this.localStorageService.getSessionToken()) {
+        this.playSoloService.createPart();
+      }
     }
     const element = this.elementClickable.nativeElement;
 

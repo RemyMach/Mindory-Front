@@ -19,6 +19,9 @@ import {AboutComponent} from './components/about/about.component';
 import {LegalNoticeComponent} from './components/legal-notice/legal-notice.component';
 import {DataComponent} from './components/data/data.component';
 import {ContactComponent} from './components/contact/contact.component';
+import {UserNoSessionGuard} from './guard/user-no-session.guard';
+import {LogoutComponent} from './components/logout/logout.component';
+import {ProfilComponent} from './components/profil/profil.component';
 import {DeckEditorComponent} from './components/admin/deck-editor/deck-editor.component';
 
 const routes: Routes = [
@@ -27,10 +30,10 @@ const routes: Routes = [
   {path: 'contact', component: ContactComponent},
   {path: 'data', component: DataComponent},
   {path: 'legal', component: LegalNoticeComponent},
-  {path: 'login', component: LoginComponent},
-  {path: 'subscribe', component: SubscribeComponent},
-  {path: 'forget', component: ForgetPasswordComponent},
-  {path: 'reset/:token', component: ResetPasswordComponent},
+  {path: 'login', component: LoginComponent, canActivate: [UserNoSessionGuard]},
+  {path: 'subscribe', component: SubscribeComponent, canActivate: [UserNoSessionGuard]},
+  {path: 'forget', component: ForgetPasswordComponent, canActivate: [UserNoSessionGuard]},
+  {path: 'reset/:token', component: ResetPasswordComponent, canActivate: [UserNoSessionGuard]},
   {path: 'play/mode', component: PlayModeComponent},
   {path: 'play/decks', component: PlayDeckComponent},
   {path: 'play/solo/decks/:deckTitle', component: PlaySoloComponent},
@@ -41,6 +44,8 @@ const routes: Routes = [
   {path: 'play/join', component: JoinPartComponent},
   {path: 'admin/decks', component: AdminDecksListComponent},
   {path: 'admin/deck/:deckId', component: DeckEditorComponent},
+  {path: 'logout', component: LogoutComponent},
+  {path: 'profil', component: ProfilComponent},
   {path: '**', component: PageNotFoundComponent}
 ];
 

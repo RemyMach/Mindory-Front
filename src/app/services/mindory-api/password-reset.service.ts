@@ -25,7 +25,7 @@ export class PasswordResetService {
 
     return this.http.post<SessionModel>(`${this.baseUrl}/`, {email}, this.httpOptions)
       .pipe(
-        tap(data => {
+        tap(() => {
           return;
         }),
         catchError((err: HttpErrorResponse) => {
@@ -38,12 +38,29 @@ export class PasswordResetService {
 
     return this.http.put<SessionModel>(`${this.baseUrl}/`, {token, password}, this.httpOptions)
       .pipe(
-        tap(data => {
+        tap(() => {
           return;
         }),
         catchError((err: HttpErrorResponse) => {
           return this.defaultErrorService.handleError<string>(err, err.message);
         })
       );
+  }
+
+  public change(oldPassword: string, newPassword: string, token: string): Observable<any> {
+    this.setAuthorizationHeader(token);
+    return this.http.put<SessionModel>(`${this.baseUrl}/change`, {oldPassword, newPassword}, this.httpOptions)
+      .pipe(
+        tap(() => {
+          return;
+        }),
+        catchError((err: HttpErrorResponse) => {
+          return this.defaultErrorService.handleError<string>(err, err.message);
+        })
+      );
+  }
+
+  private setAuthorizationHeader(token: string): void {
+    this.httpOptions.headers = this.httpOptions.headers.append('Authorization', `Bearer ${token}`);
   }
 }

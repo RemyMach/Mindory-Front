@@ -6,6 +6,7 @@ import {SocketService} from '../../services/socket/socket.service';
 import {SnackbarService} from '../../services/snackbar.service';
 import {Subscription} from 'rxjs';
 import {DialogConfirmationService} from '../../services/dialog-confirmation.service';
+import {LocalStorageService} from '../../services/local-storage.service';
 
 @Component({
   selector: 'app-play-duo',
@@ -22,11 +23,15 @@ export class PlayDuoComponent implements OnInit, OnDestroy {
     public playDuoService: PlayDuoService,
     public socketService: SocketService,
     public snackbarService: SnackbarService,
+    public localStorageService: LocalStorageService,
     @Inject(DOCUMENT) private document: Document
   ) { }
 
   ngOnInit(): void {
-    this.playDuoService.getActualRoomAndInitiateStartOfTheGame();
+    if (this.localStorageService.getSessionToken())
+      this.playDuoService.getActualRoomAndInitiateStartOfTheGame();
+    else
+      this.playDuoService.getActualRoomForAnonymous(this.route.snapshot.params.token);
   }
 
   ngOnDestroy(): void {

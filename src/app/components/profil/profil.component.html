@@ -1,0 +1,59 @@
+<app-header></app-header>
+<span id="profil_content">
+  <h3>Vos informations</h3>
+    <span class="input_double_form">
+    <mat-form-field class="example-form-field">
+      <mat-label>Nom</mat-label>
+      <input disabled matInput value="{{getUserInformations().name}}">
+    </mat-form-field>
+    <mat-form-field class="example-form-field">
+      <mat-label>Prénom</mat-label>
+      <input disabled matInput value="{{getUserInformations().surname}}">
+    </mat-form-field>
+  </span>
+
+  <span class="input_double_form">
+    <mat-form-field class="example-form-field">
+      <mat-label>Pseudo</mat-label>
+      <input disabled matInput value="{{getUserInformations().username}}">
+    </mat-form-field>
+    <mat-form-field class="example-form-field">
+      <mat-label>Adresse mail</mat-label>
+      <input disabled matInput value="{{getUserInformations().email}}">
+    </mat-form-field>
+  </span>
+
+  <h3>Changer votre mot de passe</h3>
+  <form (ngSubmit)="postChangePasswordForm()" [formGroup]="changePasswordForm" id="form-change-password">
+    <mat-form-field class="example-form-field">
+      <mat-label>Ancien mot de passe</mat-label>
+      <input [type]="hidePasswordVisibility ? 'password': 'text'" formControlName="oldPassword" id="oldPassword" matInput
+             name="oldPassword" required>
+      <mat-icon (click)="hidePasswordVisibility = !hidePasswordVisibility" class="input_icon password_icon"
+                matSuffix>{{hidePasswordVisibility ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field class="example-form-field">
+      <mat-label>Mot de passe</mat-label>
+      <input [type]="hidePasswordVisibility ? 'password': 'text'" formControlName="password" id="password" matInput
+             name="password" required>
+      <mat-icon (click)="hidePasswordVisibility = !hidePasswordVisibility" class="input_icon password_icon"
+                matSuffix>{{hidePasswordVisibility ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </mat-form-field>
+    <mat-form-field class="example-form-field">
+      <mat-label>Retaper mot de passe</mat-label>
+      <input [type]="hidePasswordConfirmationVisibility ? 'password': 'text'" formControlName="confirmationPassword" id="confirmationPassword"
+             matInput name="confirmationPassword" required>
+      <mat-icon (click)="hidePasswordConfirmationVisibility = !hidePasswordConfirmationVisibility"
+                class="input_icon password_icon"
+                matSuffix>{{hidePasswordConfirmationVisibility ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </mat-form-field>
+
+    <span id="button-validation">
+        <button [disabled]="changePasswordForm.invalid || buttonIsInValidAfterClick"
+                [ngClass]="{'button_subscribe_active': !changePasswordForm.invalid && !buttonIsInValidAfterClick}"
+                id="button_change_password" mat-raised-button>Changer de mot de passe</button>
+    </span>
+  </form>
+</span>
+<app-footer></app-footer>

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-import {AuthService} from '../../services/mindory-api/auth.service';
+import {AuthenticationService} from '../../services/mindory-api/authentication.service';
 import {SnackbarService} from '../../services/snackbar.service';
 
 @Component({
@@ -17,8 +17,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private authService: AuthService,
-    private snackBar: SnackbarService
+    private authService: AuthenticationService,
+    private snackBar: SnackbarService,
   ) { }
 
   loginForm: FormGroup = this.formBuilder.group({

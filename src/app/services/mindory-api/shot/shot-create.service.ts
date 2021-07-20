@@ -6,6 +6,7 @@ import {Card} from '../../../models/card.model';
 import {DefaultErrorService} from '../error/default-error.service';
 import {Shot} from '../../../models/shot.model';
 import {environment} from '../../../../environments/environment.dev';
+import {LocalStorageService} from '../../local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,13 +14,14 @@ import {environment} from '../../../../environments/environment.dev';
 export class ShotCreateService {
 
   private httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json', Authorization: environment.BEARER_EXAMPLE as string })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json', Authorization: this.localStorageService.getSessionToken() })
   };
   private baseUrl = 'http://localhost:3000/shots';
 
   constructor(
     private http: HttpClient,
     private defaultErrorService: DefaultErrorService,
+    private localStorageService: LocalStorageService
   ) { }
 
   public create(cards: Set<Card>, partId: number, time: number): Observable<any> {

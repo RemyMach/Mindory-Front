@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-header-login',
@@ -9,10 +10,12 @@ import {Router} from '@angular/router';
 export class HeaderLoginComponent implements OnInit {
   PAGE_URL = this.router.url;
   constructor(
-     public router: Router
+     public router: Router,
+     private authService: AuthService
   ) { }
 
   ngOnInit(): void {
+    this.authService.tryConnect();
   }
 
 }

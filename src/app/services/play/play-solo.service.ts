@@ -8,6 +8,9 @@ import {Part} from '../../models/part.model';
 import {SnackbarService} from '../snackbar.service';
 import {ShotCreateService} from '../mindory-api/shot/shot-create.service';
 import {calculateTimeInSeconds, getTimeInHourMinuteSecondsFormat} from '../../utils/Time/calculateTime';
+import {PartListService} from '../mindory-api/part/part-list.service';
+import {Deck} from '../../models/deck.model';
+import {LocalStorageService} from '../local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,11 +26,15 @@ export class PlaySoloService {
   time: Date = new Date(0);
   interval$: Subscription;
   part: Part;
+  betterPartTime: Date;
+  deck: Deck;
   constructor(
     private listDeckCardsService: ListDeckCardsService,
     private partCreateService: PartCreateService,
     private snackBarService: SnackbarService,
-    private shotCreatService: ShotCreateService
+    private shotCreatService: ShotCreateService,
+    private partListService: PartListService,
+    private localStorageService: LocalStorageService
   ) { }
 
   public async clickOnCard(card: Card, element: HTMLDivElement): Promise<void> {
@@ -39,7 +46,9 @@ export class PlaySoloService {
       }
       this.addCardToTheGame(card, element);
       if (this.cardsClicked.size === this.NUMBER_CARD_COMPARE) {
-        this.createShot();
+        if (this.localStorageService.getSessionToken()) {
+          this.createShot();
+        }
         await this.compareCardsToSeeIfItsAMatch();
       }
     }
@@ -57,7 +66,7 @@ export class PlaySoloService {
   }
 
   public createPart(): void {
-    this.partCreateService.create(this.listDeckCardsService.deck.Cards, this.listDeckCardsService.deck.id).subscribe(
+    this.partCreateService.create(this.deck.Cards, this.deck.id).subscribe(
       data => this.part = data,
       error => this.snackBarService.openSnackBar('Our services have a problem please retry later', 'OK', 'error')
     );
@@ -68,6 +77,17 @@ export class PlaySoloService {
     this.shotCreatService.create(this.cardsClicked, this.part.id, calculateTimeInSeconds(this.time)).subscribe(
       data => {},
       error  => this.snackBarService.openSnackBar('Our services have a problem please retry later', 'OK', 'error')
+    );
+  }
+
+  public getDeck(idDeck: number): void{
+    this.listDeckCardsService.getDeckWithCards(idDeck).subscribe(
+      value => {
+        this.deck = value;
+        this.getBetterPart();
+      },
+      err => console.log(err),
+      () => console.log('on a finit ici')
     );
   }
 
@@ -113,6 +133,19 @@ export class PlaySoloService {
   private clearTheCurrentCard(): void {
     this.cardsClicked.clear();
     this.listElementClicked.clear();
+  }
+
+  public getBetterPart(): void {
+    this.partListService.getBetterPartForADeck(this.deck.id).subscribe(
+      (data: Part) => {
+        console.log(data);
+        this.betterPartTime = new Date(0);
+        console.log(data.time);
+        this.betterPartTime.setSeconds(data.time);
+        console.log(this.betterPartTime);
+      },
+      error => console.log(error)
+    );
   }
 
 }
