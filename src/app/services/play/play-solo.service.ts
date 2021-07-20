@@ -10,6 +10,7 @@ import {ShotCreateService} from '../mindory-api/shot/shot-create.service';
 import {calculateTimeInSeconds, getTimeInHourMinuteSecondsFormat} from '../../utils/Time/calculateTime';
 import {PartListService} from '../mindory-api/part/part-list.service';
 import {Deck} from '../../models/deck.model';
+import {LocalStorageService} from '../local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +33,8 @@ export class PlaySoloService {
     private partCreateService: PartCreateService,
     private snackBarService: SnackbarService,
     private shotCreatService: ShotCreateService,
-    private partListService: PartListService
+    private partListService: PartListService,
+    private localStorageService: LocalStorageService
   ) { }
 
   public async clickOnCard(card: Card, element: HTMLDivElement): Promise<void> {
@@ -44,7 +46,9 @@ export class PlaySoloService {
       }
       this.addCardToTheGame(card, element);
       if (this.cardsClicked.size === this.NUMBER_CARD_COMPARE) {
-        this.createShot();
+        if (this.localStorageService.getSessionToken()) {
+          this.createShot();
+        }
         await this.compareCardsToSeeIfItsAMatch();
       }
     }
