@@ -5,6 +5,7 @@
   grid-auto-rows: minmax(10vh, 15vh);
   width: 60%;
   margin: auto;
+  color: white;
 }
 
 .game-card-content {
