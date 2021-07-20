@@ -53,6 +53,8 @@
   height: 100%;
   border-radius: 5px;
   background-color: #4572A0;
+  margin-top: 16px;
+  overflow: hidden;
 }
 
 .card-content img {
