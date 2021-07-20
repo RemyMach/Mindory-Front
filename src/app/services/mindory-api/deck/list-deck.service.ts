@@ -134,7 +134,7 @@ export class ListDeckService {
   public createCards(textA: string, imageA: Blob, textB: string, imageB: Blob): void {
     this.callCreateCard(textA, imageA, undefined).subscribe(
       value => {
-        this.callCreateCard(textB, imageB, value.id).subscribe(
+        this.callCreateCard(textB, imageB, JSON.parse(JSON.stringify(value)).id).subscribe(
           error => console.log(error)
         );
       },
