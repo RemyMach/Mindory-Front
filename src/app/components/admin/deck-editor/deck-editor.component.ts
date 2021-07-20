@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ListDeckService} from '../../../services/mindory-api/deck/list-deck.service';
 import {ActivatedRoute} from '@angular/router';
 import {Card} from '../../../models/card.model';
@@ -19,13 +19,15 @@ export class Pair {
 })
 export class DeckEditorComponent implements OnInit {
   pairs: Pair[];
-  newCardA: string;
-  newCardB: string;
+  textCardA: string;
+  textCardB: string;
+  imageCardA: any;
+  imageCardB: any;
 
   constructor(
     public listDeckService: ListDeckService,
     private activatedRoute: ActivatedRoute,
-    private snackBarService: SnackbarService
+    private snackBarService: SnackbarService,
   ) { }
 
   ngOnInit(): void {
@@ -33,7 +35,6 @@ export class DeckEditorComponent implements OnInit {
   }
 
   getPairs(): void {
-    console.log(this.listDeckService.deck);
     this.pairs = [];
     for (const card of this.listDeckService.deck.Cards) {
       const match = this.pairs.filter(pair => pair.cards.filter(c => c.id === card.id).length > 0);
@@ -41,15 +42,50 @@ export class DeckEditorComponent implements OnInit {
         this.pairs.push(new Pair(card, card.cardAssociate));
       }
     }
-    console.log(this.pairs);
+  }
+  loadImageA(event): void {
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+          console.log(event.target);
+          // this.imageCardA = e.target.value;
+          this.imageCardA = event.target.files[0];
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  }
+  loadImageB(event): void {
+    // if (event.target.files && event.target.files[0]) {
+    //   const reader = new FileReader();
+    //   reader.onload = (e: any) => {
+    //     const image = new Image();
+    //     image.src = e.target.result;
+    //     image.onload = () => {
+    //       this.imageCardB = e.target.result;
+    //     };
+    //   };
+    //
+    //   reader.readAsDataURL(event.target.files[0]);
+    // }
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.imageCardB = e.target.value;
+      };
+
+      reader.readAsDataURL(event.target.files[0]);
+    }
   }
   addPair(): void {
-    console.log(this.newCardA);
-    console.log(this.newCardB);
-    if (this.newCardA === undefined || this.newCardB === undefined) {
+    console.log(this.textCardA);
+    console.log(this.imageCardA);
+    console.log(this.textCardB);
+    console.log(this.imageCardB);
+    if ((this.textCardA === undefined && this.imageCardA === undefined) || (this.textCardB === undefined && this.imageCardB === undefined)){
       this.snackBarService.openSnackBar('Merci de remplir les deux champs pour ajouter une carte', 'OK', 'Error');
       return;
     }
+    this.listDeckService.createCard(undefined, this.imageCardA);
   }
   deletePair(pair: Pair): void {
     this.listDeckService.deleteCards(pair.cards);

@@ -64,6 +64,25 @@ export class ListDeckService {
       })
     );
   }
+  public callCreateCard(text: string, image: any): Observable<string> {
+    if (text !== undefined) {
+      return this.http.post<string>(`${this.cardBaseUrl}/`, {text, deckId: this.deck.id}).pipe(
+        tap(() => this.snackBarService.openSnackBar('Cette carte a bien été ajoute', 'OK', 'Success')),
+        catchError((err: HttpErrorResponse) => {
+          return this.defaultErrorService.handleError<string>(err, 'Incorrect request');
+        })
+      );
+    }
+    if (image !== undefined) {
+      console.log(image);
+      return this.http.post<string>(`${this.cardBaseUrl}/`, {image, deckId: this.deck.id}).pipe(
+        tap(() => this.snackBarService.openSnackBar('Cette carte a bien été ajoute', 'OK', 'Success')),
+        catchError((err: HttpErrorResponse) => {
+          return this.defaultErrorService.handleError<string>(err, 'Incorrect request');
+        })
+      );
+    }
+  }
 
   public deleteDeck(deckId: number): void
   {
@@ -103,5 +122,10 @@ export class ListDeckService {
         error => console.log(error)
       );
     }
+  }
+  public createCard(text: string, image: any): void {
+    this.callCreateCard(text, image).subscribe(
+      error => console.log(error)
+    );
   }
 }
