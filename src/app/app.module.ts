@@ -58,6 +58,7 @@ import { ContactComponent } from './components/contact/contact.component';
 import { DeckEditorComponent } from './components/admin/deck-editor/deck-editor.component';
 import {LogoutComponent} from './components/logout/logout.component';
 import {ProfilComponent} from './components/profil/profil.component';
+import { ScrapComponent } from './components/scrap/scrap.component';
 
 @NgModule({
   declarations: [
@@ -99,7 +100,8 @@ import {ProfilComponent} from './components/profil/profil.component';
     DeckEditorComponent,
     ContactComponent,
     LogoutComponent,
-    ProfilComponent
+    ProfilComponent,
+    ScrapComponent
   ],
     imports: [
         BrowserModule,

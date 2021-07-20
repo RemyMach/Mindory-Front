@@ -1,0 +1,23 @@
+<app-header></app-header>
+<div class="create-part-content">
+  <h1>Scrap des photos sur un sujet</h1>
+  <p class="create-part-content">
+    Vous pouvez scrap des photos sur le sujet que vous désirez
+  </p>
+
+  <h2>Ecrivez le sujet</h2>
+  <form id="form-keyword" [formGroup]="scrapForm" (ngSubmit)="scrapApi()">
+
+        <span id="inputs_form">
+            <mat-form-field class="example-form-field">
+              <mat-label>Sujet</mat-label>
+              <input matInput type="text" name="name" id="name" formControlName="name" required>
+            </mat-form-field>
+        </span>
+
+    <span id="button-validation">
+            <button id="button_connect" [ngClass]="{'button_connect_active': !scrapForm.invalid && !buttonCreatePart}" mat-raised-button [disabled]="scrapForm.invalid || playDuoService.buttonCreatePart">Valider</button>
+        </span>
+
+  </form>
+</div>

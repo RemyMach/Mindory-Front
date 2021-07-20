@@ -23,6 +23,7 @@ import {UserNoSessionGuard} from './guard/user-no-session.guard';
 import {LogoutComponent} from './components/logout/logout.component';
 import {ProfilComponent} from './components/profil/profil.component';
 import {DeckEditorComponent} from './components/admin/deck-editor/deck-editor.component';
+import {ScrapComponent} from './components/scrap/scrap.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -44,6 +45,7 @@ const routes: Routes = [
   {path: 'play/join', component: JoinPartComponent},
   {path: 'admin/decks', component: AdminDecksListComponent},
   {path: 'admin/deck/:deckId', component: DeckEditorComponent},
+  {path: 'admin/scrap', component: ScrapComponent},
   {path: 'logout', component: LogoutComponent},
   {path: 'profil', component: ProfilComponent},
   {path: '**', component: PageNotFoundComponent}

@@ -38,7 +38,7 @@
   margin: auto;
   display: flex;
   max-height: 100%;
-  max-width: 80%;
+  max-width: 60%;
   overflow: scroll;
   font-size: 1vmax;
   /*backface-visibility: hidden;*/
@@ -46,6 +46,12 @@
 
 .div-content-back {
   cursor: pointer;
+}
+
+@media (max-width: 1050px) {
+  .div-content-card {
+    max-width: 80%;
+  }
 }
 
 
