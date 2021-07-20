@@ -64,10 +64,6 @@ export class DeckEditorComponent implements OnInit {
     }
   }
   addPair(): void {
-    console.log(this.textCardA);
-    console.log(this.textCardB);
-    console.log(this.imageCardA);
-    console.log(this.imageCardB);
     if ((this.textCardA === undefined && this.imageCardA === undefined) || (this.textCardB === undefined && this.imageCardB === undefined)){
       this.snackBarService.openSnackBar('Merci de remplir les deux champs pour ajouter une carte', 'OK', 'Error');
       return;
