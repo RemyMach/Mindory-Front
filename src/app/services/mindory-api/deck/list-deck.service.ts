@@ -73,9 +73,15 @@ export class ListDeckService {
       })
     );
   }
-  public callCreateCard(text: string, image: any): Observable<string> {
+  public callCreateCard(text: string, image: Blob, pairId: number): Observable<string> {
     if (text !== undefined) {
-      return this.http.post<string>(`${this.cardBaseUrl}/`, {text, deckId: this.deck.id}).pipe(
+      const formData = new FormData();
+      formData.set('text', text);
+      formData.set('deckId', this.deck.id.toString());
+      if (pairId !== undefined) {
+        formData.set('cardAssociateId', pairId.toString());
+      }
+      return this.http.post<string>(`${this.cardBaseUrl}/`, formData).pipe(
         tap(() => this.snackBarService.openSnackBar('Cette carte a bien été ajoute', 'OK', 'Success')),
         catchError((err: HttpErrorResponse) => {
           return this.defaultErrorService.handleError<string>(err, 'Incorrect request');
@@ -83,8 +89,13 @@ export class ListDeckService {
       );
     }
     if (image !== undefined) {
-      console.log(image);
-      return this.http.post<string>(`${this.cardBaseUrl}/`, {image, deckId: this.deck.id}).pipe(
+      const formData = new FormData();
+      formData.set('image', image);
+      formData.set('deckId', this.deck.id.toString());
+      if (pairId !== undefined) {
+        formData.set('cardAssociateId', pairId.toString());
+      }
+      return this.http.post<string>(`${this.cardBaseUrl}/`, formData).pipe(
         tap(() => this.snackBarService.openSnackBar('Cette carte a bien été ajoute', 'OK', 'Success')),
         catchError((err: HttpErrorResponse) => {
           return this.defaultErrorService.handleError<string>(err, 'Incorrect request');
@@ -120,8 +131,13 @@ export class ListDeckService {
       );
     }
   }
-  public createCard(text: string, image: any): void {
-    this.callCreateCard(text, image).subscribe(
+  public createCards(textA: string, imageA: Blob, textB: string, imageB: Blob): void {
+    this.callCreateCard(textA, imageA, undefined).subscribe(
+      value => {
+        this.callCreateCard(textB, imageB, value.id).subscribe(
+          error => console.log(error)
+        );
+      },
       error => console.log(error)
     );
   }

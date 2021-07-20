@@ -21,8 +21,8 @@ export class DeckEditorComponent implements OnInit {
   pairs: Pair[];
   textCardA: string;
   textCardB: string;
-  imageCardA: any;
-  imageCardB: any;
+  imageCardA: Blob;
+  imageCardB: Blob;
 
   constructor(
     public listDeckService: ListDeckService,
@@ -48,44 +48,31 @@ export class DeckEditorComponent implements OnInit {
       const reader = new FileReader();
       reader.onload = (e: any) => {
           console.log(event.target);
-          // this.imageCardA = e.target.value;
           this.imageCardA = event.target.files[0];
       };
       reader.readAsDataURL(event.target.files[0]);
     }
   }
   loadImageB(event): void {
-    // if (event.target.files && event.target.files[0]) {
-    //   const reader = new FileReader();
-    //   reader.onload = (e: any) => {
-    //     const image = new Image();
-    //     image.src = e.target.result;
-    //     image.onload = () => {
-    //       this.imageCardB = e.target.result;
-    //     };
-    //   };
-    //
-    //   reader.readAsDataURL(event.target.files[0]);
-    // }
     if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        this.imageCardB = e.target.value;
+        console.log(event.target);
+        this.imageCardB = event.target.files[0];
       };
-
       reader.readAsDataURL(event.target.files[0]);
     }
   }
   addPair(): void {
     console.log(this.textCardA);
-    console.log(this.imageCardA);
     console.log(this.textCardB);
+    console.log(this.imageCardA);
     console.log(this.imageCardB);
     if ((this.textCardA === undefined && this.imageCardA === undefined) || (this.textCardB === undefined && this.imageCardB === undefined)){
       this.snackBarService.openSnackBar('Merci de remplir les deux champs pour ajouter une carte', 'OK', 'Error');
       return;
     }
-    this.listDeckService.createCard(undefined, this.imageCardA);
+    this.listDeckService.createCards(this.textCardA, this.imageCardA, this.textCardB, this.imageCardB);
   }
   deletePair(pair: Pair): void {
     this.listDeckService.deleteCards(pair.cards);
