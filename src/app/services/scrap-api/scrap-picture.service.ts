@@ -7,6 +7,7 @@ import {catchError, tap} from 'rxjs/operators';
 import {DefaultErrorService} from '../mindory-api/error/default-error.service';
 import {LocalStorageService} from '../local-storage.service';
 import {Picture} from '../../models/picture.model';
+import {SnackbarService} from '../snackbar.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,8 @@ export class ScrapPictureService {
 
   constructor(
     private http: HttpClient,
-    private defaultErrorService: DefaultErrorService
+    private defaultErrorService: DefaultErrorService,
+    private snackBarService: SnackbarService
   ) { }
 
   private scrapPictures(name: string): Observable<any> {
@@ -49,15 +51,17 @@ export class ScrapPictureService {
 
   public scrapPicturesWithApi(name: string): void {
     this.scrapPictures(name).subscribe(
-      data => data,
-      error => error
+      data => {
+        this.snackBarService.openSnackBar(`${name} a été scrap`, 'OK', 'Success');
+      },
+      error => this.snackBarService.openSnackBar('Veuillez réessayez plus tard', 'OK', 'Error')
     );
   }
 
   public getAllPictureFromAName(name: string): void {
     this.listScrapPictures(name).subscribe(
       data => this.pictures = data,
-      error => error
+      error => this.snackBarService.openSnackBar('Veuillez réessayez plus tard', 'OK', 'Error')
     );
   }
 }
