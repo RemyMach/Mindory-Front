@@ -46,7 +46,23 @@ export class AuthenticationService {
     this.httpOptions = this.httpOptionsService.generateHttpOptions();
     console.log(this.localStorageService.getSessionToken());
     console.log(this.httpOptions);
-    return this.http.post(`${this.baseUrl}/token`, {} , this.httpOptions)
+    return this.http.get(`${this.baseUrl}/token` , this.httpOptions)
+      .pipe(
+        tap(data => data),
+        catchError((err: HttpErrorResponse) => {
+          if (this.localStorageService.session) {
+            this.localStorageService.deleteSession();
+          }
+          return this.defaultErrorService.handleError<string>(err, 'Incorrect token');
+        })
+      );
+  }
+
+  public verifyTokenAdmin(): Observable<any> {
+    this.httpOptions = this.httpOptionsService.generateHttpOptions();
+    console.log(this.localStorageService.getSessionToken());
+    console.log(this.httpOptions);
+    return this.http.get(`${this.baseUrl}/token/role/admin` , this.httpOptions)
       .pipe(
         tap(data => data),
         catchError((err: HttpErrorResponse) => {

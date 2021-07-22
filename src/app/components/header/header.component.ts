@@ -17,10 +17,8 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.authService.tryConnect().subscribe(
-      data => data,
-      error => error
-    );
+    this.authService.tryConnect().subscribe();
+    this.authService.tryConnectAnAdmin().subscribe();
   }
 
   get isConnect(): boolean {
