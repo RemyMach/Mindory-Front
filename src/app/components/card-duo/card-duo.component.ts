@@ -3,6 +3,7 @@ import {Card} from '../../models/card.model';
 import {ListDeckCardsService} from '../../services/mindory-api/deck/list-deck-cards.service';
 import {PlaySoloService} from '../../services/play/play-solo.service';
 import {PlayDuoService} from '../../services/play/play-duo.service';
+import {SocketService} from '../../services/socket/socket.service';
 
 @Component({
   selector: 'app-card-duo',
@@ -18,12 +19,13 @@ export class CardDuoComponent implements OnInit {
     public playDuoService: PlayDuoService,
     private elementRef: ElementRef,
     private renderer: Renderer2,
+    private socketService: SocketService
   ) { }
 
   ngOnInit(): void {
   }
   public async handleClick(): Promise<void> {
-    if (this.playDuoService.gameStart === false) {
+    if (this.playDuoService.gameStart === false && this.socketService.socket && this.playDuoService.idUserWhoPlay && this.socketService.socket.id === this.playDuoService.idUserWhoPlay) {
       this.playDuoService.gameStart = true;
       this.playDuoService.startGameChronometer();
     }
