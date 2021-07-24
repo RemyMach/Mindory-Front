@@ -67,6 +67,7 @@ export class SubscribeComponent implements OnInit {
             );
         },
         error => {
+          console.log(error);
           this.snackBar.openSnackBar(error, 'OK', 'Error');
           this.buttonIsInValidAfterClick = false;
         }
