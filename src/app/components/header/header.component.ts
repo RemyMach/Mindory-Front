@@ -17,8 +17,10 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.authService.tryConnect().subscribe();
-    this.authService.tryConnectAnAdmin().subscribe();
+    if (this.localStorageService.getSessionToken()) {
+      this.authService.tryConnect().subscribe();
+      this.authService.tryConnectAnAdmin().subscribe();
+    }
   }
 
   get isConnect(): boolean {
