@@ -8,14 +8,22 @@
   <span id="add-pair-container">
     <h2>Ajouter une paire</h2>
     <span id="add-pair-textarea-container">
-      <textarea [(ngModel)]="newCardA" rows="2" cols="25" placeholder="Contenu de la premiere carte"></textarea>
-      <textarea [(ngModel)]="newCardB" rows="2" cols="25" placeholder="Contenu de la deuxieme carte"></textarea>
+      <textarea [(ngModel)]="textCardA" rows="2" cols="25" placeholder="Contenu de la premiere carte"></textarea>
+      <input type="file" accept="image/*" (change)="loadImageA($event)" />
+      <textarea [(ngModel)]="textCardB" rows="2" cols="25" placeholder="Contenu de la deuxieme carte"></textarea>
+      <input type="file" accept="image/*" (change)="loadImageB($event)" />
     </span>
     <p (click)="addPair()">Ajouter</p>
   </span>
   <span *ngFor="let pair of pairs" class="editor-pair-container">
       <p class="card-content pair-content" *ngIf="pair.cards[0].image === null">{{pair.cards[0].text}}</p>
+      <span class="card-content pair-content" *ngIf="pair.cards[0].image !== null" >
+        <img src="http://localhost:3000/{{pair.cards[0].image}}" />
+      </span>
       <p class="card-content pair-content" *ngIf="pair.cards[1].image === null">{{pair.cards[1].text}}</p>
+      <span class="card-content pair-content" *ngIf="pair.cards[1].image !== null" >
+        <img src="http://localhost:3000/{{pair.cards[1].image}}" />
+      </span>
       <p class="delete-pair pair-content" (click)="deletePair(pair)">Supprimer</p>
   </span>
 </div>
