@@ -55,8 +55,7 @@ export class ProfilComponent implements OnInit {
         this.snackBar.openSnackBar('Votre mot de passe a bien été changé', 'OK', 'Success');
       },
       error => {
-        this.snackBar.openSnackBar(error, 'OK', 'Error');
-        // this.snackBar.openSnackBar('Votre mot de passe est incorrect', 'OK', 'Error');
+        this.snackBar.openSnackBar('Votre mot de passe est incorrect', 'OK', 'Error');
         this.buttonIsInValidAfterClick = false;
       }
     );
