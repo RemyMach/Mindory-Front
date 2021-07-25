@@ -11,6 +11,8 @@ import {DefaultErrorService} from './error/default-error.service';
 })
 export class UserService {
 
+  user: UserModel | null;
+
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json'})
   };
@@ -22,16 +24,18 @@ export class UserService {
     private defaultErrorService: DefaultErrorService
   ) { }
 
-  public getUserByToken(token: string): Observable<any> {
-    this.setAuthorizationHeader(token);
-    console.log(this.httpOptions);
+  public getUserByToken(): Observable<any> {
+    this.localStorageService.updateLocalStorageAttributes();
+    if (this.localStorageService.session.token === undefined){
+      return;
+    }
+    this.setAuthorizationHeader(this.localStorageService.session.token);
 
     return this.http.get<UserModel>(`${this.baseUrl}/`, this.httpOptions)
       .pipe(
         tap(data => {
           if (data) {
             this.saveUser(data);
-            console.log('dans la request');
             return;
           }
         }),
@@ -42,7 +46,7 @@ export class UserService {
   }
   private saveUser(data): void {
     if (data.username) {
-      this.localStorageService.setUser(data);
+      this.user = data;
       return;
     }
   }

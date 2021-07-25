@@ -6,7 +6,6 @@ import {Observable} from 'rxjs';
 import {LocalStorageService} from '../local-storage.service';
 import {SessionModel} from '../../models/session.model';
 import {DefaultErrorService} from './error/default-error.service';
-import {environment} from '../../../environments/environment.dev';
 import {HttpOptionsService} from '../utils/http-options.service';
 
 
@@ -72,12 +71,6 @@ export class AuthenticationService {
     this.httpOptionsService.generateHttpOptions();
     return this.http.post<UserModel>(`${this.baseUrl}/subscribe`, props, this.httpOptions)
       .pipe(
-        tap(data => {
-          if (data) {
-            this.saveUser(data);
-            return data;
-          }
-        }),
         catchError((err: HttpErrorResponse) => {
           console.log(err);
           return this.defaultErrorService.handleError<string>(err, err.message);
@@ -97,13 +90,6 @@ export class AuthenticationService {
       err => console.log(err)
     );
     this.localStorageService.deleteSession();
-  }
-
-  private saveUser(data): void {
-    if (data.username) {
-      this.localStorageService.setUser(data);
-      return;
-    }
   }
 
   private saveToken(data): void {

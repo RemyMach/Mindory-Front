@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {UserModel} from '../models/User.model';
 import {SessionModel} from '../models/session.model';
 import {ParamGameModel, ParamGameProps} from '../models/paramGame.model';
 
@@ -7,22 +6,16 @@ import {ParamGameModel, ParamGameProps} from '../models/paramGame.model';
   providedIn: 'root'
 })
 
-export class LocalStorageService {
-
-  user: UserModel | null;
+export class LocalStorageService
+{
   session: SessionModel | null;
   paramGame: ParamGameProps | null;
 
   constructor() { }
 
   updateLocalStorageAttributes(): void {
-    this.user = localStorage.getItem('user') !== null ? JSON.parse(localStorage.getItem('user')) : null;
     this.session = localStorage.getItem('session') !== null && this.validSessionFormat() ? JSON.parse(localStorage.getItem('session')) : null;
     this.paramGame = localStorage.getItem('paramGame') !== null ? JSON.parse(localStorage.getItem('paramGame')) : null;
-  }
-
-  setUser(userSession: UserModel): void {
-    localStorage.setItem('user', JSON.stringify(userSession));
   }
 
   setSession(session: SessionModel): void {
