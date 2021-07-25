@@ -4,4 +4,4 @@ export type CardPlayTypes = {
   cards: number[],
   myPoints: number,
   oponnentPoints: number
-}
+};

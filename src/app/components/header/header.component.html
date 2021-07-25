@@ -4,7 +4,7 @@
     <a (click)="router.navigate(['/about'])">À propos</a>
     <a (click)="router.navigate(['/play/mode'])">Jouer</a>
 
-    <span *ngIf="isAdmin;">
+    <span *ngIf="localStorageService.getSessionToken() && authService.adminRole;">
       <a (click)="router.navigate(['/admin/decks'])">Admin</a>
     </span>
 

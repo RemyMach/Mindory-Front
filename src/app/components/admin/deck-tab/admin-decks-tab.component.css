@@ -17,8 +17,20 @@
 }
 .grid-header {
   color: white;
-  background-color: red;
+  background-color: #F73C3B;;
 }
 a {
   cursor: pointer;
+}
+
+#link-scrap-picture {
+  font-size: 1.1em;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  font-family: "Chewy", Arial,Helvetica, sans-serif;
+}
+#link-scrap-picture a{
+  color: #F73C3B;
+  text-decoration: none;
 }

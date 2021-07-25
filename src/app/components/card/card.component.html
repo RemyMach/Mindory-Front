@@ -1,10 +1,12 @@
 <div id="card-content" #elementClickable>
   <span *ngIf="card.displayCard !== undefined && card.displayCard.display === true; else cardNotDisplay">
     <span class="span-content-card div-content-front">
-      <div class="div-content-card" >
-        {{card.image}}
+      <div *ngIf="card.text; else image" class="div-content-card" >
           {{card.text}}
       </div>
+      <ng-template #image>
+        <img  class="deck-example-logo"  src="{{ 'http://localhost:3000/' + card.image}}">
+      </ng-template>
     </span>
   </span>
   <ng-template #cardNotDisplay>

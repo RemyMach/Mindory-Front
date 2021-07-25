@@ -24,6 +24,7 @@ import {LogoutComponent} from './components/logout/logout.component';
 import {ProfilComponent} from './components/profil/profil.component';
 import {DeckEditorComponent} from './components/admin/deck-editor/deck-editor.component';
 import {ScrapComponent} from './components/scrap/scrap.component';
+import {AdminAuthenticationGuard} from './guard/admin-authentication.guard';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -43,9 +44,9 @@ const routes: Routes = [
   {path: 'play/decks/load/refresh', component: PageNotFoundComponent},
   {path: 'play/create', component: CreatePartComponent},
   {path: 'play/join', component: JoinPartComponent},
-  {path: 'admin/decks', component: AdminDecksListComponent},
-  {path: 'admin/deck/:deckId', component: DeckEditorComponent},
-  {path: 'admin/scrap', component: ScrapComponent},
+  {path: 'admin/decks', component: AdminDecksListComponent, canActivate: [AdminAuthenticationGuard]},
+  {path: 'admin/deck/:deckId', component: DeckEditorComponent, canActivate: [AdminAuthenticationGuard]},
+  {path: 'admin/scrap', component: ScrapComponent, canActivate: [AdminAuthenticationGuard]},
   {path: 'logout', component: LogoutComponent},
   {path: 'profil', component: ProfilComponent},
   {path: '**', component: PageNotFoundComponent}

@@ -17,10 +17,10 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.authService.tryConnect().subscribe(
-      data => data,
-      error => error
-    );
+    if (this.localStorageService.getSessionToken()) {
+      this.authService.tryConnect().subscribe();
+      this.authService.tryConnectAnAdmin().subscribe();
+    }
   }
 
   get isConnect(): boolean {

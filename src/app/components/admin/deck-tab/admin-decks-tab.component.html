@@ -16,3 +16,6 @@
     <span *ngFor="let deck of listDeckService.decks"><a (click)="deleteDeck(deck.id)" style="color: red; text-decoration: underline">Supprimer</a></span>
   </div>
 </div>
+<span id="link-scrap-picture">
+  <p>Scraper des photos pour un deck ?<a [routerLink]="'/admin/scrap'"> cliquez ici</a></p>
+</span>

@@ -1,16 +1,22 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Deck} from '../../../models/deck.model';
 import {catchError, tap} from 'rxjs/operators';
 import {DefaultErrorService} from '../error/default-error.service';
 import {SnackbarService} from '../../snackbar.service';
 import {Card} from '../../../models/card.model';
+import {LocalStorageService} from '../../local-storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ListDeckService {
+
+  private httpOptions = {
+    headers: new HttpHeaders({ Authorization: this.localStorageService.getSessionToken() })
+  };
+
   public decksHome: Deck[];
   public decks: Deck[];
   public deck: Deck;
@@ -19,7 +25,8 @@ export class ListDeckService {
   constructor(
     private http: HttpClient,
     private defaultErrorService: DefaultErrorService,
-    private snackBarService: SnackbarService
+    private snackBarService: SnackbarService,
+    private localStorageService: LocalStorageService
   ) { }
 
   private getDecks(offset: number, limit: number, minCard: number = 0): Observable<Deck[]> {
@@ -73,6 +80,39 @@ export class ListDeckService {
       })
     );
   }
+  public callCreateCard(text: string, image: Blob, pairId: number): Observable<string> {
+    if (text !== undefined) {
+      const formData = new FormData();
+      formData.set('text', text);
+      formData.set('deckId', this.deck.id.toString());
+      if (pairId !== undefined) {
+        formData.set('cardAssociateId', pairId.toString());
+      }
+      return this.http.post<string>(`${this.cardBaseUrl}/`, formData, this.httpOptions).pipe(
+        tap(() => this.snackBarService.openSnackBar('Cette carte a bien été ajoute', 'OK', 'Success')),
+        catchError((err: HttpErrorResponse) => {
+          return this.defaultErrorService.handleError<string>(err, 'Incorrect request');
+        })
+      );
+    }
+    if (image !== undefined) {
+      const formData = new FormData();
+      formData.set('image', image);
+      formData.set('deckId', this.deck.id.toString());
+      if (pairId !== undefined) {
+        formData.set('cardAssociateId', pairId.toString());
+      }
+      return this.http.post<string>(`${this.cardBaseUrl}/`, formData, this.httpOptions).pipe(
+        tap(() => {
+            this.snackBarService.openSnackBar('Cette carte a bien été ajoute', 'OK', 'Success');
+          }
+        ),
+        catchError((err: HttpErrorResponse) => {
+          return this.defaultErrorService.handleError<string>(err, 'Incorrect request');
+        })
+      );
+    }
+  }
 
   public getDecksFromHome(minCard: number = 0): void{
     this.getDecks(0, 3, minCard).subscribe(
@@ -100,5 +140,15 @@ export class ListDeckService {
         error => console.log(error)
       );
     }
+  }
+  public createCards(textA: string, imageA: Blob, textB: string, imageB: Blob): void {
+    this.callCreateCard(textA, imageA, undefined).subscribe(
+      value => {
+        this.callCreateCard(textB, imageB, JSON.parse(JSON.stringify(value)).id).subscribe(
+          error => console.log(error)
+        );
+      },
+      error => console.log(error)
+    );
   }
 }

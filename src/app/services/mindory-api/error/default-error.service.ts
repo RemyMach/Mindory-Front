@@ -15,7 +15,13 @@ export class DefaultErrorService {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error);
       return throwError(this.MINDORY_NO_RESPONSE_MESSAGE);
-    } else if (error.error){
+    } else if (error.error) {
+      console.log(error.error);
+      if (error.error === 'The email provide is already taken')
+        return throwError('l\'email choisit n\'est pas disponible');
+      else if (error.error === 'The username provide is already taken')
+        return throwError('le Pseudo choisit n\'est pas disponible');
+    } else if (error.error && error.error.errors) {
       // tslint:disable-next-line:forin
       for (const errorProperty in error.error.errors[0].fields) {
         return throwError(error.error.errors[0].fields[errorProperty][0]);
