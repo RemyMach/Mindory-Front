@@ -22,13 +22,4 @@ export class HeaderComponent implements OnInit {
       this.authService.tryConnectAnAdmin().subscribe();
     }
   }
-
-  get isConnect(): boolean {
-    return this.authService.isConnect();
-  }
-
-  get isAdmin(): boolean {
-    return this.authService.isAdmin();
-  }
-
 }

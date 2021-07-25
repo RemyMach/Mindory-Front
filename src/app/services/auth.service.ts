@@ -36,27 +36,14 @@ export class AuthService {
     return this.authenticationService.verifyTokenAdmin().pipe(
       take(1),
       map(
-        result => {
+        () => {
           this.adminRole = true;
           return true;
         }
       ),
-      catchError(async (err: HttpErrorResponse) => {
+      catchError(async () => {
         this.adminRole = false;
         return false;
       }));
-  }
-  public isConnect(): boolean {
-    this.localStorageService.updateLocalStorageAttributes();
-    return this.localStorageService.user !== null && this.localStorageService.session !== null;
-  }
-  public isAdmin(): boolean {
-    if (this.isConnect() === false){
-      return false;
-    }
-    // TODO: Make getRole not create a infinite loop of the dead
-    // this.roleService.getRole(token);
-    // return this.roleService.userRole === 'admin';
-    return true;
   }
 }
