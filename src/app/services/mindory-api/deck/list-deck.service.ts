@@ -7,6 +7,7 @@ import {DefaultErrorService} from '../error/default-error.service';
 import {SnackbarService} from '../../snackbar.service';
 import {Card} from '../../../models/card.model';
 import {LocalStorageService} from '../../local-storage.service';
+import {HttpOptionsService} from '../../utils/http-options.service';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,8 @@ export class ListDeckService {
     private http: HttpClient,
     private defaultErrorService: DefaultErrorService,
     private snackBarService: SnackbarService,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private httpOptionsService: HttpOptionsService
   ) { }
 
   private getDecks(offset: number, limit: number, minCard: number = 0): Observable<Deck[]> {
@@ -55,20 +57,18 @@ export class ListDeckService {
     );
   }
 
-  public deleteDeck(deckId: number): void
+  public deleteDeck(deckId: number): Observable<string>
   {
     this.decks = this.decks.filter(deck => {
       return deck.id !== deckId;
     });
 
-    this.http.delete<string>(`${this.deckBaseUrl}/${deckId}`).pipe(
+    this.httpOptions = this.httpOptionsService.generateHttpOptions();
+    return this.http.delete<string>(`${this.deckBaseUrl}/${deckId}`, this.httpOptions).pipe(
       tap(() => this.snackBarService.openSnackBar('Ce deck a bien été supprimé', 'OK', 'Success')),
       catchError((err: HttpErrorResponse) => {
         return this.defaultErrorService.handleError<string>(err, 'Incorrect request');
       })
-    ).subscribe(
-      value => console.log(value),
-      err => console.log(err)
     );
   }
 

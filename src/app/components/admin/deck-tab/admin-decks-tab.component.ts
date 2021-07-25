@@ -20,6 +20,6 @@ export class AdminDecksTabComponent implements OnInit {
     this.router.navigate(['admin/deck/' + deckId]);
   }
   public deleteDeck(deckId: number): void {
-    this.listDeckService.deleteDeck(deckId);
+    this.listDeckService.deleteDeck(deckId).subscribe();
   }
 }
