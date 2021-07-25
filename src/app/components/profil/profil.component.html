@@ -4,22 +4,22 @@
     <span class="input_double_form">
     <mat-form-field class="example-form-field">
       <mat-label>Nom</mat-label>
-      <input disabled matInput value="{{getUserInformations().name}}">
+      <input disabled matInput value="{{userService.user.name}}">
     </mat-form-field>
     <mat-form-field class="example-form-field">
       <mat-label>Prénom</mat-label>
-      <input disabled matInput value="{{getUserInformations().surname}}">
+      <input disabled matInput value="{{userService.user.surname}}">
     </mat-form-field>
   </span>
 
   <span class="input_double_form">
     <mat-form-field class="example-form-field">
       <mat-label>Pseudo</mat-label>
-      <input disabled matInput value="{{getUserInformations().username}}">
+      <input disabled matInput value="{{userService.user.username}}">
     </mat-form-field>
     <mat-form-field class="example-form-field">
       <mat-label>Adresse mail</mat-label>
-      <input disabled matInput value="{{getUserInformations().email}}">
+      <input disabled matInput value="{{userService.user.email}}">
     </mat-form-field>
   </span>
 
