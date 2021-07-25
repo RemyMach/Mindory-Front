@@ -32,6 +32,7 @@ export class RoomValidService {
         tap(data => data
         ),
         catchError((err: HttpErrorResponse) => {
+          console.log(err);
           return this.defaultErrorService.handleError<string>(err, 'Please retry later');
         })
       );

@@ -134,9 +134,9 @@ export class PlayDuoService {
   private endGame(message: 'victory' | 'defeat'): void {
     this.stopGameChronometer();
     if (message === 'victory')
-      this.snackBarService.openSnackBar(`Felicitation vous avez gagnée en ${getTimeInHourMinuteSecondsFormat(this.time)}`, 'OK', 'Success');
+      this.snackBarService.openSnackBar(`Felicitation vous avez gagné`, 'OK', 'Success');
     else
-      this.snackBarService.openSnackBar(`Votre adversaire a gagné en  ${getTimeInHourMinuteSecondsFormat(this.time)}`, 'OK', 'Error');
+      this.snackBarService.openSnackBar(`Votre adversaire a gagné`, 'OK', 'Error');
   }
 
   private itsNotAPair(cardA: Card, cardB: Card): boolean {
