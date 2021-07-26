@@ -35,6 +35,7 @@ export class PlayDuoService {
   time: Date = new Date(0);
   interval$: Subscription;
   dialogOptions;
+  usersConnected =  false;
 
   NUMBER_CARD_COMPARE = 2;
   NUMBER_OF_PAIRS_TO_BE_FOUND = 15;
@@ -73,7 +74,7 @@ export class PlayDuoService {
       this.socketService.emit('cardReturn', card.id);
       this.addCardToTheGame(card, element);
       if (this.cardsClicked.size === this.NUMBER_CARD_COMPARE) {
-        if (this.localStorageService.getSessionToken()) {
+        if (this.localStorageService.getSessionToken() && this.usersConnected) {
           this.createShot();
         }
         await this.compareCardsToSeeIfItsAMatch();
@@ -321,6 +322,7 @@ export class PlayDuoService {
           message: `Vous pouvez donc refresh la page tant que la partie n'est pas finit même après son début ou revenir sur le lien pour finir la partie plus tard sans rencontrer de problèmes`,
           confirmText: 'Ok'
         };
+        this.usersConnected = true;
         this.dialogConfirmationService.open(this.dialogOptions);
       },
       err => console.log(err)
@@ -336,6 +338,7 @@ export class PlayDuoService {
           message: `Vous ne pouvez donc pas actualiser la page où la quitter sinon une nouvelle partie commencera`,
           confirmText: 'Ok'
         };
+        this.usersConnected = false;
         this.dialogConfirmationService.open(this.dialogOptions);
       },
       err => console.log(err)

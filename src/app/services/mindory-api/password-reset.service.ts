@@ -47,6 +47,19 @@ export class PasswordResetService {
       );
   }
 
+  public verifyPasswordResetToken(token: string): Observable<any> {
+
+    return this.http.get(`${this.baseUrl}/${token}`, this.httpOptions)
+      .pipe(
+        tap(() => {
+          return;
+        }),
+        catchError((err: HttpErrorResponse) => {
+          return this.defaultErrorService.handleError<string>(err, err.message);
+        })
+      );
+  }
+
   public change(oldPassword: string, newPassword: string, token: string): Observable<any> {
     this.setAuthorizationHeader(token);
     return this.http.put<SessionModel>(`${this.baseUrl}/change`, {oldPassword, newPassword}, this.httpOptions)

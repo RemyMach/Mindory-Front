@@ -21,7 +21,7 @@ export class AuthenticateGuard implements CanActivate {
     return new Observable<boolean>((observable: Subscriber<boolean>) => {
       this.localStorageService.updateLocalStorageAttributes();
       if (this.localStorageService.session) {
-        return this.userMindoryService.getUserByToken(this.localStorageService.session.token)
+        return this.userMindoryService.getUserByToken()
           .subscribe(
             data => {
               return observable.next(true);

@@ -25,6 +25,7 @@ import {ProfilComponent} from './components/profil/profil.component';
 import {DeckEditorComponent} from './components/admin/deck-editor/deck-editor.component';
 import {ScrapComponent} from './components/scrap/scrap.component';
 import {AdminAuthenticationGuard} from './guard/admin-authentication.guard';
+import {PasswordResetGuard} from './guard/password-reset.guard';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -35,7 +36,7 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent, canActivate: [UserNoSessionGuard]},
   {path: 'subscribe', component: SubscribeComponent, canActivate: [UserNoSessionGuard]},
   {path: 'forget', component: ForgetPasswordComponent, canActivate: [UserNoSessionGuard]},
-  {path: 'reset/:token', component: ResetPasswordComponent, canActivate: [UserNoSessionGuard]},
+  {path: 'reset/:token', component: ResetPasswordComponent, canActivate: [PasswordResetGuard]},
   {path: 'play/mode', component: PlayModeComponent},
   {path: 'play/decks', component: PlayDeckComponent},
   {path: 'play/solo/decks/:deckTitle', component: PlaySoloComponent},
