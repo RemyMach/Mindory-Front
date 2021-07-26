@@ -290,6 +290,7 @@ export class PlayDuoService {
     this.pairFoundByOther();
     this.switchActivePlayer();
     this.gameFinished();
+    this.otherUserIsDisconnected();
   }
 
   private initiateTheStartOfTheGameForAnonymous(): void {
@@ -302,6 +303,7 @@ export class PlayDuoService {
     this.pairFoundByOther();
     this.switchActivePlayer();
     this.gameFinished();
+    this.otherUserIsDisconnected();
   }
 
   private getIdFromTheFirstPlayer(): void {
@@ -387,6 +389,16 @@ export class PlayDuoService {
       data => {
         const endMessage = this.pairsFoundByMe > this.pairsFoundByOther ? 'victory' : 'defeat';
         this.endGame(endMessage);
+      },
+      err => console.log(err)
+    );
+  }
+
+  private otherUserIsDisconnected(): void {
+    this.socketService.listenMessage('otherUserDisconnected').subscribe(
+      data => {
+        this.stopGameChronometer();
+        this.snackBar.openSnackBar(`L'autre utilisateur c'est déconnecté`, 'OK', 'Success');
       },
       err => console.log(err)
     );
