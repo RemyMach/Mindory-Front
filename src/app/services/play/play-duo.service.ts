@@ -349,6 +349,9 @@ export class PlayDuoService {
     this.socketService.listenActivateCard().subscribe(
       data => {
         console.log(data);
+        if (!this.gameStart) {
+          this.startGameChronometer();
+        }
         this.activateCard(data);
       },
       err => console.log(err)
@@ -390,6 +393,7 @@ export class PlayDuoService {
   }
 
   public startGameChronometer(): void {
+    this.gameStart = true;
     this.interval$ = interval(1000).subscribe((d) => {
       this.time = new Date(d + 1);
       this.time.setSeconds(d + 1);
@@ -397,6 +401,7 @@ export class PlayDuoService {
   }
 
   public stopGameChronometer(): void {
+    this.gameStart = false;
     this.interval$.unsubscribe();
   }
 }
